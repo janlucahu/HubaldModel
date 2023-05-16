@@ -102,7 +102,7 @@ int check_collision (vector<vector<double>> satValues) {
             vector<double> satPos1 = {satValues[sat1].begin(), satValues[sat1].begin() + 2};
             vector<double> satPos2 = {satValues[sat2].begin(), satValues[sat2].begin() + 2};
             if (satPos1 == satPos2) {
-                cout << "Collision between Sat Numbers: " << sat1 << "  " << sat2 << endl;
+                cout << "Collision between Sat Numbers: " << sat2 << "  " << sat1 << endl;
                 cout << "sat1: " << satPos1[0] << "  " << satPos1[1] << "  " << satPos1[2] << endl;
                 cout << "sat2: " << satPos2[0] << "  " << satPos2[1] << "  " << satPos2[2] << endl;
                 collisions++;
