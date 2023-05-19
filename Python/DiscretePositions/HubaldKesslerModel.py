@@ -16,7 +16,7 @@ WMIN, WMAX = 0, 2 * np.pi
 OMIN, OMAX = 0, 2 * np.pi
 MMIN, MMAX = 0, 1000
 
-directory = 'C:\\Users\\jlhub\\Documents\\Studium\\HubaldModel\\HubaldKessler\\data\\size100000\\'
+directory = 'C:\\Users\\jlhub\\Documents\\Studium\\Masterarbeit\\HubaldModell\\HubaldModel\\Python\\DiscretePositions\\Data\\'
 
 
 @jit(nopython=True)

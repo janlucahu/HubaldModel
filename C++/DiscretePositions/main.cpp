@@ -172,10 +172,5 @@ int kessler_simulation (int nrOfSats, int size, int tmax, int acc=1, bool plane=
 int main() {
     srand(time(NULL));
     kessler_simulation(1000, 1000, 1000, 1);
-    /*
-    vector<vector<double>> vec = {{0.9, -1.8, 0}, {-0.5, -0.7, 0}, {0.9, -1.8, -0}};
-    int col = check_collision(vec);
-    cout << col;
-    */
     return 0;
 }
