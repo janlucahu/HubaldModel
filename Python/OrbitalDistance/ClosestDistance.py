@@ -156,7 +156,9 @@ def distance_matrix(nrOfSats, satParameters):
             fp[sat1, sat2] = closest_distance(a1, e1, i1, O1, w1, a2,
                                                      e2, i2, O2, w2)
 
-    return fp
+    del fp  # Close the memory-mapped file
+
+    return filepath
 
 
 sats = 1000
