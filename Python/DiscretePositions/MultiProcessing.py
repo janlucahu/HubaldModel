@@ -7,6 +7,7 @@ said density'''
 
 import time
 import numpy as np
+import multiprocessing as mp
 from numba import jit
 
 
@@ -20,55 +21,57 @@ directory = 'C:\\Users\\jlhub\\Documents\\Studium\\Masterarbeit\\HubaldModell\\H
 
 
 @jit(nopython=True)
-def orbital_position(aa, ee, ii, ww, Om, M0, TT, absoluteTime, accuracy=1):
+def orbital_position(satParameter, absoluteTime):
     '''
     Calculates the position (x, y, z) of a satellite for given orbital
     parameters (a, e, ...) and time.
 
     Args:
-        aa (float): semimajor axis
-        ee (float): eccentricity
-        ii (float): inclination
-        ww (float): argument of periapsis
-        Om (float): length of the ascending node
-        M0 (float): starting point of the mean anomaly
-        TT (float): orbital period
+        satParameter ()
         absoluteTime (int): time as curve parameter
         accuracy (int): Number of decimals to be rounded to. Defaults to 1.
 
     Returns:
-        position (1darray): Orbital position component wise as elements of
+        satPosition (2darray): Orbital position component wise as elements of
                             an array
 
     '''
-    position = np.empty(3)
+    satPosition = np.empty((satParameter.shape[0], 3))
 
-    MM = M0 + 2 * np.pi / TT * absoluteTime
-    EE = MM + ee * np.sin(MM) + 1/2 * ee ** 2 * np.sin(2 * MM)
+    for satNr in range(satParameter.shape[0]):
+        aa = satParameter[satNr][0]
+        ee = satParameter[satNr][1]
+        ii = satParameter[satNr][2]
+        ww = satParameter[satNr][3]
+        Om = satParameter[satNr][4]
+        M0 = satParameter[satNr][5]
+        TT = satParameter[satNr][6]
 
-    XX = aa * (np.cos(EE) - ee)
-    YY = aa * np.sqrt(1 - ee ** 2) * np.sin(EE)
+        MM = M0 + 2 * np.pi / TT * absoluteTime
+        EE = MM + ee * np.sin(MM) + 1/2 * ee ** 2 * np.sin(2 * MM)
 
-    P11 = (np.cos(Om) * np.cos(ww) - np.sin(Om) * np.cos(ii) * np.sin(ww))
-    P12 = (- np.cos(Om) * np.sin(ww) - np.sin(Om) * np.cos(ii) * np.cos(ww))
-    P21 = (np.sin(Om) * np.cos(ww) + np.cos(Om) * np.cos(ii) * np.sin(ww))
-    P22 = (- np.sin(Om) * np.sin(ww) + np.cos(Om) * np.cos(ii) * np.cos(ww))
-    P31 = np.sin(ii) * np.sin(ww)
-    P32 = np.sin(ii) * np.cos(ww)
+        XX = aa * (np.cos(EE) - ee)
+        YY = aa * np.sqrt(1 - ee ** 2) * np.sin(EE)
 
-    xx = XX * P11 + YY * P12
-    yy = XX * P21 + YY * P22
-    zz = XX * P31 + YY * P32
+        P11 = (np.cos(Om) * np.cos(ww) - np.sin(Om) * np.cos(ii) * np.sin(ww))
+        P12 = (- np.cos(Om) * np.sin(ww) - np.sin(Om) * np.cos(ii) * np.cos(ww))
+        P21 = (np.sin(Om) * np.cos(ww) + np.cos(Om) * np.cos(ii) * np.sin(ww))
+        P22 = (- np.sin(Om) * np.sin(ww) + np.cos(Om) * np.cos(ii) * np.cos(ww))
+        P31 = np.sin(ii) * np.sin(ww)
+        P32 = np.sin(ii) * np.cos(ww)
 
-    position[0] = xx
-    position[1] = yy
-    position[2] = zz
+        xx = XX * P11 + YY * P12
+        yy = XX * P21 + YY * P22
+        zz = XX * P31 + YY * P32
 
-    #position = np.around(position, decimals=accuracy, out=out)
+        satPosition[satNr][0] = xx
+        satPosition[satNr][1] = yy
+        satPosition[satNr][2] = zz
 
-    return position
+    return satPosition
 
 
+@jit(nopython=True)
 def initialize(nrOfSats, size, tmax, accuracy=1, plane=True):
     '''
     Inititalizes a system of satellites orbiting around a focus point. The size
@@ -90,7 +93,6 @@ def initialize(nrOfSats, size, tmax, accuracy=1, plane=True):
 
     '''
     satParameter = np.empty((nrOfSats, 7))
-    satPositions = np.empty((nrOfSats, 3))
 
     for satNr in range(nrOfSats):
         ee = np.random.uniform(EMIN, EMAX)
@@ -105,7 +107,7 @@ def initialize(nrOfSats, size, tmax, accuracy=1, plane=True):
         ww = np.random.uniform(WMIN, WMAX)
         Om = np.random.uniform(OMIN, OMAX)
         M0 = np.random.randint(MMIN, MMAX)
-        TT = np.random.randint(1/5 * tmax, tmax)
+        TT = np.random.randint(3600, 10800)
 
         satParameter[satNr][0] = aa
         satParameter[satNr][1] = ee
@@ -115,14 +117,7 @@ def initialize(nrOfSats, size, tmax, accuracy=1, plane=True):
         satParameter[satNr][5] = M0
         satParameter[satNr][6] = TT
 
-        initialPosition = orbital_position(aa, ee, ii, ww, Om, M0, TT, 0,
-                                           accuracy)
-        initialPosition = np.around(initialPosition, decimals=accuracy)
-        satPositions[satNr][0] = initialPosition[0]
-        satPositions[satNr][1] = initialPosition[1]
-        satPositions[satNr][2] = initialPosition[2]
-
-    return satParameter, satPositions
+    return satParameter
 
 
 def check_collision(satPositions):
@@ -168,24 +163,13 @@ def kessler_simulation(nrOfSats, size, tmax, accuracy=1, plane=True, run=None):
     '''
     int1 = time.time()
 
-    satParameter, satPositions = initialize(nrOfSats, size, tmax, accuracy,
+    satPositions = np.empty((nrOfSats, 3))
+    satParameter = initialize(nrOfSats, size, tmax, accuracy,
                                             plane)
     nrOfCollisions = 0
 
+    print(f'Starting satellites: {nrOfSats}, Size: {size}, Run Nr.: {run}')
     for sec in range(tmax):
-        for satNr in range(satPositions.shape[0]):
-            aa = satParameter[satNr][0]
-            ee = satParameter[satNr][1]
-            ii = satParameter[satNr][2]
-            ww = satParameter[satNr][3]
-            Om = satParameter[satNr][4]
-            M0 = satParameter[satNr][5]
-            TT = satParameter[satNr][6]
-
-            position = orbital_position(aa, ee, ii, ww, Om, M0, TT, sec,
-                                        accuracy)
-            #position = np.around(position, decimals=accuracy)
-            satPositions[satNr] = position
 
         satPositions = np.around(satPositions, decimals=accuracy)
         uniqueCollisions = check_collision(satPositions)
@@ -207,19 +191,17 @@ def kessler_simulation(nrOfSats, size, tmax, accuracy=1, plane=True, run=None):
 
             satParameter = np.vstack((satParameter, newParameter))
 
-            newPosition = orbital_position(aa, ee, ii, ww, Om, M0, TT, sec,
-                                           accuracy)
-            satPositions = np.vstack((satPositions, newPosition))
+            satPositions = orbital_position(satParameter, sec)
             nrOfCollisions += 1
 
-        print(f'Starting satellites: {nrOfSats}, Size: {size}, Run Nr.: {run}')
-        print('Progress: ', np.around(sec / tmax * 100, decimals=2), '%')
-        print('***************************************************')
+        progress = np.around(sec / tmax * 100, decimals=2)
+        print(f'\r{progress} %', end='', flush=True)
 
     int2 = time.time()
-
-    print('Number of Collisions: ', nrOfCollisions, ' after ', int2 - int1,
-          ' seconds')
+    print('')
+    print('Number of Collisions: ', nrOfCollisions, ' after ',
+          np.around(int2 - int1, decimals=2), ' seconds')
+    print('***************************************************')
     return nrOfCollisions
 
 
@@ -297,22 +279,8 @@ def main():
         None.
 
     '''
-    # stepNumber = 10
-    # systemSize = 100000
-    # averageSize = 10
-    # tmax = 1000
-    # arguments = (stepNumber, systemSize, averageSize, tmax)
-
     startingTime = time.time()
-    # runSatellites(10, 10, *arguments, accuracy=1, plane=True,
-    #               file='sats10_size100000')
-    # runSatellites(100, 100, *arguments, accuracy=1, plane=True,
-    #               file='sats100_size100000')
-    # runSatellites(1000, 1000, *arguments, accuracy=1, plane=True,
-    #               file='sats1000_size100000')
-    # runSatellites(10000, 10000, *arguments, accuracy=1, plane=True,
-    #               file='sats10000_size100000')
-    kessler_simulation(1000, 5000, 1000)
+    kessler_simulation(1000, 1000000, 86400)
     endingTime = time.time()
     print(f'Process finished in {endingTime - startingTime} seconds')
 
