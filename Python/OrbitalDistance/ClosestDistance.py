@@ -1,18 +1,28 @@
-import numpy as np
-import time
 import os
+import time
+import numpy as np
+import matplotlib.pyplot as plt
 from numba import jit
+import PlotDistance
 
 
-EMIN, EMAX = 0, 0.9
+EMIN, EMAX = 0, 0.3
 IMIN, IMAX = 0, np.pi
 WMIN, WMAX = 0, 2 * np.pi
 OMIN, OMAX = 0, 2 * np.pi
 MMIN, MMAX = 0, 1000
 
 
-@jit(nopython=True)
-def initialize(nrOfSats, size, tmax, accuracy=1, plane=True):
+#@jit(nopython=True)
+def summation(NN):
+    val = 0
+    for ii in range(NN):
+        val = val + ii
+    return val
+
+
+#@jit(nopython=True)
+def initialize(nrOfSats, alimits, plane=False):
     '''
     Inititalizes a system of satellites orbiting around a focus point. The size
     of the system specifies the bounderies, which the satellites won't pass
@@ -32,12 +42,14 @@ def initialize(nrOfSats, size, tmax, accuracy=1, plane=True):
                                 satellite number, rows positional components.
 
     '''
-    satParameter = np.empty((nrOfSats, 7))
+    satParameter = np.empty((nrOfSats, 5))
+
+    AMIN, AMAX = alimits
 
     for satNr in range(nrOfSats):
         ee = np.random.uniform(EMIN, EMAX)
         # upper limit assures that no satellite is out of bounds
-        aa = np.random.uniform(0.1* size, (size / 2) / (1 + ee))
+        aa = np.random.uniform(AMIN, AMAX)
 
         if plane:
             ii = 0
@@ -46,125 +58,162 @@ def initialize(nrOfSats, size, tmax, accuracy=1, plane=True):
 
         ww = np.random.uniform(WMIN, WMAX)
         Om = np.random.uniform(OMIN, OMAX)
-        M0 = np.random.randint(MMIN, MMAX)
-        TT = np.random.randint(1/5 * tmax, tmax)
 
         satParameter[satNr][0] = aa
         satParameter[satNr][1] = ee
         satParameter[satNr][2] = ii
         satParameter[satNr][3] = ww
         satParameter[satNr][4] = Om
-        satParameter[satNr][5] = M0
-        satParameter[satNr][6] = TT
 
     return satParameter
 
 
-@jit(nopython=True)
-def closest_distance(a1, e1, i1, Omega1, omega1, a2, e2, i2, Omega2, omega2):
-    """
-    Calculates the closest distance between two elliptical orbits given their orbital elements.
+#@jit(nopython=True)
+def constants(parameters1, parameters2):
+    i1, i2 = parameters1[2], parameters2[2]
+    w1, w2 = parameters1[3], parameters2[3]
+    O1, O2 = parameters1[4], parameters2[4]
 
-    Parameters:
-    -----------
-    a1 : float or numpy.ndarray
-        Semi-major axis of the first orbit (in AU).
-    e1 : float or numpy.ndarray
-        Eccentricity of the first orbit.
-    i1 : float or numpy.ndarray
-        Inclination of the first orbit (in degrees).
-    Omega1 : float or numpy.ndarray
-        Longitude of ascending node of the first orbit (in degrees).
-    omega1 : float or numpy.ndarray
-        Argument of periapsis of the first orbit (in degrees).
-    a2 : float or numpy.ndarray
-        Semi-major axis of the second orbit (in AU).
-    e2 : float or numpy.ndarray
-        Eccentricity of the second orbit.
-    i2 : float or numpy.ndarray
-        Inclination of the second orbit (in degrees).
-    Omega2 : float or numpy.ndarray
-        Longitude of ascending node of the second orbit (in degrees).
-    omega2 : float or numpy.ndarray
-        Argument of periapsis of the second orbit (in degrees).
+    P11_1 = np.cos(O1) * np.cos(w1) - np.sin(O1) * np.cos(i1) * np.sin(w1)
+    P12_1 = - np.cos(O1) * np.sin(w1) - np.sin(O1) * np.cos(i1) * np.cos(w1)
+    P21_1 = np.sin(O1) * np.cos(w1) + np.cos(O1) * np.cos(i1) * np.sin(w1)
+    P22_1 = - np.sin(O1) * np.sin(w1) + np.cos(O1) * np.cos(i1) * np.cos(w1)
+    P31_1 = np.sin(i1) * np.sin(w1)
+    P32_1 = np.sin(i1) * np.cos(w1)
 
-    Returns:
-    --------
-    float or numpy.ndarray
-        Closest distance between the two orbits (in AU).
-    """
+    P11_2 = np.cos(O2) * np.cos(w2) - np.sin(O2) * np.cos(i2) * np.sin(w2)
+    P12_2 = - np.cos(O2) * np.sin(w2) - np.sin(O2) * np.cos(i2) * np.cos(w2)
+    P21_2 = np.sin(O2) * np.cos(w2) + np.cos(O2) * np.cos(i2) * np.sin(w2)
+    P22_2 = - np.sin(O2) * np.sin(w2) + np.cos(O2) * np.cos(i2) * np.cos(w2)
+    P31_2 = np.sin(i2) * np.sin(w2)
+    P32_2 = np.sin(i2) * np.cos(w2)
 
-    # Convert angles to radians
-    i1 = np.radians(i1)
-    Omega1 = np.radians(Omega1)
-    omega1 = np.radians(omega1)
-    i2 = np.radians(i2)
-    Omega2 = np.radians(Omega2)
-    omega2 = np.radians(omega2)
+    const1 = (P11_1, P12_1, P21_1, P22_1, P31_1, P32_1)
+    const2 = (P11_2, P12_2, P21_2, P22_2, P31_2, P32_2)
 
-    # Calculate the relative inclination and longitude of ascending node
-    dOmega = Omega2 - Omega1
-    di = i2 - i1
-
-    # Calculate the semi-latus rectum and periapsis distance of each orbit
-    p1 = a1 * (1 - e1**2)
-    p2 = a2 * (1 - e2**2)
-    r1 = p1 / (1 + e1 * np.cos(omega1))
-    r2 = p2 / (1 + e2 * np.cos(omega2))
-
-    # Calculate the distance between the two foci of each orbit
-    f1 = a1 * e1
-    f2 = a2 * e2
-    df = f2 - f1
-
-    # Calculate the cosine and sine of the angles used in the distance formula
-    cos_theta = np.cos(dOmega) * np.cos(omega2) * np.cos(omega1) + np.sin(dOmega) * np.sin(omega2) * np.sin(omega1)
-    sin_theta = np.sqrt(1 - cos_theta**2)
-    cos_phi = np.cos(di) * (r1 + r2 * cos_theta) / df - r2 * sin_theta * np.sin(di) / df
-    sin_phi = np.sqrt(1 - np.where(cos_phi**2 < 1, 1 - cos_phi**2, 0))
-
-    # Calculate the closest distance between the two orbits
-    distance = df * cos_phi - np.sqrt(np.where(r1**2 - (r2 * sin_theta * sin_phi)**2 > 0, r1**2 - (r2 * sin_theta * sin_phi)**2, 0))
-
-    return distance
+    return const1, const2
 
 
-def distance_matrix(nrOfSats, satParameters):
-    dtype = np.float64
-    shape = (nrOfSats, nrOfSats)
+#@jit(nopython=True)
+def find_minimum(parameters1, parameters2, acc=100, repetitions=3):
+    E_1 = np.linspace(0, 2 * np.pi, acc)
+    E_2 = np.linspace(0, 2 * np.pi, acc)
 
-    filename = 'distances.dat'
-    filepath = os.path.abspath(filename)
+    E1, E2 = np.empty((acc, acc)), np.empty((acc, acc))
+    for kk in range(acc):
+        for ll in range(acc):
+            E1[kk][ll] = E_1[ll]
+            E2[kk][ll] = E_2[kk]
+    sinE1, cosE1 = np.sin(E1), np.cos(E1)
+    sinE2, cosE2 = np.sin(E2), np.cos(E2)
 
-    fp = np.memmap(filepath, dtype=dtype, mode='w+', shape=shape)
+    a1, a2 = parameters1[0], parameters2[0]
+    e1, e2 = parameters1[1], parameters2[1]
+
+    const1, const2 = constants(parameters1, parameters2)
+    P11_1, P12_1, P21_1, P22_1, P31_1, P32_1 = const1
+    P11_2, P12_2, P21_2, P22_2, P31_2, P32_2 = const2
+
+    X1 = a1 * (cosE1 - e1)
+    Y1 = a1 * np.sqrt(1 - e1 ** 2) * sinE1
+
+    x1 = X1 * P11_1 + Y1 * P12_1
+    y1 = X1 * P21_1 + Y1 * P22_1
+    z1 = X1 * P31_1 + Y1 * P32_1
+
+    X2 = a2 * (cosE2 - e2)
+    Y2 = a2 * np.sqrt(1 - e2 ** 2) * sinE2
+
+    x2 = X2 * P11_2 + Y2 * P12_2
+    y2 = X2 * P21_2 + Y2 * P22_2
+    z2 = X2 * P31_2 + Y2 * P32_2
+
+    dist = np.sqrt((x1 - x2) ** 2 + (y1 - y2) ** 2 + (z1 - z2) ** 2)
+
+    minRow = None
+    minCol = None
+    minDistance = None
+    for rep in range(repetitions):
+        if minRow is None and minCol is None:
+            minDistance = round(np.min(dist), 2)
+        else:
+            ival = 2 / (10 ** rep)
+            E_1 = np.linspace(E_1[minCol] - ival, E_1[minCol] + ival, acc)
+            E_2 = np.linspace(E_2[minRow] - ival, E_2[minRow] + ival, acc)
+            E1, E2 = np.empty((acc, acc)), np.empty((acc, acc))
+            for kk in range(acc):
+                for ll in range(acc):
+                    E1[kk][ll] = E_1[ll]
+                    E2[kk][ll] = E_2[kk]
+            X1 = a1 * (np.cos(E1) - e1)
+            Y1 = a1 * np.sqrt(1 - e1 ** 2) * np.sin(E1)
+
+            x1 = X1 * P11_1 + Y1 * P12_1
+            y1 = X1 * P21_1 + Y1 * P22_1
+            z1 = X1 * P31_1 + Y1 * P32_1
+
+            X2 = a2 * (np.cos(E2) - e2)
+            Y2 = a2 * np.sqrt(1 - e2 ** 2) * np.sin(E2)
+
+            x2 = X2 * P11_2 + Y2 * P12_2
+            y2 = X2 * P21_2 + Y2 * P22_2
+            z2 = X2 * P31_2 + Y2 * P32_2
+
+            dist = np.sqrt((x1 - x2) ** 2 + (y1 - y2) ** 2 + (z1 - z2) ** 2)
+
+            minDistance = round(np.min(dist), 2)
+
+    return minDistance
+
+
+#@jit(nopython=True)
+def distance_matrix(nrOfSats, satParameters, acc=20):
+    nrOfDistances = int(1 / 2 * nrOfSats * (nrOfSats - 1))
+    distances = np.empty(nrOfDistances)
 
     for sat1 in range(nrOfSats):
-        progress = np.around(sat1 / nrOfSats * 100, decimals=2)
-        print(f'\r{progress} %', end='', flush=True)
-        a1 = satParameters[sat1][0]
-        e1 = satParameters[sat1][1]
-        i1 = satParameters[sat1][2]
-        w1 = satParameters[sat1][3]
-        O1 = satParameters[sat1][4]
+        print(sat1, ' of ', nrOfSats)
         for sat2 in range(sat1):
-            a2 = satParameters[sat2][0]
-            e2 = satParameters[sat2][1]
-            i2 = satParameters[sat2][2]
-            w2 = satParameters[sat2][3]
-            O2 = satParameters[sat2][4]
+            closestDistance = find_minimum(satParameters[sat1],
+                                           satParameters[sat2], acc=acc)
 
-            fp[sat1, sat2] = closest_distance(a1, e1, i1, O1, w1, a2,
-                                                     e2, i2, O2, w2)
+            index = summation(sat1) + sat2 - 1
 
-    del fp  # Close the memory-mapped file
+            distances[index] = closestDistance
 
-    return filepath
+    return distances
 
 
-sats = 1000
-start = time.time()
-satParameters = initialize(sats, 1000000, 86400)
-d_matrix = distance_matrix(sats, satParameters)
-finish = time.time()
+def distance_histogram(distanceMatrix, bins=50):
+    counts, bins = np.histogram(distanceMatrix, bins=bins)
+    plt.hist(bins[:-1], bins, weights=counts)
+    plt.xlabel('Closest approach distance in m')
+    plt.ylabel('Number of occurrence')
+    plt.show()
 
-print('\nProcess finished after: ', finish - start)
+
+def main():
+    satellites = 1000
+    alimits = (200_000, 2_000_000)
+    accuracy = 20
+
+    start = time.time()
+    parameters = initialize(satellites, alimits, plane=False)
+    distanceMatrix = distance_matrix(satellites, parameters, acc=accuracy)
+    finish = time.time()
+
+    print('Process finished after: ', finish - start)
+    print('Mean distance: ', np.mean(distanceMatrix))
+
+    entries = 5
+    indices = np.argpartition(distanceMatrix, entries)[:entries]
+    lowest_values = distanceMatrix[indices]
+    print(f'Values of the lowest {entries} entries: ', lowest_values)
+
+    distance_histogram(distanceMatrix)
+
+    plot_orbits(par[0:10])
+
+
+if __name__ == '__main__':
+    main()
