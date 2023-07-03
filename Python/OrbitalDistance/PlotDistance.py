@@ -51,7 +51,7 @@ def initialize(nrOfSats, size, plane=False):
     return satParameter
 
 
-def constants(parameters1, parameters2):
+def constants2(parameters1, parameters2):
     i1, i2 = parameters1[2], parameters2[2]
     w1, w2 = parameters1[3], parameters2[3]
     O1, O2 = parameters1[4], parameters2[4]
@@ -243,7 +243,7 @@ def plot_orbits(parameters):
         XX = aa * (np.cos(EE) - ee)
         YY = aa * np.sqrt(1 - ee ** 2) * np.sin(EE)
 
-        const1, *_ = constants(parameters[nn], parameters[nn])
+        const1, *_ = constants2(parameters[nn], parameters[nn])
         P11, P12, P21, P22, P31, P32 = const1
 
         xx = XX * P11 + YY * P12
@@ -262,7 +262,6 @@ def plot_orbits(parameters):
 def distance_histogram(distanceMatrix, bins=50):
     counts, bins = np.histogram(distanceMatrix, bins=bins)
     plt.hist(bins[:-1], bins, weights=counts)
-    plt.ticklabel_format(style='sci', axis='both')
     plt.xlabel('Closest approach distance in m')
     plt.ylabel('Number of occurance')
     plt.show()

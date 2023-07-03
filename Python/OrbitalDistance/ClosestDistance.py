@@ -22,6 +22,25 @@ def summation(NN):
 
 
 #@jit(nopython=True)
+def constants(parameters):
+    i1 = parameters[2]
+    w1 = parameters[3]
+    O1 = parameters[4]
+
+    P11_1 = np.cos(O1) * np.cos(w1) - np.sin(O1) * np.cos(i1) * np.sin(w1)
+    P12_1 = - np.cos(O1) * np.sin(w1) - np.sin(O1) * np.cos(i1) * np.cos(w1)
+    P21_1 = np.sin(O1) * np.cos(w1) + np.cos(O1) * np.cos(i1) * np.sin(w1)
+    P22_1 = - np.sin(O1) * np.sin(w1) + np.cos(O1) * np.cos(i1) * np.cos(w1)
+    P31_1 = np.sin(i1) * np.sin(w1)
+    P32_1 = np.sin(i1) * np.cos(w1)
+
+    entries = [P11_1, P12_1, P21_1, P22_1, P31_1, P32_1]
+    const = np.array(entries)
+
+    return const
+
+
+#@jit(nopython=True)
 def initialize(nrOfSats, alimits, plane=False):
     '''
     Inititalizes a system of satellites orbiting around a focus point. The size
@@ -43,6 +62,7 @@ def initialize(nrOfSats, alimits, plane=False):
 
     '''
     satParameter = np.empty((nrOfSats, 5))
+    satConstants = np.empty((nrOfSats, 6))
 
     AMIN, AMAX = alimits
 
@@ -65,37 +85,16 @@ def initialize(nrOfSats, alimits, plane=False):
         satParameter[satNr][3] = ww
         satParameter[satNr][4] = Om
 
-    return satParameter
+        satConstants[satNr] = constants(satParameter[satNr])
+
+
+    return satParameter, satConstants
 
 
 #@jit(nopython=True)
-def constants(parameters1, parameters2):
-    i1, i2 = parameters1[2], parameters2[2]
-    w1, w2 = parameters1[3], parameters2[3]
-    O1, O2 = parameters1[4], parameters2[4]
+def find_minimum(parameters1, parameters2, const1, const2, acc=100,
+                 repetitions=3):
 
-    P11_1 = np.cos(O1) * np.cos(w1) - np.sin(O1) * np.cos(i1) * np.sin(w1)
-    P12_1 = - np.cos(O1) * np.sin(w1) - np.sin(O1) * np.cos(i1) * np.cos(w1)
-    P21_1 = np.sin(O1) * np.cos(w1) + np.cos(O1) * np.cos(i1) * np.sin(w1)
-    P22_1 = - np.sin(O1) * np.sin(w1) + np.cos(O1) * np.cos(i1) * np.cos(w1)
-    P31_1 = np.sin(i1) * np.sin(w1)
-    P32_1 = np.sin(i1) * np.cos(w1)
-
-    P11_2 = np.cos(O2) * np.cos(w2) - np.sin(O2) * np.cos(i2) * np.sin(w2)
-    P12_2 = - np.cos(O2) * np.sin(w2) - np.sin(O2) * np.cos(i2) * np.cos(w2)
-    P21_2 = np.sin(O2) * np.cos(w2) + np.cos(O2) * np.cos(i2) * np.sin(w2)
-    P22_2 = - np.sin(O2) * np.sin(w2) + np.cos(O2) * np.cos(i2) * np.cos(w2)
-    P31_2 = np.sin(i2) * np.sin(w2)
-    P32_2 = np.sin(i2) * np.cos(w2)
-
-    const1 = (P11_1, P12_1, P21_1, P22_1, P31_1, P32_1)
-    const2 = (P11_2, P12_2, P21_2, P22_2, P31_2, P32_2)
-
-    return const1, const2
-
-
-#@jit(nopython=True)
-def find_minimum(parameters1, parameters2, acc=100, repetitions=3):
     E_1 = np.linspace(0, 2 * np.pi, acc)
     E_2 = np.linspace(0, 2 * np.pi, acc)
 
@@ -110,9 +109,12 @@ def find_minimum(parameters1, parameters2, acc=100, repetitions=3):
     a1, a2 = parameters1[0], parameters2[0]
     e1, e2 = parameters1[1], parameters2[1]
 
-    const1, const2 = constants(parameters1, parameters2)
-    P11_1, P12_1, P21_1, P22_1, P31_1, P32_1 = const1
-    P11_2, P12_2, P21_2, P22_2, P31_2, P32_2 = const2
+    P11_1, P11_2 = const1[0], const2[0]
+    P12_1, P12_2 = const1[1], const2[1]
+    P21_1, P21_2 = const1[2], const2[2]
+    P22_1, P22_2 = const1[3], const2[3]
+    P31_1, P31_2 = const1[4], const2[4]
+    P32_1, P32_2 = const1[5], const2[5]
 
     X1 = a1 * (cosE1 - e1)
     Y1 = a1 * np.sqrt(1 - e1 ** 2) * sinE1
@@ -167,7 +169,7 @@ def find_minimum(parameters1, parameters2, acc=100, repetitions=3):
 
 
 #@jit(nopython=True)
-def distance_matrix(nrOfSats, satParameters, acc=20):
+def distance_matrix(nrOfSats, satParameters, satConstants, acc=20):
     nrOfDistances = int(1 / 2 * nrOfSats * (nrOfSats - 1))
     distances = np.empty(nrOfDistances)
 
@@ -175,7 +177,9 @@ def distance_matrix(nrOfSats, satParameters, acc=20):
         print(sat1, ' of ', nrOfSats)
         for sat2 in range(sat1):
             closestDistance = find_minimum(satParameters[sat1],
-                                           satParameters[sat2], acc=acc)
+                                           satParameters[sat2],
+                                           satConstants[sat1],
+                                           satConstants[sat2], acc=acc)
 
             index = summation(sat1) + sat2 - 1
 
@@ -198,8 +202,9 @@ def main():
     accuracy = 20
 
     start = time.time()
-    parameters = initialize(satellites, alimits, plane=False)
-    distanceMatrix = distance_matrix(satellites, parameters, acc=accuracy)
+    parameters, constants = initialize(satellites, alimits, plane=False)
+    distanceMatrix = distance_matrix(satellites, parameters, constants,
+                                     acc=accuracy)
     finish = time.time()
 
     print('Process finished after: ', finish - start)
@@ -212,7 +217,7 @@ def main():
 
     distance_histogram(distanceMatrix)
 
-    plot_orbits(par[0:10])
+    #plot_orbits(parameters[0:10])
 
 
 if __name__ == '__main__':
