@@ -3,7 +3,7 @@ import time
 import numpy as np
 import matplotlib.pyplot as plt
 from numba import jit
-import PlotDistance
+#import PlotDistance
 
 
 EMIN, EMAX = 0, 0.3
@@ -13,7 +13,7 @@ OMIN, OMAX = 0, 2 * np.pi
 MMIN, MMAX = 0, 1000
 
 
-#@jit(nopython=True)
+@jit(nopython=True)
 def summation(NN):
     val = 0
     for ii in range(NN):
@@ -21,7 +21,7 @@ def summation(NN):
     return val
 
 
-#@jit(nopython=True)
+@jit(nopython=True)
 def constants(parameters):
     i1 = parameters[2]
     w1 = parameters[3]
@@ -40,7 +40,7 @@ def constants(parameters):
     return const
 
 
-#@jit(nopython=True)
+@jit(nopython=True)
 def initialize(nrOfSats, alimits, plane=False):
     '''
     Inititalizes a system of satellites orbiting around a focus point. The size
@@ -91,7 +91,7 @@ def initialize(nrOfSats, alimits, plane=False):
     return satParameter, satConstants
 
 
-#@jit(nopython=True)
+@jit(nopython=True)
 def find_minimum(parameters1, parameters2, const1, const2, acc=100,
                  repetitions=3):
 
@@ -169,9 +169,21 @@ def find_minimum(parameters1, parameters2, const1, const2, acc=100,
 
 
 #@jit(nopython=True)
+def collision_probability(distance, sigma):
+    prob = (distance / sigma**2) * np.exp(- (distance**2 ) / (2 * sigma**2))
+
+    if distance.shape[0] > 1:
+        plt.plot(distance, prob)
+
+    return prob
+
+
+
+@jit(nopython=True)
 def distance_matrix(nrOfSats, satParameters, satConstants, acc=20):
     nrOfDistances = int(1 / 2 * nrOfSats * (nrOfSats - 1))
     distances = np.empty(nrOfDistances)
+    index = 0
 
     for sat1 in range(nrOfSats):
         print(sat1, ' of ', nrOfSats)
@@ -181,9 +193,8 @@ def distance_matrix(nrOfSats, satParameters, satConstants, acc=20):
                                            satConstants[sat1],
                                            satConstants[sat2], acc=acc)
 
-            index = summation(sat1) + sat2 - 1
-
             distances[index] = closestDistance
+            index += 1
 
     return distances
 
@@ -197,14 +208,14 @@ def distance_histogram(distanceMatrix, bins=50):
 
 
 def main():
-    satellites = 1000
+    satellites = 50000
     alimits = (200_000, 2_000_000)
     accuracy = 20
 
     start = time.time()
     parameters, constants = initialize(satellites, alimits, plane=False)
     distanceMatrix = distance_matrix(satellites, parameters, constants,
-                                     acc=accuracy)
+                                      acc=accuracy)
     finish = time.time()
 
     print('Process finished after: ', finish - start)
@@ -217,7 +228,7 @@ def main():
 
     distance_histogram(distanceMatrix)
 
-    #plot_orbits(parameters[0:10])
+    # plot_orbits(parameters[0:10])
 
 
 if __name__ == '__main__':
