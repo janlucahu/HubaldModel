@@ -22,6 +22,12 @@ def summation(NN):
 
 
 @jit(nopython=True)
+def half_normal(x, sigma):
+    y = np.sqrt(2/np.pi) * np.exp(-x**2/(2*sigma**2))
+    return y * (x >= 0)
+
+
+@jit(nopython=True)
 def constants(parameters):
     i1 = parameters[2]
     w1 = parameters[3]
@@ -169,20 +175,12 @@ def find_minimum(parameters1, parameters2, const1, const2, acc=100,
 
 
 #@jit(nopython=True)
-def collision_probability(distance, sigma):
-    prob = (distance / sigma**2) * np.exp(- (distance**2 ) / (2 * sigma**2))
-
-    if distance.shape[0] > 1:
-        plt.plot(distance, prob)
-
-    return prob
-
-
-
-@jit(nopython=True)
-def distance_matrix(nrOfSats, satParameters, satConstants, acc=20):
+def distance_matrix(nrOfSats, satParameters, satConstants, acc=20, flat=True):
     nrOfDistances = int(1 / 2 * nrOfSats * (nrOfSats - 1))
-    distances = np.empty(nrOfDistances)
+    if flat:
+        distances = np.empty(nrOfDistances)
+    else:
+        distances = np.empty((nrOfSats, nrOfSats))
     index = 0
 
     for sat1 in range(nrOfSats):
@@ -193,8 +191,11 @@ def distance_matrix(nrOfSats, satParameters, satConstants, acc=20):
                                            satConstants[sat1],
                                            satConstants[sat2], acc=acc)
 
-            distances[index] = closestDistance
-            index += 1
+            if flat:
+                distances[index] = closestDistance
+                index += 1
+            else:
+                distances[sat2][sat1] = closestDistance
 
     return distances
 
@@ -207,20 +208,29 @@ def distance_histogram(distanceMatrix, bins=50):
     plt.show()
 
 
-def main():
-    satellites = 50000
-    alimits = (200_000, 2_000_000)
-    accuracy = 20
+def hubald_model(startingSats, tmax, timestep, aLimits=(200_000, 2_000_000), accuracy=20):
+    parameters, constants = initialize(startingSats, aLimits, plane=False)
+    distanceMatrix = distance_matrix(startingSats, parameters, constants,
+                                     acc=accuracy, flat=False)
+    colProb = half_normal(distanceMatrix, 3000)
 
+    zeroThresh = half_normal(0.1, 3000)
+    for time in range(0, tmax, timestep):
+        pp = np.random.rand()
+        indices = np.where((pp < colProb) & (colProb < zeroThresh))
+        print(indices)
+
+    return colProb
+
+
+def main():
     start = time.time()
-    parameters, constants = initialize(satellites, alimits, plane=False)
-    distanceMatrix = distance_matrix(satellites, parameters, constants,
-                                      acc=accuracy)
+    colProb = hubald_model(1000, 1000, 10)
     finish = time.time()
 
     print('Process finished after: ', finish - start)
-    print('Mean distance: ', np.mean(distanceMatrix))
-
+    #print('Mean distance: ', np.mean(distanceMatrix))
+    '''
     entries = 5
     indices = np.argpartition(distanceMatrix, entries)[:entries]
     lowest_values = distanceMatrix[indices]
@@ -229,7 +239,7 @@ def main():
     distance_histogram(distanceMatrix)
 
     # plot_orbits(parameters[0:10])
-
+    '''
 
 if __name__ == '__main__':
     main()
