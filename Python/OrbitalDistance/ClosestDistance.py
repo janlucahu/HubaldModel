@@ -11,6 +11,7 @@ IMIN, IMAX = 0, np.pi
 WMIN, WMAX = 0, 2 * np.pi
 OMIN, OMAX = 0, 2 * np.pi
 MMIN, MMAX = 0, 1000
+TMIN, TMAX = 1.5 , 8
 
 
 @jit(nopython=True)
@@ -49,8 +50,8 @@ def constants(parameters):
 @jit(nopython=True)
 def initialize(nrOfSats, alimits, plane=False):
     '''
-    Inititalizes a system of satellites orbiting around a focus point. The size
-    of the system specifies the bounderies, which the satellites won't pass
+    Initializes a system of satellites orbiting around a focus point. The size
+    of the system specifies the boundaries, which the satellites won't pass
 
     Args:
         nrOfSats (int): Number of satellites to be initialized
@@ -67,14 +68,13 @@ def initialize(nrOfSats, alimits, plane=False):
                                 satellite number, rows positional components.
 
     '''
-    satParameter = np.empty((nrOfSats, 5))
+    satParameter = np.empty((nrOfSats, 6))
     satConstants = np.empty((nrOfSats, 6))
 
     AMIN, AMAX = alimits
-
+    signs = np.array([-1, 1])
     for satNr in range(nrOfSats):
         ee = np.random.uniform(EMIN, EMAX)
-        # upper limit assures that no satellite is out of bounds
         aa = np.random.uniform(AMIN, AMAX)
 
         if plane:
@@ -84,15 +84,17 @@ def initialize(nrOfSats, alimits, plane=False):
 
         ww = np.random.uniform(WMIN, WMAX)
         Om = np.random.uniform(OMIN, OMAX)
+        sign = signs[np.random.randint(0, 2)]
+        TT = sign * np.random.uniform(TMIN, TMAX)
 
         satParameter[satNr][0] = aa
         satParameter[satNr][1] = ee
         satParameter[satNr][2] = ii
         satParameter[satNr][3] = ww
         satParameter[satNr][4] = Om
+        satParameter[satNr][5] = TT
 
         satConstants[satNr] = constants(satParameter[satNr])
-
 
     return satParameter, satConstants
 
@@ -174,17 +176,17 @@ def find_minimum(parameters1, parameters2, const1, const2, acc=100,
     return minDistance
 
 
-#@jit(nopython=True)
+# @jit(nopython=True)
 def distance_matrix(nrOfSats, satParameters, satConstants, acc=20, flat=True):
     nrOfDistances = int(1 / 2 * nrOfSats * (nrOfSats - 1))
     if flat:
         distances = np.empty(nrOfDistances)
     else:
-        distances = np.empty((nrOfSats, nrOfSats))
+        distances = np.zeros((nrOfSats, nrOfSats))
     index = 0
 
     for sat1 in range(nrOfSats):
-        print(sat1, ' of ', nrOfSats)
+        print(sat1 + 1, ' of ', nrOfSats)
         for sat2 in range(sat1):
             closestDistance = find_minimum(satParameters[sat1],
                                            satParameters[sat2],
@@ -196,7 +198,6 @@ def distance_matrix(nrOfSats, satParameters, satConstants, acc=20, flat=True):
                 index += 1
             else:
                 distances[sat2][sat1] = closestDistance
-
     return distances
 
 
@@ -208,38 +209,91 @@ def distance_histogram(distanceMatrix, bins=50):
     plt.show()
 
 
-def hubald_model(startingSats, tmax, timestep, aLimits=(200_000, 2_000_000), accuracy=20):
+def hubald_model(startingSats, tmax, timestep, aLimits=(200_000, 2_000_000), accuracy=20, satsPerCol=3):
+    sigma = 1000
     parameters, constants = initialize(startingSats, aLimits, plane=False)
-    distanceMatrix = distance_matrix(startingSats, parameters, constants,
-                                     acc=accuracy, flat=False)
-    colProb = half_normal(distanceMatrix, 3000)
-
-    zeroThresh = half_normal(0.1, 3000)
-    for time in range(0, tmax, timestep):
+    distanceMatrix = distance_matrix(startingSats, parameters, constants, acc=accuracy, flat=False)
+    colProbMatrix = half_normal(distanceMatrix, sigma)
+    zeroThresh = half_normal(0.1, sigma)
+    nrOfCollisions = 0
+    collisionArr = []
+    timeArr = []
+    for tt in range(0, tmax, timestep):
         pp = np.random.rand()
-        indices = np.where((pp < colProb) & (colProb < zeroThresh))
-        print(indices)
+        rows, cols = np.where((pp < colProbMatrix) & (colProbMatrix < zeroThresh))
 
-    return colProb
+        collisionsInIteration = len(rows)
+        nrOfCollisions += collisionsInIteration
+        collisionArr.append(nrOfCollisions)
+        timeArr.append(tt)
+        for ii in range(collisionsInIteration):
+            sat1 = rows[ii]
+            sat2 = cols[ii]
+            print(f'Collision between satellites {sat1} and {sat2}')
+            probPrint = round(colProbMatrix[sat1][sat2]  * 100, 1)
+            print(f'probability: {probPrint}%,    iteration: {tt} of {tmax}')
+
+            newPars, newCons = initialize(satsPerCol, aLimits, plane=False)
+            # Change rows of collided satellites
+            for jj in range(sat1):
+                parameters[sat1] = newPars[0]
+                constants[sat1] = newCons[0]
+                closestDistance = find_minimum(parameters[sat1], parameters[jj], constants[sat1], constants[jj],
+                                               acc=accuracy)
+                colProb = half_normal(closestDistance, sigma)
+                colProbMatrix[jj][sat1] = colProb
+
+            for jj in range(sat2):
+                parameters[sat2] = newPars[1]
+                constants[sat2] = newCons[1]
+                closestDistance = find_minimum(parameters[sat2], parameters[jj], constants[sat2], constants[jj],
+                                               acc=accuracy)
+                colProb = half_normal(closestDistance, sigma)
+                colProbMatrix[jj][sat2] = colProb
+
+            # Change columns of collided satellites
+            for jj in range(len(colProbMatrix[sat1][sat1:-1])):
+                ind = jj + sat1
+                closestDistance = find_minimum(parameters[sat1], parameters[ind], constants[sat1], constants[ind],
+                                               acc=accuracy)
+                colProb = half_normal(closestDistance, sigma)
+                colProbMatrix[sat1][ind] = colProb
+
+            for jj in range(len(colProbMatrix[sat2][sat2:-1])):
+                ind = jj + sat2
+                closestDistance = find_minimum(parameters[sat2], parameters[ind], constants[sat2], constants[ind],
+                                               acc=accuracy)
+                colProb = half_normal(closestDistance, sigma)
+                colProbMatrix[sat2][ind] = colProb
+
+
+            for jj in range(satsPerCol - 2):
+                currentSatNr = parameters.shape[0]
+                parameters = np.vstack((parameters, newPars[jj + 2]))
+                constants = np.vstack((constants, newCons[jj + 2]))
+
+                # Append a row of zeros to the bottom of the array
+                colProbMatrix = np.vstack((colProbMatrix, np.zeros((1, currentSatNr))))
+                # Append a column of zeros to the right of the array
+                colProbMatrix = np.hstack((colProbMatrix, np.zeros((currentSatNr + 1, 1))))
+                for kk in range(currentSatNr):
+                    closestDistance = find_minimum(parameters[kk], parameters[-1], constants[kk], constants[-1],
+                                                   acc=accuracy)
+                    colProb = half_normal(closestDistance, sigma)
+                    colProbMatrix[kk][-1] = colProb
+    return nrOfCollisions, collisionArr, timeArr
 
 
 def main():
     start = time.time()
-    colProb = hubald_model(1000, 1000, 10)
+    colNr, collisionArr, timeArr = hubald_model(5000, 1000, 1)
+    print(f'Number of collisions: {colNr}')
     finish = time.time()
+    print(f'Process finished after: {finish - start}s')
 
-    print('Process finished after: ', finish - start)
-    #print('Mean distance: ', np.mean(distanceMatrix))
-    '''
-    entries = 5
-    indices = np.argpartition(distanceMatrix, entries)[:entries]
-    lowest_values = distanceMatrix[indices]
-    print(f'Values of the lowest {entries} entries: ', lowest_values)
+    plt.plot(timeArr, collisionArr)
+    plt.show()
 
-    distance_histogram(distanceMatrix)
-
-    # plot_orbits(parameters[0:10])
-    '''
 
 if __name__ == '__main__':
     main()
