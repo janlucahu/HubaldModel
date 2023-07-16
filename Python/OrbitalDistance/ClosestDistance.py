@@ -31,6 +31,7 @@ def half_normal(x, sigma, active):
     return y * (x >= 0)
 
 
+@jit(nopython=True)
 def logistic_distribution(x, g, d, c):
     return g / (1 + d * np.exp(-c * x))
 
@@ -56,25 +57,6 @@ def constants(parameters):
 
 @jit(nopython=True)
 def initialize(nrOfSats, alimits, activeFraction, plane=False):
-    '''
-    Initializes a system of satellites orbiting around a focus point. The size
-    of the system specifies the boundaries, which the satellites won't pass
-
-    Args:
-        nrOfSats (int): Number of satellites to be initialized
-        size (int): Size of the system
-        tmax (int): Maximum time, influencing the orbital period
-        accuracy (int): Number of decimals to be rounded to. Defaults to 1.
-        plane (bool): Choose between a plane orbit or 3d orbit
-
-    Returns:
-        satParameter (2darray): Orbital parameters for each Satellite. Columns
-                                depict satellite number, rows orbital
-                                parameters.
-        satPositions (2darray): Positions for each satellite. Columns depict
-                                satellite number, rows positional components.
-
-    '''
     satParameter = np.empty((nrOfSats, 7))
     satConstants = np.empty((nrOfSats, 6))
 
@@ -112,13 +94,11 @@ def initialize(nrOfSats, alimits, activeFraction, plane=False):
 
 
 @jit(nopython=True)
-def find_minimum(parameters1, parameters2, const1, const2, acc=100,
-                 repetitions=3):
-
+def find_minimum(parameters1, parameters2, const1, const2, acc=100, repetitions=3):
     E_1 = np.linspace(0, 2 * np.pi, acc)
     E_2 = np.linspace(0, 2 * np.pi, acc)
 
-    E1, E2 = np.empty((acc, acc)), np.empty((acc, acc))
+    E1 = E2 = np.empty((acc, acc))
     for kk in range(acc):
         for ll in range(acc):
             E1[kk][ll] = E_1[ll]
@@ -203,141 +183,179 @@ def distance_matrix(nrOfSats, satParameters, satConstants, acc=20):
     return distances
 
 
-def distance_histogram(distanceMatrix, bins=50):
-    counts, bins = np.histogram(distanceMatrix, bins=bins)
-    plt.hist(bins[:-1], bins, weights=counts)
-    plt.xlabel('Closest approach distance in m')
-    plt.ylabel('Number of occurrence')
-    plt.show()
-
-
-def hubald_model(startingSats, tmax, timestep, aLimits=(200_000, 2_000_000), accuracy=20, satsPerCol=3):
-    sigma = 2000
-    numberOfFragments = 1_000_000
-    parameters, constants = initialize(startingSats, aLimits, 0.9, plane=False)
-    distanceMatrix = distance_matrix(startingSats, parameters, constants, acc=accuracy)
+@jit(nopython=True)
+def probability_matrix(distanceMatrix, satParameters, sigma):
     colProbMatrix = np.zeros(distanceMatrix.shape)
-    freeIndices = []
-    for sat1 in range(startingSats):
+    for sat1 in range(colProbMatrix.shape[0]):
         for sat2 in range(sat1):
-            activeSatellite = parameters[sat1][6] + parameters[sat2][6] # = false if both are inactive
+            activeSatellite = satParameters[sat1][6] + satParameters[sat2][6]  # = false if both are inactive
             if activeSatellite:
                 colProbMatrix[sat1][sat2] = half_normal(distanceMatrix[sat1][sat2], sigma, True)
             else:
                 colProbMatrix[sat1][sat2] = half_normal(distanceMatrix[sat1][sat2], sigma, False)
-    nrOfCollisions = 0
-    collisionArr = []
-    timeArr = []
+
+    return colProbMatrix
+
+
+@jit(nopython=True)
+def fragment_collision(satParameters, numberOfFragments, dd, cc):
+    satellitesStruck = 0
+    pp = np.random.rand()
+    fragmentCollisonProb = logistic_distribution(numberOfFragments, 1, dd, cc)
+    if pp < fragmentCollisonProb:
+        struckSat, act = np.where(satParameters == 1)
+        randSat = struckSat[np.random.randint(0, len(struckSat))]
+        satParameters[randSat][6] = 0
+        print(f'Satellite {randSat} struck by fragment')
+        satellitesStruck += 1
+
+    return satParameters, satellitesStruck
+
+
+def satellite_collision(colProbMatrix, satParameters, numberOfFragments, freeIndices, tt, tmax):
+    pMatrix = np.random.rand(*colProbMatrix.shape)
+    rows, cols = np.where(pMatrix < colProbMatrix)
+    collisionsInIteration = len(rows)
+
+    for ii in range(collisionsInIteration):
+        numberOfFragments += 10_000
+        sat1 = rows[ii]
+        sat2 = cols[ii]
+        freeIndices.append(sat1)
+        freeIndices.append(sat2)
+        print(f'Collision between satellites {sat2} and {sat1},   '
+              f'status: {satParameters[sat1][6]} {satParameters[sat2][6]},    '
+              f'iteration {tt} of {tmax}')
+        satParameters[sat1][:] = np.array([0, 0, 0, 0, 0, 0, -1])
+        satParameters[sat2][:] = np.array([0, 0, 0, 0, 0, 0, -1])
+
+        # Change rows of collided satellites
+        for jj in range(sat1):
+            colProbMatrix[sat1][jj] = 0
+        for jj in range(sat2):
+            colProbMatrix[sat2][jj] = 0
+
+        # Change columns of collided satellites
+        for jj in range(len(colProbMatrix[sat1][sat1:-1])):
+            ind = jj + sat1
+            colProbMatrix[ind][sat1] = 0
+        for jj in range(len(colProbMatrix[sat2][sat2:-1])):
+            ind = jj + sat2
+            colProbMatrix[ind][sat2] = 0
+
+    return colProbMatrix, satParameters, numberOfFragments, collisionsInIteration, freeIndices
+
+
+def deorbit_and_launch(colProbMatrix, satParameters, satConstants, aLimits, accuracy, sigma, freeIndices):
+    deorbitingSats = np.random.randint(0, 2)
+    oldSats = []
+    for oldSat in range(len(satParameters)):
+        if satParameters[oldSat][6] == 0:
+            oldSats.append(oldSat)
+    if len(oldSats) > deorbitingSats:
+        for ii in range(deorbitingSats):
+            randIndex = np.random.randint(0, len(oldSats))
+            randOldSat = oldSats[randIndex]
+            del oldSats[randIndex]
+            print(f'Deorbitation of satellite {randOldSat}')
+            satParameters[randOldSat][:] = np.array([0, 0, 0, 0, 0, 0, -1])
+            freeIndices.append(randOldSat)
+            for jj in range(randOldSat):
+                colProbMatrix[randOldSat][jj] = 0
+            for jj in range(len(colProbMatrix[randOldSat][randOldSat:-1])):
+                ind = jj + randOldSat
+                colProbMatrix[ind][randOldSat] = 0
+
+    launchedSats = np.random.randint(0, 10)
+    newPars, newCons = initialize(launchedSats, aLimits, 1, plane=False)
+    launchIndices = []
+    for ii in range(launchedSats):
+        if len(freeIndices) > 0:
+            newSat = freeIndices[0]
+            del freeIndices[0]
+            launchIndices.append(newSat)
+            for jj in range(newSat):
+                satParameters[newSat] = newPars[ii]
+                satConstants[newSat] = newCons[ii]
+                closestDistance = find_minimum(satParameters[newSat], satParameters[jj],
+                                               satConstants[newSat], satConstants[jj], acc=accuracy)
+                colProb = half_normal(closestDistance, sigma, 1)
+                colProbMatrix[jj][newSat] = colProb
+
+        else:
+            currentSatNr = satParameters.shape[0]
+            launchIndices.append(currentSatNr)
+            satParameters = np.vstack((satParameters, newPars[ii]))
+            satConstants = np.vstack((satConstants, newCons[ii]))
+
+            # Append a row of zeros to the bottom of the array
+            colProbMatrix = np.vstack((colProbMatrix, np.zeros((1, currentSatNr))))
+            # Append a column of zeros to the right of the array
+            colProbMatrix = np.hstack((colProbMatrix, np.zeros((currentSatNr + 1, 1))))
+            for jj in range(currentSatNr):
+                closestDistance = find_minimum(satParameters[jj], satParameters[-1], satConstants[jj], satConstants[-1],
+                                               acc=accuracy)
+                colProb = half_normal(closestDistance, sigma, 1)
+                colProbMatrix[jj][-1] = colProb
+    if len(launchIndices) > 0:
+        print(f'Launch of new satellites: {launchIndices}')
+
+    return colProbMatrix, satParameters, satConstants, freeIndices
+
+
+def collect_data(collectedData, tt, collisions, numberOfSatellites, numberOfFragments, counter):
+    collectedData[0][counter] = tt
+    collectedData[1][counter] = collisions
+    collectedData[2][counter] = np.sum(collectedData[1])
+    collectedData[3][counter] = numberOfSatellites
+    collectedData[4][counter] = numberOfFragments
+
+    return collectedData
+
+
+def hubald_model(startingSats, tmax, timestep, aLimits=(200_000, 2_000_000), accuracy=20):
+    sigma = 500
+    numberOfFragments = 1_000_000
+    collectedData = np.empty((5, tmax // timestep))
+    freeIndices = []
+
+    satParameters, satConstants = initialize(startingSats, aLimits, 0.9, plane=False)
+    distanceMatrix = distance_matrix(startingSats, satParameters, satConstants, acc=accuracy)
+    colProbMatrix = probability_matrix(distanceMatrix, satParameters, sigma)
+
+    counter = 0
     for tt in range(0, tmax, timestep):
-        pMatrix = np.random.rand(*colProbMatrix.shape)
-        rows, cols = np.where(pMatrix < colProbMatrix)
+        satParameters, satsStruck = fragment_collision(satParameters, numberOfFragments, 10000, 0.000005)
 
-        collisionsInIteration = len(rows)
-        nrOfCollisions += collisionsInIteration
-        collisionArr.append(nrOfCollisions)
-        timeArr.append(tt)
+        colProbMatrix, satParameters, numberOfFragments, cols, freeIndices = satellite_collision(colProbMatrix,
+                                                                                                 satParameters,
+                                                                                                 numberOfFragments,
+                                                                                                 freeIndices, tt, tmax)
 
-        pp = np.random.rand()
-        fragmentCollisonProb = logistic_distribution(numberOfFragments, 1, 10000, 0.000005)
-        if pp < fragmentCollisonProb:
-            struckSat, act = np.where(parameters == 1)
-            randSat = struckSat[np.random.randint(0, len(struckSat))]
-            parameters[randSat][6] = 0
-            print(f'Satellite {randSat} struck by fragment')
-
-        for ii in range(collisionsInIteration):
-            numberOfFragments += 10_000
-            sat1 = rows[ii]
-            sat2 = cols[ii]
-            freeIndices.append(sat1)
-            freeIndices.append(sat2)
-            print(f'Collision between satellites {sat2} and {sat1},   '
-                  f'status: {parameters[sat1][6]} {parameters[sat2][6]},    '
-                  f'iteration {tt} of {tmax}')
-            probPrint = round(colProbMatrix[sat1][sat2] * 100, 1)
-            diced = round(pMatrix[sat1][sat2] * 100, 1)
-            parameters[sat1][:] = np.array([0, 0, 0, 0, 0, 0, -1])
-            parameters[sat2][:] = np.array([0, 0, 0, 0, 0, 0, -1])
-
-            # Change rows of collided satellites
-            for jj in range(sat1):
-                colProbMatrix[sat1][jj] = 0
-            for jj in range(sat2):
-                colProbMatrix[sat2][jj] = 0
-
-            # Change columns of collided satellites
-            for jj in range(len(colProbMatrix[sat1][sat1:-1])):
-                ind = jj + sat1
-                colProbMatrix[ind][sat1] = 0
-            for jj in range(len(colProbMatrix[sat2][sat2:-1])):
-                ind = jj + sat2
-                colProbMatrix[ind][sat2] = 0
-
-        deorbitingSats = np.random.randint(0, 2)
-        oldSats = []
-        for oldSat in range(len(parameters)):
-            if parameters[oldSat][6] == 0:
-                oldSats.append(oldSat)
-        if len(oldSats) > deorbitingSats:
-            for ii in range(deorbitingSats):
-                randIndex = np.random.randint(0, len(oldSats))
-                randOldSat = oldSats[randIndex]
-                del oldSats[randIndex]
-                print(f'Deorbitation of satellite {randOldSat}')
-                parameters[randOldSat][:] = np.array([0, 0, 0, 0, 0, 0, -1])
-                freeIndices.append(randOldSat)
-                for jj in range(randOldSat):
-                    colProbMatrix[randOldSat][jj] = 0
-                for jj in range(len(colProbMatrix[randOldSat][randOldSat:-1])):
-                    ind = jj + randOldSat
-                    colProbMatrix[ind][randOldSat] = 0
-
-        launchedSats = np.random.randint(0, 10)
-        newPars, newCons = initialize(launchedSats, aLimits, 1, plane=False)
-        launchIndices = []
-        for ii in range(launchedSats):
-            if len(freeIndices) > 0:
-                newSat = freeIndices[0]
-                del freeIndices[0]
-                launchIndices.append(newSat)
-                for jj in range(newSat):
-                    parameters[newSat] = newPars[ii]
-                    constants[newSat] = newCons[ii]
-                    closestDistance = find_minimum(parameters[newSat], parameters[jj], constants[newSat], constants[jj],
-                                                   acc=accuracy)
-                    colProb = half_normal(closestDistance, sigma, 1)
-                    colProbMatrix[jj][newSat] = colProb
-
-            else:
-                currentSatNr = parameters.shape[0]
-                launchIndices.append(currentSatNr)
-                parameters = np.vstack((parameters, newPars[ii]))
-                constants = np.vstack((constants, newCons[ii]))
-
-                # Append a row of zeros to the bottom of the array
-                colProbMatrix = np.vstack((colProbMatrix, np.zeros((1, currentSatNr))))
-                # Append a column of zeros to the right of the array
-                colProbMatrix = np.hstack((colProbMatrix, np.zeros((currentSatNr + 1, 1))))
-                for jj in range(currentSatNr):
-                    closestDistance = find_minimum(parameters[jj], parameters[-1], constants[jj], constants[-1],
-                                                   acc=accuracy)
-                    colProb = half_normal(closestDistance, sigma, 1)
-                    colProbMatrix[jj][-1] = colProb
-        if len(launchIndices) > 0:
-            print(f'Launch of new satellites: {launchIndices}')
+        colProbMatrix, satParameters, satConstants, freeIndices = deorbit_and_launch(colProbMatrix, satParameters,
+                                                                                     satConstants, aLimits, accuracy,
+                                                                                     sigma, freeIndices)
+        nonZeroRows = satParameters[:, 0] != 0
+        numberOfSatellites = np.count_nonzero(nonZeroRows)
+        print(f'Number of satellites: {numberOfSatellites}')
+        collectedData = collect_data(collectedData, tt, cols, numberOfSatellites, numberOfFragments, counter)
+        counter += 1
         print()
 
-    return nrOfCollisions, collisionArr, timeArr
+    return collectedData
 
 
 def main():
     start = time.time()
-    colNr, collisionArr, timeArr = hubald_model(1000, 1000, 1)
-    print(f'Number of collisions: {colNr}')
+    simulationData = hubald_model(1000, 1200, 3)
+    print(f'Number of collisions: {simulationData[2][-1]}')
     finish = time.time()
     print(f'Process finished after: {finish - start}s')
 
-    plt.plot(timeArr, collisionArr)
+    plt.plot(simulationData[0], simulationData[2])
+    plt.show()
+
+    plt.plot(simulationData[0], simulationData[1])
     plt.show()
 
 
