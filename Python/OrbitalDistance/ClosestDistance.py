@@ -12,25 +12,39 @@ TMIN, TMAX = 1.5, 8
 
 
 @jit(nopython=True)
-def summation(NN):
-    val = 0
-    for ii in range(NN):
-        val = val + ii
-    return val
+def half_normal(xx, sigma, active):
+    '''
+    Half normal distribution used for satellite collision probability.
+    Args:
+        xx (float): X value for distribution. In this case satellite distance.
+        sigma (float): Standard deviation.
+        active (bool): Active status of satellite.
 
-
-@jit(nopython=True)
-def half_normal(x, sigma, active):
+    Returns:
+        yy (float): Y value of distribution for xx > 0.
+    '''
     if active:
-        y = np.sqrt(2 / (100 * np.pi)) * np.exp(-x ** 2 / (2 * sigma ** 2))
+        yy = np.sqrt(2 / (100 * np.pi)) * np.exp(-xx ** 2 / (2 * sigma ** 2))
     else:
-        y = np.sqrt(2 / np.pi) * np.exp(-x ** 2 / (2 * sigma ** 2))
-    return y * (x >= 0)
+        yy = np.sqrt(2 / np.pi) * np.exp(-xx ** 2 / (2 * sigma ** 2))
+    return yy * (xx >= 0)
 
 
 @jit(nopython=True)
-def logistic_distribution(x, g, d, c):
-    return g / (1 + d * np.exp(-c * x))
+def logistic_distribution(xx, gg, dd, cc):
+    '''
+
+    Args:
+        xx (float): X value for logistic distribution.
+        gg (float): Scaling parameter.
+        dd (float): Scaling parameter.
+        cc (float): Scaling parameter.
+
+    Returns:
+        yy (float): Y value of distribution.
+    '''
+    yy = gg / (1 + dd * np.exp(-cc * xx))
+    return yy
 
 
 @jit(nopython=True)
@@ -189,13 +203,13 @@ def probability_matrix(distanceMatrix, satParameters, sigma):
             if activeSatellite:
                 colProbMatrix[sat1][sat2] = half_normal(distanceMatrix[sat1][sat2], sigma, True)
             else:
-                colProbMatrix[sat1][sat2] = half_normal(distanceMatrix[sat1][sat2], sigma, False)
+                colProbMatrix[sat1][sat2] = half_normal(distanceMatrix[sat1][sat2], 2 * sigma, False)
 
     return colProbMatrix
 
 
 @jit(nopython=True)
-def fragment_collision(satParameters, numberOfFragments, dd, cc):
+def fragment_collision(colProbMatrix, satParameters, satConstants, numberOfFragments, dd, cc, sigma, accuracy):
     satellitesStruck = 0
     pp = np.random.rand()
     fragmentCollisionProb = logistic_distribution(numberOfFragments, 1, dd, cc)
@@ -206,7 +220,21 @@ def fragment_collision(satParameters, numberOfFragments, dd, cc):
         print(f'Satellite {randSat} struck by fragment')
         satellitesStruck += 1
 
-    return satParameters, satellitesStruck
+        for jj in range(randSat):
+            activeSatellite = satParameters[jj][6]
+            closestDistance = find_minimum(satParameters[randSat], satParameters[jj],
+                                           satConstants[randSat], satConstants[jj], acc=accuracy)
+            colProb = half_normal(closestDistance, sigma, activeSatellite)
+            colProbMatrix[randSat][jj] = colProb
+        for jj in range(len(colProbMatrix[randSat][randSat:-1])):
+            ind = jj + randSat
+            activeSatellite = satParameters[ind][6]
+            closestDistance = find_minimum(satParameters[randSat], satParameters[ind],
+                                           satConstants[randSat], satConstants[ind], acc=accuracy)
+            colProb = half_normal(closestDistance, sigma, activeSatellite)
+            colProbMatrix[ind][randSat] = colProb
+
+    return colProbMatrix, satParameters, satConstants, satellitesStruck
 
 
 def satellite_collision(colProbMatrix, satParameters, satConstants, numberOfFragments, freeIndices, tt, tmax):
@@ -221,29 +249,26 @@ def satellite_collision(colProbMatrix, satParameters, satConstants, numberOfFrag
         freeIndices.append(sat1)
         freeIndices.append(sat2)
         print('*****************************************************************************************************')
-        print(f'Collision between satellites {sat2} and {sat1},   '
+        print(f'Collision between satellites {sat1} and {sat2},   '
               f'status: {satParameters[sat1][6]} {satParameters[sat2][6]},    '
               f'iteration {tt} of {tmax}')
         print('*****************************************************************************************************')
-        satParameters[sat1][:] = np.array([0, 0, 0, 0, 0, 0, 0])
-        satParameters[sat2][:] = np.array([0, 0, 0, 0, 0, 0, 0])
+        satParameters[sat1][:] = np.array([0, 0, 0, 0, 0, 0, -1])
+        satParameters[sat2][:] = np.array([0, 0, 0, 0, 0, 0, -1])
         satConstants[sat1][:] = np.array([0, 0, 0, 0, 0, 0])
         satConstants[sat2][:] = np.array([0, 0, 0, 0, 0, 0])
 
         # Change rows of collided satellites
-        for jj in range(sat1):
+        for jj in range(colProbMatrix.shape[0]):
             colProbMatrix[sat1][jj] = 0
-        for jj in range(sat2):
+        for jj in range(colProbMatrix.shape[0]):
             colProbMatrix[sat2][jj] = 0
 
         # Change columns of collided satellites
-        for jj in range(len(colProbMatrix[sat1][sat1:-1])):
-            ind = jj + sat1
-            colProbMatrix[ind][sat1] = 0
-        for jj in range(len(colProbMatrix[sat2][sat2:-1])):
-            ind = jj + sat2
-            colProbMatrix[ind][sat2] = 0
-
+        for jj in range(colProbMatrix.shape[1]):
+            colProbMatrix[jj][sat1] = 0
+        for jj in range(colProbMatrix.shape[1]):
+            colProbMatrix[jj][sat2] = 0
     return colProbMatrix, satParameters, satConstants, numberOfFragments, collisionsInIteration, freeIndices
 
 
@@ -261,11 +286,10 @@ def deorbit_and_launch(colProbMatrix, satParameters, satConstants, aLimits, accu
             print(f'Deorbitation of satellite {randOldSat}')
             satParameters[randOldSat][:] = np.array([0, 0, 0, 0, 0, 0, -1])
             freeIndices.append(randOldSat)
-            for jj in range(randOldSat):
+            for jj in range(colProbMatrix.shape[0]):
                 colProbMatrix[randOldSat][jj] = 0
-            for jj in range(len(colProbMatrix[randOldSat][randOldSat:-1])):
-                ind = jj + randOldSat
-                colProbMatrix[ind][randOldSat] = 0
+            for jj in range(colProbMatrix.shape[1]):
+                colProbMatrix[jj][randOldSat] = 0
 
     launchedSats = np.random.randint(0, 3)
     newPars, newCons = initialize(launchedSats, aLimits, 1, plane=False)
@@ -275,13 +299,19 @@ def deorbit_and_launch(colProbMatrix, satParameters, satConstants, aLimits, accu
             newSat = freeIndices[0]
             del freeIndices[0]
             launchIndices.append(newSat)
+            satParameters[newSat] = newPars[ii]
+            satConstants[newSat] = newCons[ii]
             for jj in range(newSat):
-                satParameters[newSat] = newPars[ii]
-                satConstants[newSat] = newCons[ii]
                 closestDistance = find_minimum(satParameters[newSat], satParameters[jj],
                                                satConstants[newSat], satConstants[jj], acc=accuracy)
-                colProb = half_normal(closestDistance, sigma, 1)
-                colProbMatrix[jj][newSat] = colProb
+                colProb = half_normal(closestDistance, sigma, True)
+                colProbMatrix[newSat][jj] = colProb
+            for jj in range(len(colProbMatrix[newSat][newSat:-1])):
+                ind = jj + newSat
+                closestDistance = find_minimum(satParameters[newSat], satParameters[ind],
+                                               satConstants[newSat], satConstants[ind], acc=accuracy)
+                colProb = half_normal(closestDistance, sigma, True)
+                colProbMatrix[ind][newSat] = colProb
 
         else:
             currentSatNr = satParameters.shape[0]
@@ -304,29 +334,77 @@ def deorbit_and_launch(colProbMatrix, satParameters, satConstants, aLimits, accu
     return colProbMatrix, satParameters, satConstants, freeIndices
 
 
-def collect_data(collectedData, tt, collisions, numberOfSatellites, numberOfFragments, counter):
+def collect_data(collectedData, tt, collisions, satParameters, numberOfFragments, counter):
+    activeSatParameters = satParameters[:, -1] == 1
+    inactiveSatParameters = satParameters[:, -1] == 0
+    activeSatellites = np.count_nonzero(activeSatParameters)
+    inactiveSatellites = np.count_nonzero(inactiveSatParameters)
+    totalSatellites = activeSatellites + inactiveSatellites
+
     collectedData[0][counter] = tt
     collectedData[1][counter] = collisions
     collectedData[2][counter] = np.sum(collectedData[1])
-    collectedData[3][counter] = numberOfSatellites
-    collectedData[4][counter] = numberOfFragments
+    collectedData[3][counter] = totalSatellites
+    collectedData[4][counter] = activeSatellites
+    collectedData[5][counter] = inactiveSatellites
+    collectedData[6][counter] = numberOfFragments
 
     return collectedData
 
 
+def plot_data(simulationData):
+    tt = simulationData[0]
+    totalCollisions = simulationData[1]
+    collisionsPerIteration = simulationData[2]
+    totalSatellites = simulationData[3]
+    activeSatellites = simulationData[4]
+    inactiveSatellites = simulationData[5]
+    numberOfFragments = simulationData[6]
+
+    plt.plot(tt, collisionsPerIteration)
+    plt.xlabel('Collisions per Iteration')
+    plt.ylabel('Time')
+    plt.title('Collisions per Iteration')
+    plt.show()
+
+    plt.plot(tt, totalCollisions)
+    plt.xlabel('Total collisions')
+    plt.ylabel('Time')
+    plt.title('Collisions over time')
+    plt.show()
+
+    fig, ax = plt.subplots()
+    ax.plot(tt, activeSatellites, label='active')
+    ax.plot(tt, inactiveSatellites, label='inactive')
+    ax.set_xlabel('Time')
+    ax.set_ylabel('Number of satellites')
+    ax.set_title('Active and inactive satellites over time')
+    ax.legend()
+    plt.show()
+
+    plt.plot(tt, numberOfFragments)
+    plt.xlabel('Number of fragments')
+    plt.ylabel('Time')
+    plt.title('Fragments over time')
+    plt.show()
+
+
 def hubald_model(startingSats, tmax, timestep, aLimits=(200_000, 2_000_000), accuracy=20):
-    sigma = 2000
+    sigma = 500
+    activePercentage = 0.8
     numberOfFragments = 1_000_000
-    collectedData = np.empty((5, tmax // timestep))
+    collectedData = np.empty((7, tmax // timestep))
     freeIndices = []
 
-    satParameters, satConstants = initialize(startingSats, aLimits, 0.5, plane=False)
+    satParameters, satConstants = initialize(startingSats, aLimits, activePercentage, plane=False)
     distanceMatrix = distance_matrix(startingSats, satParameters, satConstants, acc=accuracy)
     colProbMatrix = probability_matrix(distanceMatrix, satParameters, sigma)
 
     counter = 0
     for tt in range(0, tmax, timestep):
-        satParameters, satsStruck = fragment_collision(satParameters, numberOfFragments, 10000, 0.000005)
+        colProbMatrix, satParameters, satConstants,satsStruck = fragment_collision(colProbMatrix ,satParameters,
+                                                                                   satConstants, numberOfFragments,
+                                                                                   10000, 0.000005, sigma, accuracy)
 
         colArgs = (colProbMatrix, satParameters, satConstants, numberOfFragments, freeIndices, tt, tmax)
         colProbMatrix, satParameters, satConstants, numberOfFragments, cols, freeIndices = satellite_collision(*colArgs)
@@ -337,10 +415,9 @@ def hubald_model(startingSats, tmax, timestep, aLimits=(200_000, 2_000_000), acc
         nonZeroRows = satParameters[:, 0] != 0
         numberOfSatellites = np.count_nonzero(nonZeroRows)
         print(f'Number of satellites: {numberOfSatellites}    Iteration: {tt}')
-        collectedData = collect_data(collectedData, tt, cols, numberOfSatellites, numberOfFragments, counter)
+        collectedData = collect_data(collectedData, tt, cols, satParameters, numberOfFragments, counter)
         counter += 1
         print()
-
     return collectedData
 
 
@@ -351,23 +428,7 @@ def main():
     finish = time.time()
     print(f'Process finished after: {round(finish - start, 2)}s')
 
-    plt.plot(simulationData[0], simulationData[2])
-    plt.xlabel('Collisions per Iteration')
-    plt.ylabel('Time')
-    plt.title('Collisions per Iteration')
-    plt.show()
-
-    plt.plot(simulationData[0], simulationData[1])
-    plt.xlabel('Total collisions')
-    plt.ylabel('Time')
-    plt.title('Collisions over time')
-    plt.show()
-
-    plt.plot(simulationData[0], simulationData[4])
-    plt.xlabel('Number of fragments')
-    plt.ylabel('Time')
-    plt.title('Fragments over time')
-    plt.show()
+    plot_data(simulationData)
 
 
 if __name__ == '__main__':
