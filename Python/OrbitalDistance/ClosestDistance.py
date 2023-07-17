@@ -1,9 +1,7 @@
-import os
 import time
 import numpy as np
 import matplotlib.pyplot as plt
 from numba import jit
-#import PlotDistance
 
 
 EMIN, EMAX = 0, 0.3
