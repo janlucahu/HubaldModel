@@ -15,6 +15,7 @@ TMIN, TMAX = 1.5, 8
 def half_normal(xx, sigma, active):
     '''
     Half normal distribution used for satellite collision probability.
+
     Args:
         xx (float): X value for distribution. In this case satellite distance.
         sigma (float): Standard deviation.
@@ -33,6 +34,7 @@ def half_normal(xx, sigma, active):
 @jit(nopython=True)
 def logistic_distribution(xx, gg, dd, cc):
     '''
+    Logistic distribution used for calculating collision probabilities with fragments.
 
     Args:
         xx (float): X value for logistic distribution.
@@ -48,10 +50,19 @@ def logistic_distribution(xx, gg, dd, cc):
 
 
 @jit(nopython=True)
-def constants(parameters):
-    i1 = parameters[2]
-    w1 = parameters[3]
-    O1 = parameters[4]
+def constants(satParameters):
+    '''
+    Calculate constants used to calculate the orbits of the satellites.
+
+    Args:
+        satParameters (1darray): Orbital parameters of the satellites.
+
+    Returns:
+        satConstants (1darray): Rotation matrix elements for position calculation in satellite frame.
+    '''
+    i1 = satParameters[2]
+    w1 = satParameters[3]
+    O1 = satParameters[4]
 
     P11_1 = np.cos(O1) * np.cos(w1) - np.sin(O1) * np.cos(i1) * np.sin(w1)
     P12_1 = - np.cos(O1) * np.sin(w1) - np.sin(O1) * np.cos(i1) * np.cos(w1)
@@ -61,14 +72,27 @@ def constants(parameters):
     P32_1 = np.sin(i1) * np.cos(w1)
 
     entries = [P11_1, P12_1, P21_1, P22_1, P31_1, P32_1]
-    const = np.array(entries)
+    satConstants = np.array(entries)
 
-    return const
+    return satConstants
 
 
 @jit(nopython=True)
 def initialize(nrOfSats, alimits, activeFraction, plane=False):
-    satParameter = np.empty((nrOfSats, 7))
+    '''
+    Initializes random orbital parameters for a given number of satellites.
+
+    Args:
+        nrOfSats (int): Number of satellites for which the orbital parameters should be initialized.
+        alimits (float, float): Upper and lower limit for the semi-major axes.
+        activeFraction (float): Percentage of active satellites initialized.
+        plane (bool): Only planar orbits (inclination = 0) are initialized if set to True.
+
+    Returns:
+        satParameter (2darray): Orbital parameters, period time and active status for each satellite.
+        satConstants (2darray): Rotation matrix elements for position calculation for each satellite.
+    '''
+    satParameters = np.empty((nrOfSats, 7))
     satConstants = np.empty((nrOfSats, 6))
 
     AMIN, AMAX = alimits
@@ -91,21 +115,37 @@ def initialize(nrOfSats, alimits, activeFraction, plane=False):
         else:
             active = 0
 
-        satParameter[satNr][0] = aa
-        satParameter[satNr][1] = ee
-        satParameter[satNr][2] = ii
-        satParameter[satNr][3] = ww
-        satParameter[satNr][4] = Om
-        satParameter[satNr][5] = TT
-        satParameter[satNr][6] = active
+        satParameters[satNr][0] = aa
+        satParameters[satNr][1] = ee
+        satParameters[satNr][2] = ii
+        satParameters[satNr][3] = ww
+        satParameters[satNr][4] = Om
+        satParameters[satNr][5] = TT
+        satParameters[satNr][6] = active
 
-        satConstants[satNr] = constants(satParameter[satNr])
+        satConstants[satNr] = constants(satParameters[satNr])
 
-    return satParameter, satConstants
+    return satParameters, satConstants
 
 
 @jit(nopython=True)
 def find_minimum(parameters1, parameters2, const1, const2, acc=100, repetitions=3):
+    '''
+    Calculates the closest approach of two satellites. The minimum of the 2-dimensional distance function depending on
+    the respective orbital anomalies is searched.
+
+    Args:
+        parameters1 (1darray): Set of orbital parameters for satellite 1.
+        parameters2 (1darray): Set of orbital parameters for satellite 2.
+        const1 (1darray): Rotation matrix elements for position calculation of satellite 1.
+        const2 (1darray): Rotation matrix elements for position calculation of satellite 1.
+        acc (int): Number of points per axes for 2-dimensional distance function.
+        repetitions (int): For each repetition a smaller area is considered around the previously found minimum and a
+                           more accurate minimum is found.
+
+    Returns:
+        minDistance (float): Closest approach distance between two satellites.
+    '''
     E_1 = np.linspace(0, 2 * np.pi, acc)
     E_2 = np.linspace(0, 2 * np.pi, acc)
 
@@ -181,7 +221,20 @@ def find_minimum(parameters1, parameters2, const1, const2, acc=100, repetitions=
 
 @jit(nopython=True)
 def distance_matrix(nrOfSats, satParameters, satConstants, acc=20):
-    distances = np.zeros((nrOfSats, nrOfSats))
+    '''
+    Computes a matrix containing the closest approach distance for each pair of satellites.
+
+    Args:
+        nrOfSats (int): Number of satellites and hence matrix size.
+        satParameters (2darray): Orbital parameters, period time and active status for each satellite.
+        satConstants (2darray): Rotation matrix elements for position calculation for each satellite.
+        acc (int): Number of points per axes for 2-dimensional distance function.
+
+    Returns:
+        distanceMatrix (2darray): Matrix containing closest approach distances for each pair of satellites. Only the
+                                  lower left triangle is filled.
+    '''
+    distanceMatrix = np.zeros((nrOfSats, nrOfSats))
 
     for sat1 in range(nrOfSats):
         print(sat1 + 1, ' of ', nrOfSats)
@@ -190,12 +243,26 @@ def distance_matrix(nrOfSats, satParameters, satConstants, acc=20):
                                            satParameters[sat2],
                                            satConstants[sat1],
                                            satConstants[sat2], acc=acc)
-            distances[sat1][sat2] = closestDistance
-    return distances
+            distanceMatrix[sat1][sat2] = closestDistance
+    return distanceMatrix
 
 
 @jit(nopython=True)
 def probability_matrix(distanceMatrix, satParameters, sigma):
+    '''
+    Converts a matrix containing the closest approach distances into a matrix containing the collision probabilities for
+    each pair of satellites. For probability calculation a half-normal distribution is used.
+
+    Args:
+        distanceMatrix (2darray): Matrix containing closest approach distances for each pair of satellites. Only the
+                                  lower left triangle is filled.
+        satParameters (2darray): Orbital parameters, period time and active status for each satellite.
+        sigma (float): Standard deviation of half-normal distribution.
+
+    Returns:
+        colProbMatrix (2darray): Matrix containing collision probabilities for each pair of satellites. Only the lower
+                                 left triangle is filled.
+    '''
     colProbMatrix = np.zeros(distanceMatrix.shape)
     for sat1 in range(colProbMatrix.shape[0]):
         for sat2 in range(sat1):
@@ -210,6 +277,27 @@ def probability_matrix(distanceMatrix, satParameters, sigma):
 
 @jit(nopython=True)
 def fragment_collision(colProbMatrix, satParameters, satConstants, numberOfFragments, dd, cc, sigma, accuracy):
+    '''
+    Updates the collision probability matrix considering the chance that a number of active satellites are hit by an
+    fragment and become an inactive one. The probability of a fragment colliding with a satellite is calculated using a
+    logistic distribution.
+
+    Args:
+        colProbMatrix (2darray): Matrix containing collision probabilities for each pair of satellites.
+        satParameters (2darray): Orbital parameters, period time and active status for each satellite.
+        satConstants (2darray): Rotation matrix elements for position calculation for each satellite.
+        numberOfFragments (int): Total number of fragments present.
+        dd (float): Scaling parameter of logistic distribution.
+        cc (float): Scaling parameter of logistic distribution.
+        sigma (float): Standard deviation of half-normal distribution used for satellite collision probability.
+        accuracy (int): Number of points per axes for 2-dimensional distance function.
+
+    Returns:
+        colProbMatrix (2darray): Updated collision probability matrix.
+        satParameters (2darray): Updated satellite parameters with changed active statuses.
+        satsStruck (int): Number of satellites hit by fragment.
+
+    '''
     satellitesStruck = 0
     activeSatParameters = satParameters[:, -1] == 1
     activeSatellites = np.count_nonzero(activeSatParameters)
@@ -237,10 +325,31 @@ def fragment_collision(colProbMatrix, satParameters, satConstants, numberOfFragm
                 colProb = half_normal(closestDistance, sigma, activeSatellite)
                 colProbMatrix[ind][randSat] = colProb
 
-    return colProbMatrix, satParameters, satConstants, satellitesStruck
+    return colProbMatrix, satParameters, satellitesStruck
 
 
 def satellite_collision(colProbMatrix, satParameters, satConstants, numberOfFragments, freeIndices, tt, tmax):
+    '''
+    Updates the collision probability matrix based on collisions between satellites. Two satellites can collide
+    depending on their collision probability which will destroy them and set all probabilities in the relevant matrix
+    entries to 0. Additionally, fragments are yielded by the collision raising the total number of fragments.
+    Args:
+        colProbMatrix (2darray): Matrix containing collision probabilities for each pair of satellites.
+        satParameters (2darray): Orbital parameters, period time and active status for each satellite.
+        satConstants (2darray): Rotation matrix elements for position calculation for each satellite.
+        numberOfFragments (int): Total number of fragments.
+        freeIndices (list): Free indices in the collision probability matrix to be reused.
+        tt (int): Iteration step.
+        tmax (int): Maximum iteration step.
+
+    Returns:
+        colProbMatrix (2darray): Updated collision probability matrix.
+        satParameters (2darray): Updated satellite parameters, destroyed satellite parameters are set to 0.
+        satConstants (2darray): Updated satellite constants, destroyed satellite constants are set to 0.
+        numberOfFragments (int): Updated total number of fragments.
+        collisionsInIteration (int): Number of collisions caused.
+        freeIndices (list): Updated free indices in the collision probability matrix to be reused.
+    '''
     pMatrix = np.random.rand(*colProbMatrix.shape)
     rows, cols = np.where(pMatrix < colProbMatrix)
     collisionsInIteration = len(rows)
@@ -275,7 +384,25 @@ def satellite_collision(colProbMatrix, satParameters, satConstants, numberOfFrag
     return colProbMatrix, satParameters, satConstants, numberOfFragments, collisionsInIteration, freeIndices
 
 
-def deorbit_and_launch(colProbMatrix, satParameters, satConstants, aLimits, accuracy, sigma, freeIndices):
+def deorbit_and_launch(colProbMatrix, satParameters, satConstants, aLimits, sigma, accuracy, freeIndices):
+    '''
+    Update collision probability matrix considering deorbitation of old satellites and launch of new ones.
+
+    Args:
+        colProbMatrix (2darray): Matrix containing collision probabilities for each pair of satellites.
+        satParameters (2darray): Orbital parameters, period time and active status for each satellite.
+        satConstants (2darray): Rotation matrix elements for position calculation for each satellite.
+        aLimits (float, float): Lower and upper limit for the semi-major axes.
+        sigma (float): Standard deviation of half-normal distribution used for satellite collision probability.
+        accuracy (int): Number of points per axes for 2-dimensional distance function.
+        freeIndices (list): Free indices in the collision probability matrix to be reused.
+
+    Returns:
+        colProbMatrix (2darray): Updated collision probability matrix.
+        satParameters (2darray): Updated satellite parameters, destroyed satellite parameters are set to 0.
+        satConstants (2darray): Updated satellite constants, destroyed satellite constants are set to 0.
+        freeIndices (list): Updated free indices in the collision probability matrix to be reused.
+    '''
     deorbitingSats = np.random.randint(0, 2)
     oldSats = []
     for oldSat in range(len(satParameters)):
@@ -338,6 +465,20 @@ def deorbit_and_launch(colProbMatrix, satParameters, satConstants, aLimits, accu
 
 
 def collect_data(collectedData, tt, collisions, satParameters, numberOfFragments, counter):
+    '''
+    Collects various different quantities of the simulation of the kessler syndrome.
+
+    Args:
+        collectedData (2darray): Measured data.
+        tt (int): Iteration step.
+        collisions (int): Number of collisions.
+        satParameters (2darray): Orbital parameters, period time and active status for each satellite.
+        numberOfFragments (int): Total number of fragments.
+        counter (int): Counter variable for indices assignment.
+
+    Returns:
+        collectedData (2darray): Updated measured data.
+    '''
     activeSatParameters = satParameters[:, -1] == 1
     inactiveSatParameters = satParameters[:, -1] == 0
     activeSatellites = np.count_nonzero(activeSatParameters)
@@ -356,6 +497,14 @@ def collect_data(collectedData, tt, collisions, satParameters, numberOfFragments
 
 
 def plot_data(simulationData):
+    '''
+    Plots the gathered simulation data.
+    Args:
+        simulationData (2darray): Measured data.
+
+    Returns:
+        None.
+    '''
     tt = simulationData[0]
     collisionsPerIteration = simulationData[1]
     totalCollisions = simulationData[2]
@@ -394,6 +543,25 @@ def plot_data(simulationData):
 
 
 def hubald_model(startingSats, tmax, timestep, aLimits=(200_000, 2_000_000), accuracy=20):
+    '''
+    Simulates the development of the population of the simulated orbit after starting with a given amount of satellites.
+    The dynamics of the model work as following: Satellites are categorized as either active or inactive, distigushed by
+    a significantly lower probability for active satellites to collide. The probability of the collision of satellites
+    depends on their closest apporach distance, yielding them destroyed after colliding, which means they are removed
+    from the simulation, leaving fragments. Fragments have a chance of hitting active satellites, leaving them inactive.
+    Also, inactive satellites can deorbit, which also means they are removed, while new satellites can be launched,
+    hence added to the simulation.
+
+    Args:
+        startingSats (int): Number of satellites at the beginning of the simulation.
+        tmax (int): Maximum iteration steps.
+        timestep (int): Stepsize of the iterations.
+        aLimits (float, float): Lower and upper limit for the semi-major axes.
+        accuracy (int): Number of points per axes for 2-dimensional distance function.
+
+    Returns:
+        collectedData (2darray): Various quantities measured for each iteration step.
+    '''
     sigma = 2000
     activePercentage = 0.8
     numberOfFragments = 1_000_000
@@ -406,16 +574,16 @@ def hubald_model(startingSats, tmax, timestep, aLimits=(200_000, 2_000_000), acc
 
     counter = 0
     for tt in range(0, tmax, timestep):
-        colProbMatrix, satParameters, satConstants, satsStruck = fragment_collision(colProbMatrix, satParameters,
-                                                                                    satConstants, numberOfFragments,
-                                                                                    10000, 0.0000005, sigma, accuracy)
+        colProbMatrix, satParameters, satsStruck = fragment_collision(colProbMatrix, satParameters, satConstants,
+                                                                      numberOfFragments, 10000, 0.0000005, sigma,
+                                                                      accuracy)
 
         colArgs = (colProbMatrix, satParameters, satConstants, numberOfFragments, freeIndices, tt, tmax)
         colProbMatrix, satParameters, satConstants, numberOfFragments, cols, freeIndices = satellite_collision(*colArgs)
 
         colProbMatrix, satParameters, satConstants, freeIndices = deorbit_and_launch(colProbMatrix, satParameters,
-                                                                                     satConstants, aLimits, accuracy,
-                                                                                     sigma, freeIndices)
+                                                                                     satConstants, aLimits, sigma,
+                                                                                     accuracy, freeIndices)
         nonZeroRows = satParameters[:, 0] != 0
         numberOfSatellites = np.count_nonzero(nonZeroRows)
         print(f'Number of satellites: {numberOfSatellites}    Iteration: {tt}')
@@ -426,6 +594,12 @@ def hubald_model(startingSats, tmax, timestep, aLimits=(200_000, 2_000_000), acc
 
 
 def main():
+    '''
+    Main function.
+
+    Returns:
+        None.
+    '''
     start = time.time()
     simulationData = hubald_model(1000, 1200, 3)
     print(f'Number of collisions: {int(simulationData[2][-1])}')
