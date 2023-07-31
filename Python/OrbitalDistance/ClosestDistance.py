@@ -562,7 +562,7 @@ def hubald_model(startingSats, tmax, timestep, aLimits=(200_000, 2_000_000), acc
     Returns:
         collectedData (2darray): Various quantities measured for each iteration step.
     '''
-    sigma = 2000
+    sigma = 500
     activePercentage = 0.8
     numberOfFragments = 1_000_000
     collectedData = np.empty((7, tmax // timestep))
@@ -575,7 +575,7 @@ def hubald_model(startingSats, tmax, timestep, aLimits=(200_000, 2_000_000), acc
     counter = 0
     for tt in range(0, tmax, timestep):
         colProbMatrix, satParameters, satsStruck = fragment_collision(colProbMatrix, satParameters, satConstants,
-                                                                      numberOfFragments, 10000, 0.0000005, sigma,
+                                                                      numberOfFragments, 10000, 0.0000001, sigma,
                                                                       accuracy)
 
         colArgs = (colProbMatrix, satParameters, satConstants, numberOfFragments, freeIndices, tt, tmax)
@@ -601,7 +601,7 @@ def main():
         None.
     '''
     start = time.time()
-    simulationData = hubald_model(1000, 1200, 3)
+    simulationData = hubald_model(5000, 1200, 1)
     print(f'Number of collisions: {int(simulationData[2][-1])}')
     finish = time.time()
     print(f'Process finished after: {round(finish - start, 2)}s')
