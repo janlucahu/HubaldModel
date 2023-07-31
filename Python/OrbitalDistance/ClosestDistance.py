@@ -513,44 +513,44 @@ def plot_data(simulationData):
     inactiveSatellites = simulationData[5]
     numberOfFragments = simulationData[6]
 
-    plt.plot(tt, collisionsPerIteration)
-    plt.xlabel('Collisions per Iteration')
-    plt.ylabel('Time')
-    plt.title('Collisions per Iteration')
-    plt.show()
+    fig, axs = plt.subplots(2, 2, figsize=(12, 8))
 
-    plt.plot(tt, totalCollisions)
-    plt.xlabel('Total collisions')
-    plt.ylabel('Time')
-    plt.title('Collisions over time')
-    plt.show()
+    axs[0, 0].plot(tt, collisionsPerIteration)
+    axs[0, 0].set_xlabel('Time')
+    axs[0, 0].set_ylabel('Collisions per Iteration')
+    axs[0, 0].set_title('Collisions per Iteration')
 
-    fig, ax = plt.subplots()
-    ax.plot(tt, activeSatellites, label='active')
-    ax.plot(tt, inactiveSatellites, label='inactive')
-    ax.plot(tt, totalSatellites, label='total')
-    ax.set_xlabel('Time')
-    ax.set_ylabel('Number of satellites')
-    ax.set_title('Active and inactive satellites over time')
-    ax.legend()
-    plt.show()
+    axs[0, 1].plot(tt, totalCollisions)
+    axs[0, 1].set_xlabel('Time')
+    axs[0, 1].set_ylabel('Total collisions')
+    axs[0, 1].set_title('Collisions over time')
 
-    plt.plot(tt, numberOfFragments)
-    plt.xlabel('Number of fragments')
-    plt.ylabel('Time')
-    plt.title('Fragments over time')
+    axs[1, 0].plot(tt, activeSatellites, label='active')
+    axs[1, 0].plot(tt, inactiveSatellites, label='inactive')
+    axs[1, 0].plot(tt, totalSatellites, label='total')
+    axs[1, 0].set_xlabel('Time')
+    axs[1, 0].set_ylabel('Number of satellites')
+    axs[1, 0].set_title('Active and inactive satellites over time')
+    axs[1, 0].legend()
+
+    axs[1, 1].plot(tt, numberOfFragments)
+    axs[1, 1].set_xlabel('Time')
+    axs[1, 1].set_ylabel('Number of fragments')
+    axs[1, 1].set_title('Fragments over time')
+
+    plt.tight_layout()
     plt.show()
 
 
 def hubald_model(startingSats, tmax, timestep, aLimits=(200_000, 2_000_000), accuracy=20):
     '''
     Simulates the development of the population of the simulated orbit after starting with a given amount of satellites.
-    The dynamics of the model work as following: Satellites are categorized as either active or inactive, distigushed by
-    a significantly lower probability for active satellites to collide. The probability of the collision of satellites
-    depends on their closest apporach distance, yielding them destroyed after colliding, which means they are removed
-    from the simulation, leaving fragments. Fragments have a chance of hitting active satellites, leaving them inactive.
-    Also, inactive satellites can deorbit, which also means they are removed, while new satellites can be launched,
-    hence added to the simulation.
+    The dynamics of the model work as following: Satellites are categorized as either active or inactive, distinguished
+    by a significantly lower probability for active satellites to collide. The probability of the collision of
+    satellites depends on their closest approach distance, yielding them destroyed after colliding, which means they are
+    removed from the simulation, leaving fragments. Fragments have a chance of hitting active satellites, leaving them
+    inactive. Also, inactive satellites can deorbit, which also means they are removed, while new satellites can be
+    launched, hence added to the simulation.
 
     Args:
         startingSats (int): Number of satellites at the beginning of the simulation.
