@@ -18,10 +18,10 @@ sigma = 500
 sample = np.abs(np.random.normal(scale=sigma, size=10000))
 
 # Plot the probability density function (PDF) of the half normal distribution with standard deviation sigma=2
-x = np.linspace(0, 1000, 1000)
+x = np.linspace(0, 10000000, 1000)
 pdf = half_normal(x, sigma, active=True)
-logistic = logistic_distribution(x, 1, 100, 0.0000001)
-plt.plot(x, pdf, 'r-', lw=2)
+logistic = logistic_distribution(x, 1, 1000000, 0.0000001)
+plt.plot(x, logistic, 'r-', lw=2)
 
 # Show the histogram of the sample
 #plt.hist(sample, bins=50, density=True)

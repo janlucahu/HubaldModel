@@ -276,17 +276,17 @@ def probability_matrix(distanceMatrix, satParameters, sigma):
 
 
 @jit(nopython=True)
-def fragment_collision(colProbMatrix, satParameters, satConstants, numberOfFragments, dd, cc, sigma, accuracy):
+def small_fragment(colProbMatrix, satParameters, satConstants, smallFragments, dd, cc, sigma, accuracy):
     '''
-    Updates the collision probability matrix considering the chance that a number of active satellites are hit by an
-    fragment and become an inactive one. The probability of a fragment colliding with a satellite is calculated using a
+    Updates the collision probability matrix considering the chance that a number of active satellites are hit by small
+    fragments and become an inactive one. The probability of a fragment colliding with a satellite is calculated using a
     logistic distribution.
 
     Args:
         colProbMatrix (2darray): Matrix containing collision probabilities for each pair of satellites.
         satParameters (2darray): Orbital parameters, period time and active status for each satellite.
         satConstants (2darray): Rotation matrix elements for position calculation for each satellite.
-        numberOfFragments (int): Total number of fragments present.
+        smallFragments (int): Total number of small fragments present.
         dd (float): Scaling parameter of logistic distribution.
         cc (float): Scaling parameter of logistic distribution.
         sigma (float): Standard deviation of half-normal distribution used for satellite collision probability.
@@ -295,7 +295,7 @@ def fragment_collision(colProbMatrix, satParameters, satConstants, numberOfFragm
     Returns:
         colProbMatrix (2darray): Updated collision probability matrix.
         satParameters (2darray): Updated satellite parameters with changed active statuses.
-        satsStruck (int): Number of satellites hit by fragment.
+        satellitesStruck (int): Number of satellites hit by fragment.
 
     '''
     satellitesStruck = 0
@@ -303,7 +303,7 @@ def fragment_collision(colProbMatrix, satParameters, satConstants, numberOfFragm
     activeSatellites = np.count_nonzero(activeSatParameters)
     for ii in range(activeSatellites):
         pp = np.random.rand()
-        fragmentCollisionProb = logistic_distribution(numberOfFragments, 1, dd, cc)
+        fragmentCollisionProb = logistic_distribution(smallFragments, 1, dd, cc)
         if pp < fragmentCollisionProb:
             struckSat, act = np.where(satParameters == 1)
             randSat = struckSat[np.random.randint(0, len(struckSat))]
@@ -328,7 +328,61 @@ def fragment_collision(colProbMatrix, satParameters, satConstants, numberOfFragm
     return colProbMatrix, satParameters, satellitesStruck
 
 
-def satellite_collision(colProbMatrix, satParameters, satConstants, numberOfFragments, freeIndices, tt, tmax):
+def large_fragment(colProbMatrix, satParameters, satConstants, smallFragments, largeFragments, freeIndices, dd, cc):
+    '''
+    Large fragments are able to destroy satellites, setting their collision probability to 0, aswell as their
+    parameters. Additionally, large fragment collision create small and large fragments.
+
+    Args:
+        colProbMatrix (2darray): Matrix containing collision probabilities for each pair of satellites.
+        satParameters (2darray): Orbital parameters, period time and active status for each satellite.
+        satConstants (2darray): Rotation matrix elements for position calculation for each satellite.
+        smallFragments (int): Total number of small fragments present.
+        largeFragments (int): Total number of large fragments present.
+        freeIndices (list): Free indices in the collision probability matrix to be reused.
+        dd (float): Scaling parameter of logistic distribution.
+        cc (float): Scaling parameter of logistic distribution.
+
+    Returns:
+        colProbMatrix (2darray): Updated collision probability matrix.
+        satParameters (2darray): Updated satellite parameters, destroyed satellite parameters are set to 0.
+        satConstants (2darray): Updated satellite constants, destroyed satellite constants are set to 0.
+        fragments (int, int): Number of small and large fragments.
+        satellitesStruck (int): Number of satellites hit by fragment.
+        freeIndices (list): Updated free indices in the collision probability matrix to be reused.
+    '''
+    satellitesStruck = 0
+    # find indices of not destroyed satellites
+    activity = satParameters[:, -1]
+    mask = activity != -1
+    nonDestroyed = np.where(mask)[0]
+    for ii in range(len(nonDestroyed)):
+        pp = np.random.rand()
+        fragmentCollisionProb = logistic_distribution(largeFragments, 1, dd, cc)
+        if pp < fragmentCollisionProb:
+            randSat = nonDestroyed[np.random.randint(0, len(nonDestroyed))]
+            satParameters[randSat][:] = np.array([0, 0, 0, 0, 0, 0, -1])
+            satConstants[randSat][:] = np.array([0, 0, 0, 0, 0, 0])
+
+            # Change rows of fragmented satellite
+            for jj in range(colProbMatrix.shape[0]):
+                colProbMatrix[randSat][jj] = 0
+
+            # Change columns of fragmented satellite
+            for jj in range(colProbMatrix.shape[1]):
+                colProbMatrix[jj][randSat] = 0
+
+            smallFragments += 50_000
+            largeFragments += 200
+            print(f'Satellite {randSat} struck by large fragment')
+            satellitesStruck += 1
+            freeIndices.append(randSat)
+    fragments = (smallFragments, largeFragments)
+    return colProbMatrix, satParameters, satConstants, fragments, satellitesStruck, freeIndices
+
+
+def satellite_collision(colProbMatrix, satParameters, satConstants, smallFragments, largeFragments, freeIndices,
+                        tt, tmax):
     '''
     Updates the collision probability matrix based on collisions between satellites. Two satellites can collide
     depending on their collision probability which will destroy them and set all probabilities in the relevant matrix
@@ -355,7 +409,8 @@ def satellite_collision(colProbMatrix, satParameters, satConstants, numberOfFrag
     collisionsInIteration = len(rows)
 
     for ii in range(collisionsInIteration):
-        numberOfFragments += 50_000
+        smallFragments += 50_000
+        largeFragments += 200
         sat1 = rows[ii]
         sat2 = cols[ii]
         freeIndices.append(sat1)
@@ -381,7 +436,8 @@ def satellite_collision(colProbMatrix, satParameters, satConstants, numberOfFrag
             colProbMatrix[jj][sat1] = 0
         for jj in range(colProbMatrix.shape[1]):
             colProbMatrix[jj][sat2] = 0
-    return colProbMatrix, satParameters, satConstants, numberOfFragments, collisionsInIteration, freeIndices
+    fragments = (smallFragments, largeFragments)
+    return colProbMatrix, satParameters, satConstants, fragments, collisionsInIteration, freeIndices
 
 
 def deorbit_and_launch(colProbMatrix, satParameters, satConstants, aLimits, sigma, accuracy, freeIndices):
@@ -562,9 +618,10 @@ def hubald_model(startingSats, tmax, timestep, aLimits=(200_000, 2_000_000), acc
     Returns:
         collectedData (2darray): Various quantities measured for each iteration step.
     '''
-    sigma = 500
-    activePercentage = 0.8
-    numberOfFragments = 1_000_000
+    sigma = 1000
+    activePercentage = 0.6
+    smallFragments = 1_000_000
+    largeFragments = 10_000
     collectedData = np.empty((7, tmax // timestep))
     freeIndices = []
 
@@ -574,12 +631,18 @@ def hubald_model(startingSats, tmax, timestep, aLimits=(200_000, 2_000_000), acc
 
     counter = 0
     for tt in range(0, tmax, timestep):
-        colProbMatrix, satParameters, satsStruck = fragment_collision(colProbMatrix, satParameters, satConstants,
-                                                                      numberOfFragments, 10000, 0.0000001, sigma,
-                                                                      accuracy)
+        d, c = 1000000, 0.0000001
+        colProbMatrix, satParameters, satsStruck = small_fragment(colProbMatrix, satParameters, satConstants,
+                                                                  smallFragments, d, c, sigma, accuracy)
 
-        colArgs = (colProbMatrix, satParameters, satConstants, numberOfFragments, freeIndices, tt, tmax)
-        colProbMatrix, satParameters, satConstants, numberOfFragments, cols, freeIndices = satellite_collision(*colArgs)
+        d, c = 10000, 0.00001
+        fragmentArgs = (colProbMatrix, satParameters, satConstants, smallFragments, largeFragments, freeIndices, d, c)
+        colProbMatrix, satParameters, satConstants, fragments, satsStruck, freeIndices = large_fragment(*fragmentArgs)
+        smallFragments, largeFragments = fragments
+
+        colArgs = (colProbMatrix, satParameters, satConstants, smallFragments, largeFragments, freeIndices, tt, tmax)
+        colProbMatrix, satParameters, satConstants, fragments, cols, freeIndices = satellite_collision(*colArgs)
+        smallFragments, largeFragments = fragments
 
         colProbMatrix, satParameters, satConstants, freeIndices = deorbit_and_launch(colProbMatrix, satParameters,
                                                                                      satConstants, aLimits, sigma,
@@ -587,7 +650,7 @@ def hubald_model(startingSats, tmax, timestep, aLimits=(200_000, 2_000_000), acc
         nonZeroRows = satParameters[:, 0] != 0
         numberOfSatellites = np.count_nonzero(nonZeroRows)
         print(f'Number of satellites: {numberOfSatellites}    Iteration: {tt}')
-        collectedData = collect_data(collectedData, tt, cols, satParameters, numberOfFragments, counter)
+        collectedData = collect_data(collectedData, tt, cols, satParameters, smallFragments, counter)
         counter += 1
         print()
     return collectedData
@@ -601,7 +664,7 @@ def main():
         None.
     '''
     start = time.time()
-    simulationData = hubald_model(5000, 1200, 1)
+    simulationData = hubald_model(5000, 1200, 3)
     print(f'Number of collisions: {int(simulationData[2][-1])}')
     finish = time.time()
     print(f'Process finished after: {round(finish - start, 2)}s')
