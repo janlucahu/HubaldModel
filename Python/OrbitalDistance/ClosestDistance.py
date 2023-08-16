@@ -477,7 +477,7 @@ def deorbit_and_launch(colProbMatrix, satParameters, satConstants, aLimits, sigm
             for jj in range(colProbMatrix.shape[1]):
                 colProbMatrix[jj][randOldSat] = 0
 
-    launchedSats = np.random.randint(0, 5)
+    launchedSats = np.random.randint(0, 20)
     newPars, newCons = initialize(launchedSats, aLimits, 1, plane=False)
     launchIndices = []
     for ii in range(launchedSats):
@@ -618,8 +618,8 @@ def hubald_model(startingSats, tmax, timestep, aLimits=(200_000, 2_000_000), acc
     Returns:
         collectedData (2darray): Various quantities measured for each iteration step.
     '''
-    sigma = 1000
-    activePercentage = 0.6
+    sigma = 250
+    activePercentage = 0.3
     smallFragments = 1_000_000
     largeFragments = 10_000
     collectedData = np.empty((7, tmax // timestep))
@@ -664,7 +664,7 @@ def main():
         None.
     '''
     start = time.time()
-    simulationData = hubald_model(5000, 1200, 3)
+    simulationData = hubald_model(10000, 1200, 3)
     print(f'Number of collisions: {int(simulationData[2][-1])}')
     finish = time.time()
     print(f'Process finished after: {round(finish - start, 2)}s')
