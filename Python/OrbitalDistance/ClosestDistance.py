@@ -4,10 +4,10 @@ import matplotlib.pyplot as plt
 from numba import jit
 
 
-EMIN, EMAX = 0, 0.1
-IMIN, IMAX = 0, 0.1 * np.pi
-WMIN, WMAX = 0, 0.1 * np.pi
-OMIN, OMAX = 0, 0.1 * np.pi
+EMIN, EMAX = 0, 0.3
+IMIN, IMAX = 0, 0.5 * np.pi
+WMIN, WMAX = 0, 1.0 * np.pi
+OMIN, OMAX = 0, 1.0 * np.pi
 TMIN, TMAX = 1.5, 8
 
 
@@ -618,7 +618,7 @@ def hubald_model(startingSats, tmax, timestep, aLimits=(200_000, 2_000_000), acc
     Returns:
         collectedData (2darray): Various quantities measured for each iteration step.
     '''
-    sigma = 250
+    sigma = 2000
     activePercentage = 0.3
     smallFragments = 1_000_000
     largeFragments = 10_000
