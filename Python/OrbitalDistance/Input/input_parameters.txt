@@ -1,0 +1,6 @@
+starting_satellites=10000
+active_percentage=0.3
+small_fragments=1000000
+large_fragments=10000
+timestep=3
+tmax=1200

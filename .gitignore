@@ -3,3 +3,15 @@ Python/.idea
 Python/OrbitalDistance/__pycache__/PlotDistance.cpython-37.pyc
 Python/OrbitalDistance/.DS_Store
 .DS_Store
+.idea/inspectionProfiles/profiles_settings.xml
+.idea/inspectionProfiles/Project_Default.xml
+.idea/other.xml
+.idea/vcs.xml
+.idea/workspace.xml
+Python/OrbitalDistance/__pycache__/calculations.cpython-39.pyc
+Python/OrbitalDistance/__pycache__/data_handling.cpython-39.pyc
+Python/OrbitalDistance/__pycache__/model_dynamics.cpython-39.pyc
+Python/OrbitalDistance/__pycache__/model_simulation.cpython-37.pyc
+Python/OrbitalDistance/__pycache__/model_simulation.cpython-39.pyc
+Python/OrbitalDistance/__pycache__/probability_distributions.cpython-37.pyc
+Python/OrbitalDistance/__pycache__/probability_distributions.cpython-39.pyc
