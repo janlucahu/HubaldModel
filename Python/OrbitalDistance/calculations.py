@@ -70,7 +70,8 @@ def initialize(nrOfSats, alimits, activeFraction, plane=False):
         ww = np.random.uniform(WMIN, WMAX)
         Om = np.random.uniform(OMIN, OMAX)
         sign = signs[np.random.randint(0, 2)]
-        TT = sign * np.random.uniform(TMIN, TMAX)
+        CEarth = 9.91 * 10 ** (-14)
+        TT = sign * np.sqrt(CEarth * aa ** 3)
         if np.random.rand() < activeFraction:
             active = 1
         else:
@@ -205,11 +206,13 @@ def distance_matrix(nrOfSats, satParameters, satConstants, acc=20):
                                            satConstants[sat1],
                                            satConstants[sat2], acc=acc)
             distanceMatrix[sat1][sat2] = closestDistance
+            if closestDistance < 10000:
+                print(closestDistance)
     return distanceMatrix
 
 
 @jit(nopython=True)
-def probability_matrix(distanceMatrix, satParameters, sigma):
+def probability_matrix(distanceMatrix, satParameters, sigma, timestep):
     '''
     Converts a matrix containing the closest approach distances into a matrix containing the collision probabilities for
     each pair of satellites. For probability calculation a half-normal distribution is used.
@@ -225,12 +228,18 @@ def probability_matrix(distanceMatrix, satParameters, sigma):
                                  left triangle is filled.
     '''
     colProbMatrix = np.zeros(distanceMatrix.shape)
+    monthsToSeconds = 30 * 24 * 60 * 60
     for sat1 in range(colProbMatrix.shape[0]):
         for sat2 in range(sat1):
             activeSatellite = satParameters[sat1][6] + satParameters[sat2][6]  # = false if both are inactive
+            synodicPeriod = 1 / np.abs(1/satParameters[sat1][5] - 1/satParameters[sat2][5])
+            numberOfApproaches = int(timestep * monthsToSeconds / synodicPeriod)
             if activeSatellite:
-                colProbMatrix[sat1][sat2] = half_normal(distanceMatrix[sat1][sat2], sigma, True)
+                colProbPerApproach = half_normal(distanceMatrix[sat1][sat2], sigma, True)
+                colProb = 1 - (1 - colProbPerApproach) ** numberOfApproaches
+                colProbMatrix[sat1][sat2] = colProb
             else:
-                colProbMatrix[sat1][sat2] = half_normal(distanceMatrix[sat1][sat2], 2 * sigma, False)
-
+                colProbPerApproach = half_normal(distanceMatrix[sat1][sat2], sigma, False)
+                colProb = 1 - (1 - colProbPerApproach) ** numberOfApproaches
+                colProbMatrix[sat1][sat2] = colProb
     return colProbMatrix

@@ -17,9 +17,9 @@ def half_normal(xx, sigma, active):
         yy (float): Y value of distribution for xx > 0.
     '''
     if active:
-        yy = np.sqrt(2 / (100 * np.pi)) * np.exp(-xx ** 2 / (2 * sigma ** 2))
+        yy = 5 * 10 ** (-5) * np.exp(-xx ** 2 / (2 * sigma ** 2))
     else:
-        yy = np.sqrt(2 / np.pi) * np.exp(-xx ** 2 / (2 * sigma ** 2))
+        yy = 5 * 10 ** (-1) * np.exp(-xx ** 2 / (2 * sigma ** 2))
     return yy * (xx >= 0)
 
 
@@ -61,7 +61,7 @@ def plot_distributions(x1, sigma, active, x2, gg, dd, cc):
 
 if __name__ == "__main__":
     x1 = 5000
-    sigma = 250
+    sigma = 2000
     active = 1
 
     x2 = 10000000

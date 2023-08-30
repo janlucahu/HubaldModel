@@ -1,4 +1,5 @@
 import numpy as np
+import os
 import matplotlib.pyplot as plt
 
 
@@ -77,4 +78,7 @@ def plot_data(simulationData):
     axs[1, 1].set_title('Fragments over time')
 
     plt.tight_layout()
+    currentDir = os.getcwd()
+    saveDir = os.path.join(currentDir, "output/output.png")
+    plt.savefig(saveDir, dpi=600)
     plt.show()

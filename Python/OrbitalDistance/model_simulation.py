@@ -33,8 +33,8 @@ def hubald_model(startingSats, tmax, timestep, aLimits=(200_000, 2_000_000), acc
 
     satParameters, satConstants = initialize(startingSats, aLimits, activePercentage, plane=False)
     distanceMatrix = distance_matrix(startingSats, satParameters, satConstants, acc=accuracy)
-    colProbMatrix = probability_matrix(distanceMatrix, satParameters, sigma)
-
+    colProbMatrix = probability_matrix(distanceMatrix, satParameters, sigma, timestep)
+    nonzero = np.nonzero(colProbMatrix)
     counter = 0
     for tt in range(0, tmax, timestep):
         d, c = 1000000, 0.0000001
