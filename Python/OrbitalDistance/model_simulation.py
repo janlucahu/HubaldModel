@@ -1,5 +1,3 @@
-from probability_distributions import *
-from calculations import *
 from model_dynamics import *
 from data_handling import *
 
@@ -26,8 +24,8 @@ def hubald_model(startingSats, tmax, timestep, aLimits=(200_000, 2_000_000), acc
     '''
     sigma = 2000
     activePercentage = 0.3
-    smallFragments = 1_000_000
-    largeFragments = 10_000
+    smallFragments = 100_000_000
+    largeFragments = 100_000
     collectedData = np.empty((7, tmax // timestep))
     freeIndices = []
 
@@ -37,12 +35,12 @@ def hubald_model(startingSats, tmax, timestep, aLimits=(200_000, 2_000_000), acc
     nonzero = np.nonzero(colProbMatrix)
     counter = 0
     for tt in range(0, tmax, timestep):
-        d, c = 1000000, 0.0000001
+        m, b = 1 / 10000 / 12 / 100000000 * timestep, 0
         colProbMatrix, satParameters, satsStruck = small_fragment(colProbMatrix, satParameters, satConstants,
-                                                                  smallFragments, d, c, sigma, accuracy)
+                                                                  smallFragments, m, b, sigma, accuracy)
 
-        d, c = 10000, 0.00001
-        fragmentArgs = (colProbMatrix, satParameters, satConstants, smallFragments, largeFragments, freeIndices, d, c)
+        m, b = 1 / 10000 / 12 / 100000 * timestep, 0
+        fragmentArgs = (colProbMatrix, satParameters, satConstants, smallFragments, largeFragments, freeIndices, m, b)
         colProbMatrix, satParameters, satConstants, fragments, satsStruck, freeIndices = large_fragment(*fragmentArgs)
         smallFragments, largeFragments = fragments
 

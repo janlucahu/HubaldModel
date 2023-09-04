@@ -1,5 +1,3 @@
-import numpy as np
-from numba import jit
 from probability_distributions import *
 
 
@@ -91,7 +89,7 @@ def initialize(nrOfSats, alimits, activeFraction, plane=False):
 
 
 @jit(nopython=True)
-def find_minimum(parameters1, parameters2, const1, const2, acc=100, repetitions=3):
+def find_minimum(parameters1, parameters2, const1, const2, acc=100, repetitions=2):
     '''
     Calculates the closest approach of two satellites. The minimum of the 2-dimensional distance function depending on
     the respective orbital anomalies is searched.

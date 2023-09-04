@@ -41,22 +41,40 @@ def logistic_distribution(xx, gg, dd, cc):
     return yy
 
 
-def plot_distributions(x1, sigma, active, x2, gg, dd, cc):
-    hnx = np.linspace(0, x1, 1000)
-    halfNormal = half_normal(hnx, sigma, active)
-    plt.plot(hnx, halfNormal, 'r-', lw=2)
-    plt.xlabel('Value')
-    plt.ylabel('Frequency')
-    plt.title(f'Half Normal Distribution with Standard Deviation σ={sigma}')
-    plt.show()
+@jit(nopython=True)
+def linear_distribution(xx, mm, bb):
+    yy = mm * xx + bb
+    return yy
 
-    lx = np.linspace(0, x2, 1000)
-    logistic = logistic_distribution(lx, gg, dd, cc)
-    plt.plot(hnx, logistic, 'r-', lw=2)
-    plt.xlabel('Value')
-    plt.ylabel('Frequency')
-    plt.title(f'Half Normal Distribution with Standard Deviation σ={sigma}')
-    plt.show()
+
+def plot_distributions(x1, sigma, active, x2, gg, dd, cc, x3, mm, bb, plot=(1, 1, 1)):
+    plot_normal, plot_logistic, plot_linear = plot
+    if plot_normal:
+        hnx = np.linspace(0, x1, 1000)
+        halfNormal = half_normal(hnx, sigma, active)
+        plt.plot(hnx, halfNormal, 'r-', lw=2)
+        plt.xlabel('Value')
+        plt.ylabel('Frequency')
+        plt.title(f'Half Normal Distribution with Standard Deviation σ={sigma}')
+        plt.show()
+
+    if plot_logistic:
+        lx = np.linspace(0, x2, 1000)
+        logistic = logistic_distribution(lx, gg, dd, cc)
+        plt.plot(lx, logistic, 'r-', lw=2)
+        plt.xlabel('Value')
+        plt.ylabel('Frequency')
+        plt.title(f'Logistic Distribution with d={dd}, c={cc}')
+        plt.show()
+
+    if plot_linear:
+        linx = np.linspace(0, x3, 1000)
+        linear = linear_distribution(linx, mm, bb)
+        plt.plot(linx, linear, 'r-', lw=2)
+        plt.xlabel('Value')
+        plt.ylabel('Frequency')
+        plt.title(f'Linear Distribution with m={mm}, b={bb}')
+        plt.show()
 
 
 if __name__ == "__main__":
@@ -64,9 +82,13 @@ if __name__ == "__main__":
     sigma = 2000
     active = 1
 
-    x2 = 10000000
+    x2 = 1000000000
     gg = 1
-    dd = 1000000
-    cc = 0.0000001
-    plot_distributions(x1, sigma, active, x2, gg, dd, cc)
-    print("Done")
+    dd = 10000
+    cc = 0.00000002
+
+    x3 = 1000000000
+    mm = 1 / 10000 / 1000000000
+    bb = 0
+
+    plot_distributions(x1, sigma, active, x2, gg, dd, cc, x3, mm, bb, plot=(0, 0, 1))

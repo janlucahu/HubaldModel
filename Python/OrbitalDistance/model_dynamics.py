@@ -1,11 +1,8 @@
-import numpy as np
-from numba import jit
-from probability_distributions import *
 from calculations import *
 
 
 @jit(nopython=True)
-def small_fragment(colProbMatrix, satParameters, satConstants, smallFragments, dd, cc, sigma, accuracy):
+def small_fragment(colProbMatrix, satParameters, satConstants, smallFragments, mm, bb, sigma, accuracy):
     '''
     Updates the collision probability matrix considering the chance that a number of active satellites are hit by small
     fragments and become an inactive one. The probability of a fragment colliding with a satellite is calculated using a
@@ -32,7 +29,7 @@ def small_fragment(colProbMatrix, satParameters, satConstants, smallFragments, d
     activeSatellites = np.count_nonzero(activeSatParameters)
     for ii in range(activeSatellites):
         pp = np.random.rand()
-        fragmentCollisionProb = logistic_distribution(smallFragments, 1, dd, cc)
+        fragmentCollisionProb = linear_distribution(smallFragments, mm, bb)
         if pp < fragmentCollisionProb:
             struckSat, act = np.where(satParameters == 1)
             randSat = struckSat[np.random.randint(0, len(struckSat))]
@@ -57,7 +54,7 @@ def small_fragment(colProbMatrix, satParameters, satConstants, smallFragments, d
     return colProbMatrix, satParameters, satellitesStruck
 
 
-def large_fragment(colProbMatrix, satParameters, satConstants, smallFragments, largeFragments, freeIndices, dd, cc):
+def large_fragment(colProbMatrix, satParameters, satConstants, smallFragments, largeFragments, freeIndices, mm, bb):
     '''
     Large fragments are able to destroy satellites, setting their collision probability to 0, aswell as their
     parameters. Additionally, large fragment collision create small and large fragments.
@@ -87,7 +84,7 @@ def large_fragment(colProbMatrix, satParameters, satConstants, smallFragments, l
     nonDestroyed = np.where(mask)[0]
     for ii in range(len(nonDestroyed)):
         pp = np.random.rand()
-        fragmentCollisionProb = logistic_distribution(largeFragments, 1, dd, cc)
+        fragmentCollisionProb = linear_distribution(largeFragments, mm, bb)
         if pp < fragmentCollisionProb:
             randSat = nonDestroyed[np.random.randint(0, len(nonDestroyed))]
             satParameters[randSat][:] = np.array([0, 0, 0, 0, 0, 0, -1])
