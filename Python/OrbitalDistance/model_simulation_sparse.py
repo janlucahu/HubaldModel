@@ -1,4 +1,4 @@
-from model_dynamics import *
+from model_dynamics_sparse import *
 from data_handling import *
 
 
@@ -22,7 +22,7 @@ def hubald_model(startingSats, tmax, timestep, aLimits=(200_000, 2_000_000), acc
     Returns:
         collectedData (2darray): Various quantities measured for each iteration step.
     '''
-    sigma = 2000
+    sigma = 10000
     activePercentage = 0.3
     smallFragments = 100_000_000
     largeFragments = 100_000
@@ -30,14 +30,12 @@ def hubald_model(startingSats, tmax, timestep, aLimits=(200_000, 2_000_000), acc
     freeIndices = []
 
     satParameters, satConstants = initialize(startingSats, aLimits, activePercentage, plane=False)
-    distanceMatrix = distance_matrix(startingSats, satParameters, satConstants, acc=accuracy)
-    colProbMatrix = probability_matrix(distanceMatrix, satParameters, sigma, timestep)
-    nonzero = np.nonzero(colProbMatrix)
+    colProbMatrix = sparse_prob_matrix(satParameters, satConstants, sigma, timestep, accuracy)
     counter = 0
     for tt in range(0, tmax, timestep):
         m, b = 1 / 10000 / 12 / 100000000 * timestep, 0
         colProbMatrix, satParameters, satsStruck = small_fragment(colProbMatrix, satParameters, satConstants,
-                                                                  smallFragments, m, b, sigma, accuracy)
+                                                                  smallFragments, m, b, timestep, sigma, accuracy)
 
         m, b = 1 / 10000 / 12 / 100000 * timestep, 0
         fragmentArgs = (colProbMatrix, satParameters, satConstants, smallFragments, largeFragments, freeIndices, m, b)
@@ -49,8 +47,8 @@ def hubald_model(startingSats, tmax, timestep, aLimits=(200_000, 2_000_000), acc
         smallFragments, largeFragments = fragments
 
         colProbMatrix, satParameters, satConstants, freeIndices = deorbit_and_launch(colProbMatrix, satParameters,
-                                                                                     satConstants, aLimits, sigma,
-                                                                                     accuracy, freeIndices)
+                                                                                     satConstants, aLimits, timestep,
+                                                                                     sigma, accuracy, freeIndices)
         nonZeroRows = satParameters[:, 0] != 0
         numberOfSatellites = np.count_nonzero(nonZeroRows)
         print(f'Number of satellites: {numberOfSatellites}    Iteration: {tt}')

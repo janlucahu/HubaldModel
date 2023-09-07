@@ -180,6 +180,27 @@ def find_minimum(parameters1, parameters2, const1, const2, acc=100, repetitions=
 
 
 @jit(nopython=True)
+def collision_probability(sat1, sat2, satParameters, satConstants, sigma, timestep, acc=20):
+    if satParameters[sat1][6] != -1 and satParameters[sat2][6] != -1:
+        monthsToSeconds = 30 * 24 * 60 * 60
+        activeSatellite = satParameters[sat1][6] + satParameters[sat2][6]  # = false if both are inactive
+        synodicPeriod = 1 / np.abs(1 / satParameters[sat1][5] - 1 / satParameters[sat2][5])
+        numberOfApproaches = int(timestep * monthsToSeconds / synodicPeriod)
+        closestDistance = find_minimum(satParameters[sat1], satParameters[sat2], satConstants[sat1],
+                                       satConstants[sat2], acc=acc)
+        if activeSatellite:
+            colProbPerApproach = half_normal(closestDistance, sigma, True)
+        else:
+            colProbPerApproach = half_normal(closestDistance, sigma, False)
+
+        colProb = 1 - (1 - colProbPerApproach) ** numberOfApproaches
+    else:
+        colProb = 0
+
+    return colProb
+
+
+@jit(nopython=True)
 def distance_matrix(nrOfSats, satParameters, satConstants, acc=20):
     '''
     Computes a matrix containing the closest approach distance for each pair of satellites.
@@ -204,8 +225,6 @@ def distance_matrix(nrOfSats, satParameters, satConstants, acc=20):
                                            satConstants[sat1],
                                            satConstants[sat2], acc=acc)
             distanceMatrix[sat1][sat2] = closestDistance
-            if closestDistance < 10000:
-                print(closestDistance)
     return distanceMatrix
 
 
@@ -241,3 +260,18 @@ def probability_matrix(distanceMatrix, satParameters, sigma, timestep):
                 colProb = 1 - (1 - colProbPerApproach) ** numberOfApproaches
                 colProbMatrix[sat1][sat2] = colProb
     return colProbMatrix
+
+
+@jit(nopython=True)
+def sparse_prob_matrix(satParameters, satConstants, sigma, timestep, acc=20):
+    sparseProbList = []
+    probThresh = 10 ** (-10)
+    for sat1 in range(satParameters.shape[0]):
+        print(sat1 + 1, ' of ', satParameters.shape[0])
+        for sat2 in range(sat1):
+            colProb = collision_probability(sat1, sat2, satParameters, satConstants, sigma, timestep, acc)
+            if colProb > probThresh:
+                sparseProbList.extend([sat1, sat2, colProb])
+
+    sparseProbMatrix = np.array(sparseProbList).reshape(-1, 3)
+    return sparseProbMatrix
