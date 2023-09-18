@@ -15,3 +15,6 @@ Python/OrbitalDistance/__pycache__/model_simulation.cpython-37.pyc
 Python/OrbitalDistance/__pycache__/model_simulation.cpython-39.pyc
 Python/OrbitalDistance/__pycache__/probability_distributions.cpython-37.pyc
 Python/OrbitalDistance/__pycache__/probability_distributions.cpython-39.pyc
+Python/Multiprocessing/__pycache__/probability_distributions.cpython-310.pyc
+Python/Multiprocessing/__pycache__/calculations.cpython-310.pyc
+Python/Multiprocessing/__pycache__/collision_probability.cpython-310.pyc
