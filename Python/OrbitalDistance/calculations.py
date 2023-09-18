@@ -1,3 +1,4 @@
+import time
 from probability_distributions import *
 
 
@@ -262,8 +263,9 @@ def probability_matrix(distanceMatrix, satParameters, sigma, timestep):
     return colProbMatrix
 
 
-@jit(nopython=True)
+#@jit(nopython=True)
 def sparse_prob_matrix(satParameters, satConstants, sigma, timestep, acc=20):
+    start = time.time()
     sparseProbList = []
     probThresh = 10 ** (-10)
     for sat1 in range(satParameters.shape[0]):
@@ -274,4 +276,6 @@ def sparse_prob_matrix(satParameters, satConstants, sigma, timestep, acc=20):
                 sparseProbList.extend([sat1, sat2, colProb])
 
     sparseProbMatrix = np.array(sparseProbList).reshape(-1, 3)
+    finish = time.time()
+    print(f"Matrix built after {finish - start}s")
     return sparseProbMatrix
