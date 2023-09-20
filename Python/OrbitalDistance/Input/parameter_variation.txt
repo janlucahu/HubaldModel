@@ -1,0 +1,4 @@
+starting_sats=[100]
+sigma=[2000]
+starts_per_timestep=[5,10]
+deorbits_per_timestep=[1,2,3]

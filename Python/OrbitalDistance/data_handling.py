@@ -1,9 +1,10 @@
 import numpy as np
 import os
+import time
 import matplotlib.pyplot as plt
 
 
-def collect_data(collectedData, tt, collisions, satParameters, numberOfFragments, counter):
+def collect_data(collectedData, tt, collisions, satParameters, smallFragments, largeFragments, counter):
     '''
     Collects various different quantities of the simulation of the kessler syndrome.
 
@@ -30,7 +31,8 @@ def collect_data(collectedData, tt, collisions, satParameters, numberOfFragments
     collectedData[3][counter] = totalSatellites
     collectedData[4][counter] = activeSatellites
     collectedData[5][counter] = inactiveSatellites
-    collectedData[6][counter] = numberOfFragments
+    collectedData[6][counter] = smallFragments
+    collectedData[7][counter] = largeFragments
 
     return collectedData
 
@@ -79,6 +81,5 @@ def plot_data(simulationData):
 
     plt.tight_layout()
     currentDir = os.getcwd()
-    saveDir = os.path.join(currentDir, "output/output.png")
+    saveDir = os.path.join(currentDir, "output/" + time.asctime() + ".png")
     plt.savefig(saveDir, dpi=600)
-    plt.show()

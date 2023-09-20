@@ -7,20 +7,19 @@ def main():
     aLimits = [200_000, 2_000_000]
     activeFraction = 0.3
 
-    satPrameters, satConstants = initialize(1000, aLimits, activeFraction)
+    satParameters, satConstants = initialize(10000, aLimits, activeFraction)
 
-    max_workers = 4  # Specify the maximum number of concurrent processes
-    with concurrent.futures.ProcessPoolExecutor(max_workers=max_workers) as executor:
+    with concurrent.futures.ProcessPoolExecutor() as executor:
         futures = (
             executor.submit(
                 calc_collision_probability,
-                satPrameters[sat1],
-                satPrameters[sat2],
+                satParameters[sat1],
+                satParameters[sat2],
                 satConstants[sat1],
                 satConstants[sat2],
                 2000, 3, 20, 2
             )
-            for sat1 in range(satPrameters.shape[0])
+            for sat1 in range(satParameters.shape[0])
             for sat2 in range(sat1)
         )
 

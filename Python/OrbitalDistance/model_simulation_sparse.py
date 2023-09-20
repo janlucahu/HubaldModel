@@ -2,7 +2,7 @@ from model_dynamics_sparse import *
 from data_handling import *
 
 
-def hubald_model(startingSats, tmax, timestep, aLimits=(200_000, 2_000_000), accuracy=20):
+def hubald_model(input_parameters, accuracy=20):
     '''
     Simulates the development of the population of the simulated orbit after starting with a given amount of satellites.
     The dynamics of the model work as following: Satellites are categorized as either active or inactive, distinguished
@@ -22,15 +22,25 @@ def hubald_model(startingSats, tmax, timestep, aLimits=(200_000, 2_000_000), acc
     Returns:
         collectedData (2darray): Various quantities measured for each iteration step.
     '''
-    sigma = 10000
-    activePercentage = 0.3
-    smallFragments = 100_000_000
-    largeFragments = 100_000
-    collectedData = np.empty((7, tmax // timestep))
+    earthRadius = 6_370_000
+    startingSats = input_parameters.get("starting_sats")
+    sigma = input_parameters.get("sigma")
+    activePercentage = input_parameters.get("active_percentage")
+    aLimits = input_parameters.get("aLimits")
+    aLimits[0] += earthRadius
+    aLimits[1] += earthRadius
+    smallFragments = input_parameters.get("small_fragments")
+    largeFragments = input_parameters.get("large_fragments")
+    timestep = input_parameters.get("timestep")
+    tmax = input_parameters.get("tmax")
+    startsPerTimestep = input_parameters.get("starts_per_timestep")
+    deorbitsPerTimestep = input_parameters.get("deorbits_per_timestep")
+    collectedData = np.empty((8, tmax // timestep))
     freeIndices = []
 
     satParameters, satConstants = initialize(startingSats, aLimits, activePercentage, plane=False)
     colProbMatrix = sparse_prob_matrix(satParameters, satConstants, sigma, timestep, accuracy)
+    print(colProbMatrix)
     counter = 0
     for tt in range(0, tmax, timestep):
         m, b = 1 / 10000 / 12 / 100000000 * timestep, 0
@@ -48,11 +58,13 @@ def hubald_model(startingSats, tmax, timestep, aLimits=(200_000, 2_000_000), acc
 
         colProbMatrix, satParameters, satConstants, freeIndices = deorbit_and_launch(colProbMatrix, satParameters,
                                                                                      satConstants, aLimits, timestep,
-                                                                                     sigma, accuracy, freeIndices)
+                                                                                     sigma, accuracy, freeIndices,
+                                                                                     startsPerTimestep,
+                                                                                     deorbitsPerTimestep)
         nonZeroRows = satParameters[:, 0] != 0
         numberOfSatellites = np.count_nonzero(nonZeroRows)
         print(f'Number of satellites: {numberOfSatellites}    Iteration: {tt}')
-        collectedData = collect_data(collectedData, tt, cols, satParameters, smallFragments, counter)
+        collectedData = collect_data(collectedData, tt, cols, satParameters, smallFragments, largeFragments, counter)
         counter += 1
         print()
     return collectedData, colProbMatrix

@@ -156,7 +156,8 @@ def satellite_collision(colProbMatrix, satParameters, satConstants, smallFragmen
     return colProbMatrix, satParameters, satConstants, fragments, collisionsInIteration, freeIndices
 
 
-def deorbit_and_launch(colProbMatrix, satParameters, satConstants, aLimits, timestep, sigma, accuracy, freeIndices):
+def deorbit_and_launch(colProbMatrix, satParameters, satConstants, aLimits, timestep, sigma, accuracy, freeIndices,
+                       startsPerTimestep, deorbitsPerTimestep):
     '''
     Update collision probability matrix considering deorbitation of old satellites and launch of new ones.
 
@@ -176,8 +177,7 @@ def deorbit_and_launch(colProbMatrix, satParameters, satConstants, aLimits, time
         freeIndices (list): Updated free indices in the collision probability matrix to be reused.
     '''
     probThresh = 10 ** (-10)
-    launchesPerTimestep = 50
-    deorbitingSats = np.random.randint(0, 2)
+    deorbitingSats = np.random.randint(0, deorbitsPerTimestep)
     oldSats = []
     for oldSat in range(len(satParameters)):
         if satParameters[oldSat][6] == 0:
@@ -194,7 +194,7 @@ def deorbit_and_launch(colProbMatrix, satParameters, satConstants, aLimits, time
             mask = np.any(colProbMatrix == randOldSat, axis=1)
             colProbMatrix = colProbMatrix[~mask]
 
-    launchedSats = np.random.randint(0, launchesPerTimestep)
+    launchedSats = np.random.randint(0, startsPerTimestep)
     newPars, newCons = initialize(launchedSats, aLimits, 1, plane=False)
     launchIndices = []
     for ii in range(launchedSats):
