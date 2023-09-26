@@ -18,3 +18,6 @@ Python/OrbitalDistance/__pycache__/probability_distributions.cpython-39.pyc
 Python/Multiprocessing/__pycache__/probability_distributions.cpython-310.pyc
 Python/Multiprocessing/__pycache__/calculations.cpython-310.pyc
 Python/Multiprocessing/__pycache__/collision_probability.cpython-310.pyc
+*.pyc
+Python/OrbitalDistance/__pycache__/data_handling.cpython-310.pyc
+Python/OrbitalDistance/__pycache__/data_handling.cpython-310.pyc

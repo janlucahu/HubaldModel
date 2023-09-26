@@ -99,7 +99,11 @@ def write_results_to_csv(simulationData, fileHeader, output_directory=os.path.ab
     Returns:
         None
     """
-    outputFileNameame = "hubald_simulation_" + time.asctime() + ".csv"
+    currentTime = time.strftime("%a %b %d %H:%M:%S %Y")  # Get the current time in the desired format
+    currentTime = currentTime.replace(" ", "_")  # Replace spaces with underscores
+    currentTime = currentTime[4:]
+    currentTime = currentTime.replace(":", "-")  # Replace colons with hyphens or any other desired character
+    outputFileNameame = "hubald_simulation_" + currentTime + ".csv"
     filepath = os.path.join(output_directory, outputFileNameame)
     transposedData = np.transpose(simulationData)
 

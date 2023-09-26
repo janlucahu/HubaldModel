@@ -1,7 +1,9 @@
-from probability_distributions import *
+import time
+import numpy as np
+from probability_distributions import half_normal
 
 
-def calc_collision_probability(parameters1, parameters2, const1, const2, sigma, timestep, acc=20, repetitions=2):
+def calc_collision_probability(parameters1, parameters2, const1, const2, sigma, timestep, sinE, cosE):
     '''
     Calculates the closest approach of two satellites. The minimum of the 2-dimensional distance function depending on
     the respective orbital anomalies is searched.
@@ -18,16 +20,10 @@ def calc_collision_probability(parameters1, parameters2, const1, const2, sigma, 
     Returns:
         minDistance (float): Closest approach distance between two satellites.
     '''
-    E_1 = np.linspace(0, 2 * np.pi, acc)
-    E_2 = np.linspace(0, 2 * np.pi, acc)
+    start = time.time()
 
-    E1 = E2 = np.empty((acc, acc))
-    for kk in range(acc):
-        for ll in range(acc):
-            E1[kk][ll] = E_1[ll]
-            E2[kk][ll] = E_2[kk]
-    sinE1, cosE1 = np.sin(E1), np.cos(E1)
-    sinE2, cosE2 = np.sin(E2), np.cos(E2)
+    sinE1 = sinE2 = sinE
+    cosE1 = cosE2 = cosE
 
     a1, a2 = parameters1[0], parameters2[0]
     e1, e2 = parameters1[1], parameters2[1]
@@ -53,40 +49,9 @@ def calc_collision_probability(parameters1, parameters2, const1, const2, sigma, 
     y2 = X2 * P21_2 + Y2 * P22_2
     z2 = X2 * P31_2 + Y2 * P32_2
 
-    dist = np.sqrt((x1 - x2) ** 2 + (y1 - y2) ** 2 + (z1 - z2) ** 2)
+    dist = np.linalg.norm(np.array([x1 - x2, y1 - y2, z1 - z2]), axis=0)
 
-    minRow = None
-    minCol = None
-    minDistance = None
-    for rep in range(repetitions):
-        if minRow is None and minCol is None:
-            minDistance = round(np.min(dist), 2)
-        else:
-            ival = 2 / (10 ** rep)
-            E_1 = np.linspace(E_1[minCol] - ival, E_1[minCol] + ival, acc)
-            E_2 = np.linspace(E_2[minRow] - ival, E_2[minRow] + ival, acc)
-            E1, E2 = np.empty((acc, acc)), np.empty((acc, acc))
-            for kk in range(acc):
-                for ll in range(acc):
-                    E1[kk][ll] = E_1[ll]
-                    E2[kk][ll] = E_2[kk]
-            X1 = a1 * (np.cos(E1) - e1)
-            Y1 = a1 * np.sqrt(1 - e1 ** 2) * np.sin(E1)
-
-            x1 = X1 * P11_1 + Y1 * P12_1
-            y1 = X1 * P21_1 + Y1 * P22_1
-            z1 = X1 * P31_1 + Y1 * P32_1
-
-            X2 = a2 * (np.cos(E2) - e2)
-            Y2 = a2 * np.sqrt(1 - e2 ** 2) * np.sin(E2)
-
-            x2 = X2 * P11_2 + Y2 * P12_2
-            y2 = X2 * P21_2 + Y2 * P22_2
-            z2 = X2 * P31_2 + Y2 * P32_2
-
-            dist = np.sqrt((x1 - x2) ** 2 + (y1 - y2) ** 2 + (z1 - z2) ** 2)
-
-            minDistance = round(np.min(dist), 2)
+    minDistance = np.min(dist)
 
     if parameters1[6] != -1 and parameters2[6] != -1:
         monthsToSeconds = 30 * 24 * 60 * 60
@@ -102,5 +67,9 @@ def calc_collision_probability(parameters1, parameters2, const1, const2, sigma, 
         colProb = 1 - (1 - colProbPerApproach) ** numberOfApproaches
     else:
         colProb = 0
+
+    finish = time.time()
+    elapsed_time = np.round(finish - start, 6)
+    print(f"Finished after {elapsed_time}s")
 
     return colProb

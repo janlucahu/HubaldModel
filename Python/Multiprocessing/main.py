@@ -1,40 +1,39 @@
 import time
-import concurrent.futures
-from calculations import *
+import multiprocessing
+import numpy as np
+from calculations import initialize
 from collision_probability import calc_collision_probability
+
 
 def main():
     aLimits = [200_000, 2_000_000]
     activeFraction = 0.3
+    satParameters, satConstants = initialize(20, aLimits, activeFraction)
+    sigma = 2000
+    timestep = 3
+    acc = 20
 
-    satParameters, satConstants = initialize(10000, aLimits, activeFraction)
+    E_1 = np.linspace(0, 2 * np.pi, acc)
+    E_2 = np.linspace(0, 2 * np.pi, acc)
 
-    with concurrent.futures.ProcessPoolExecutor() as executor:
-        futures = (
-            executor.submit(
-                calc_collision_probability,
-                satParameters[sat1],
-                satParameters[sat2],
-                satConstants[sat1],
-                satConstants[sat2],
-                2000, 3, 20, 2
-            )
-            for sat1 in range(satParameters.shape[0])
-            for sat2 in range(sat1)
-        )
+    E1, E2 = np.meshgrid(E_1, E_2)
+    sinE, cosE = np.sin(E1), np.cos(E1)
 
-        print("Tasks submitted")
+    processes = []
+    for sat1 in range(satParameters.shape[0]):
+        for sat2 in range(sat1):
+            p = multiprocessing.Process(target=calc_collision_probability, args=[satParameters[sat1], satParameters[sat2],
+                                                                                 satConstants[sat1], satConstants[sat2],
+                                                                                 sigma, timestep, sinE, cosE])
+            p.start()
+            processes.append(p)
 
-        for future in concurrent.futures.as_completed(futures):
-            result = future.result()
-            if result is not None and result > 10 ** (-10):
-                print(result)
-
-        print("Finished")
+    for process in processes:
+        process.join()
 
 
 if __name__ == '__main__':
     start = time.time()
     main()
     finish = time.time()
-    print(f"Process finished after {finish - start}s")
+    print(f"Finalized after {finish - start}s")

@@ -1,4 +1,5 @@
 import numpy as np
+np.__version__ = '1.24'
 import matplotlib.pyplot as plt
 from numba import jit
 

@@ -1,4 +1,4 @@
-from probability_distributions import *
+import numpy as np
 
 
 EMIN, EMAX = 0, 0.3
