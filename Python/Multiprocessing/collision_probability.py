@@ -70,6 +70,6 @@ def calc_collision_probability(parameters1, parameters2, const1, const2, sigma, 
 
     finish = time.time()
     elapsed_time = np.round(finish - start, 6)
-    print(f"Finished after {elapsed_time}s")
+    #print(f"Finished after {elapsed_time}s")
 
     return colProb

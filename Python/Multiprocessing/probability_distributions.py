@@ -1,7 +1,9 @@
 import numpy as np
 import matplotlib.pyplot as plt
+from numba import jit
 
 
+@jit(nopython=True)
 def half_normal(xx, sigma, active):
     '''
     Half normal distribution used for satellite collision probability.
@@ -21,6 +23,7 @@ def half_normal(xx, sigma, active):
     return yy * (xx >= 0)
 
 
+@jit(nopython=True)
 def logistic_distribution(xx, gg, dd, cc):
     '''
     Logistic distribution used for calculating collision probabilities with fragments.
@@ -38,6 +41,7 @@ def logistic_distribution(xx, gg, dd, cc):
     return yy
 
 
+@jit(nopython=True)
 def linear_distribution(xx, mm, bb):
     yy = mm * xx + bb
     return yy

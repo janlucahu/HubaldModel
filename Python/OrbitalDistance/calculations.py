@@ -1,5 +1,7 @@
 import time
-from probability_distributions import *
+import numpy as np
+from numba import jit
+from probability_distributions import half_normal
 
 
 EMIN, EMAX = 0, 0.3
@@ -144,38 +146,7 @@ def find_minimum(parameters1, parameters2, const1, const2, acc=100, repetitions=
 
     dist = np.sqrt((x1 - x2) ** 2 + (y1 - y2) ** 2 + (z1 - z2) ** 2)
 
-    minRow = None
-    minCol = None
-    minDistance = None
-    for rep in range(repetitions):
-        if minRow is None and minCol is None:
-            minDistance = round(np.min(dist), 2)
-        else:
-            ival = 2 / (10 ** rep)
-            E_1 = np.linspace(E_1[minCol] - ival, E_1[minCol] + ival, acc)
-            E_2 = np.linspace(E_2[minRow] - ival, E_2[minRow] + ival, acc)
-            E1, E2 = np.empty((acc, acc)), np.empty((acc, acc))
-            for kk in range(acc):
-                for ll in range(acc):
-                    E1[kk][ll] = E_1[ll]
-                    E2[kk][ll] = E_2[kk]
-            X1 = a1 * (np.cos(E1) - e1)
-            Y1 = a1 * np.sqrt(1 - e1 ** 2) * np.sin(E1)
-
-            x1 = X1 * P11_1 + Y1 * P12_1
-            y1 = X1 * P21_1 + Y1 * P22_1
-            z1 = X1 * P31_1 + Y1 * P32_1
-
-            X2 = a2 * (np.cos(E2) - e2)
-            Y2 = a2 * np.sqrt(1 - e2 ** 2) * np.sin(E2)
-
-            x2 = X2 * P11_2 + Y2 * P12_2
-            y2 = X2 * P21_2 + Y2 * P22_2
-            z2 = X2 * P31_2 + Y2 * P32_2
-
-            dist = np.sqrt((x1 - x2) ** 2 + (y1 - y2) ** 2 + (z1 - z2) ** 2)
-
-            minDistance = round(np.min(dist), 2)
+    minDistance = np.min(dist)
 
     return minDistance
 

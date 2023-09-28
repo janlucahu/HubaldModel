@@ -1,5 +1,8 @@
-from model_dynamics_sparse import *
-from data_handling import *
+import time
+import numpy as np
+from model_dynamics_sparse import small_fragment, large_fragment, satellite_collision, deorbit_and_launch
+from data_handling import collect_data
+from calculations import initialize, sparse_prob_matrix
 
 
 def hubald_model(input_parameters, accuracy=20):
@@ -38,9 +41,11 @@ def hubald_model(input_parameters, accuracy=20):
     collectedData = np.empty((8, tmax // timestep))
     freeIndices = []
 
+    start = time.time()
     satParameters, satConstants = initialize(startingSats, aLimits, activePercentage, plane=False)
     colProbMatrix = sparse_prob_matrix(satParameters, satConstants, sigma, timestep, accuracy)
-    print(colProbMatrix)
+    finish = time.time()
+    print(f"Matrix built after {finish - start}s")
     counter = 0
     for tt in range(0, tmax, timestep):
         m, b = 1 / 10000 / 12 / 100000000 * timestep, 0

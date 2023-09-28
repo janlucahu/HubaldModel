@@ -1,4 +1,6 @@
-from calculations import *
+import numpy as np
+from probability_distributions import linear_distribution
+from calculations import initialize, collision_probability
 
 
 def small_fragment(colProbMatrix, satParameters, satConstants, smallFragments, mm, bb, timestep, sigma, accuracy):
