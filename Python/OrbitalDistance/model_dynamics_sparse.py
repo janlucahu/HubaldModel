@@ -36,7 +36,7 @@ def small_fragment(colProbMatrix, satParameters, satConstants, smallFragments, m
             struckSat, act = np.where(satParameters == 1)
             randSat = struckSat[np.random.randint(0, len(struckSat))]
             satParameters[randSat][6] = 0
-            print(f'Satellite {randSat} struck by fragment')
+            #print(f'Satellite {randSat} struck by fragment')
             satellitesStruck += 1
 
             mask = np.any(colProbMatrix == randSat, axis=1)
@@ -94,7 +94,7 @@ def large_fragment(colProbMatrix, satParameters, satConstants, smallFragments, l
 
             smallFragments += 50_000
             largeFragments += 200
-            print(f'Satellite {randSat} struck by large fragment')
+            #print(f'Satellite {randSat} struck by large fragment')
             satellitesStruck += 1
             freeIndices.append(randSat)
     fragments = (smallFragments, largeFragments)
@@ -135,13 +135,13 @@ def satellite_collision(colProbMatrix, satParameters, satConstants, smallFragmen
             freeIndices.append(sat1)
             freeIndices.append(sat2)
 
-            print(
-                '*****************************************************************************************************')
-            print(f'Collision between satellites {sat2} and {sat1},   '
-                  f'status: {satParameters[sat1][6]} {satParameters[sat2][6]},    '
-                  f'iteration {tt} of {tmax}')
-            print(
-                '*****************************************************************************************************')
+            #print(
+            #    '*****************************************************************************************************')
+            #print(f'Collision between satellites {sat2} and {sat1},   '
+            #      f'status: {satParameters[sat1][6]} {satParameters[sat2][6]},    '
+            #      f'iteration {tt} of {tmax}')
+            #print(
+            #    '*****************************************************************************************************')
 
             satParameters[sat1][:] = np.array([0, 0, 0, 0, 0, 0, -1])
             satParameters[sat2][:] = np.array([0, 0, 0, 0, 0, 0, -1])
@@ -189,7 +189,7 @@ def deorbit_and_launch(colProbMatrix, satParameters, satConstants, aLimits, time
             randIndex = np.random.randint(0, len(oldSats))
             randOldSat = oldSats[randIndex]
             del oldSats[randIndex]
-            print(f'Deorbitation of satellite {randOldSat}')
+            #print(f'Deorbitation of satellite {randOldSat}')
             satParameters[randOldSat][:] = np.array([0, 0, 0, 0, 0, 0, -1])
             freeIndices.append(randOldSat)
 
@@ -227,7 +227,7 @@ def deorbit_and_launch(colProbMatrix, satParameters, satConstants, aLimits, time
                     newRow = np.array([currentSatNr, sat2, colProb])
                     colProbMatrix = np.vstack((colProbMatrix, newRow))
 
-    if len(launchIndices) > 0:
-        print(f'Launch of new satellites: {launchIndices}')
+    #if len(launchIndices) > 0:
+        #print(f'Launch of new satellites: {launchIndices}')
 
     return colProbMatrix, satParameters, satConstants, freeIndices

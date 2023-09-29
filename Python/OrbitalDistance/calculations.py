@@ -238,8 +238,9 @@ def probability_matrix(distanceMatrix, satParameters, sigma, timestep):
 def sparse_prob_matrix(satParameters, satConstants, sigma, timestep, acc=20):
     sparseProbList = []
     probThresh = 10 ** (-10)
+    print("Building probability matrix")
     for sat1 in range(satParameters.shape[0]):
-        print(sat1 + 1, ' of ', satParameters.shape[0])
+        #print(sat1 + 1, ' of ', satParameters.shape[0])
         for sat2 in range(sat1):
             colProb = collision_probability(sat1, sat2, satParameters, satConstants, sigma, timestep, acc)
             if colProb > probThresh:

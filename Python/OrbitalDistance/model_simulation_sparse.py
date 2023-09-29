@@ -28,6 +28,7 @@ def hubald_model(input_parameters, accuracy=20):
     earthRadius = 6_370_000
     startingSats = input_parameters.get("starting_sats")
     sigma = input_parameters.get("sigma")
+    fragmentColProb = input_parameters.get("fragmentCollisionProbability")
     activePercentage = input_parameters.get("active_percentage")
     aLimits = input_parameters.get("aLimits")
     aLimits[0] += earthRadius
@@ -38,7 +39,7 @@ def hubald_model(input_parameters, accuracy=20):
     tmax = input_parameters.get("tmax")
     startsPerTimestep = input_parameters.get("starts_per_timestep")
     deorbitsPerTimestep = input_parameters.get("deorbits_per_timestep")
-    collectedData = np.empty((8, tmax // timestep))
+    collectedData = np.empty((10, tmax // timestep))
     freeIndices = []
 
     start = time.time()
@@ -48,13 +49,18 @@ def hubald_model(input_parameters, accuracy=20):
     print(f"Matrix built after {finish - start}s")
     counter = 0
     for tt in range(0, tmax, timestep):
-        m, b = 1 / 10000 / 12 / 100000000 * timestep, 0
+        print(f"Iteration {tt} of {tmax}")
+        # m, b = 1 / 10000 / 12 / 100000000 * timestep, 0
+        m, b = fragmentColProb / 12 / 100000000 * timestep, 0
         colProbMatrix, satParameters, satsStruck = small_fragment(colProbMatrix, satParameters, satConstants,
                                                                   smallFragments, m, b, timestep, sigma, accuracy)
+        smallFragmentCols = satsStruck
 
-        m, b = 1 / 10000 / 12 / 100000 * timestep, 0
+        # m, b = 1 / 10000 / 12 / 100000 * timestep, 0
+        m, b = fragmentColProb /  12 / 100000 * timestep, 0
         fragmentArgs = (colProbMatrix, satParameters, satConstants, smallFragments, largeFragments, freeIndices, m, b)
         colProbMatrix, satParameters, satConstants, fragments, satsStruck, freeIndices = large_fragment(*fragmentArgs)
+        largeFragmentsCols = satsStruck
         smallFragments, largeFragments = fragments
 
         colArgs = (colProbMatrix, satParameters, satConstants, smallFragments, largeFragments, freeIndices, tt, tmax)
@@ -69,7 +75,8 @@ def hubald_model(input_parameters, accuracy=20):
         nonZeroRows = satParameters[:, 0] != 0
         numberOfSatellites = np.count_nonzero(nonZeroRows)
         print(f'Number of satellites: {numberOfSatellites}    Iteration: {tt}')
-        collectedData = collect_data(collectedData, tt, cols, satParameters, smallFragments, largeFragments, counter)
+        collectedData = collect_data(collectedData, tt, cols, satParameters, smallFragments, largeFragments,
+                                     smallFragmentCols, largeFragmentsCols, counter)
         counter += 1
         print()
     return collectedData, colProbMatrix

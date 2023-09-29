@@ -4,7 +4,8 @@ import time
 import matplotlib.pyplot as plt
 
 
-def collect_data(collectedData, tt, collisions, satParameters, smallFragments, largeFragments, counter):
+def collect_data(collectedData, tt, collisions, satParameters, smallFragments, largeFragments, smallFragmentCols,
+                 largeFragmentCols, counter):
     '''
     Collects various different quantities of the simulation of the kessler syndrome.
 
@@ -33,6 +34,8 @@ def collect_data(collectedData, tt, collisions, satParameters, smallFragments, l
     collectedData[5][counter] = inactiveSatellites
     collectedData[6][counter] = smallFragments
     collectedData[7][counter] = largeFragments
+    collectedData[8][counter] = smallFragmentCols
+    collectedData[9][counter] = largeFragmentCols
 
     return collectedData
 

@@ -1,4 +1,5 @@
 import time
+import multiprocessing
 import numpy as np
 from calculations import initialize
 from collision_probability import calc_collision_probability
@@ -37,17 +38,19 @@ def main2():
     print("Test parallel calculation")
     aLimits = [200_000, 2_000_000]
     activeFraction = 0.3
-    satParameters, satConstants = initialize(10000, aLimits, activeFraction)
+    satParameters, satConstants = initialize(20000, aLimits, activeFraction)
     sigma = 2000
     timestep = 3
     acc = 20
 
-    numberOfWorkers = 8
+    availableCores = multiprocessing.cpu_count()
+    print("Number of CPU cores:", availableCores)
+    numberOfWorkers = availableCores
     calculationSlices = calculation_slices(satParameters, numberOfWorkers)
     for ii in range(len(calculationSlices) - 1):
         workerCalculations = (calculationSlices[ii + 1] ** 2 / 2 - calculationSlices[ii + 1] / 2 -
                               (calculationSlices[ii] ** 2 / 2 - calculationSlices[ii] / 2))
-        print(f"Worker {ii}: Calculations: {workerCalculations}")
+        print(f"Worker {ii + 1}: Calculations: {workerCalculations}")
     with Pool() as pool:
         processes = []
         for ii in range(len(calculationSlices) - 1):
@@ -65,7 +68,7 @@ def test_non_parallel():
     print("Test non parallel calculation")
     aLimits = [200_000, 2_000_000]
     activeFraction = 0.3
-    satParameters, satConstants = initialize(10000, aLimits, activeFraction)
+    satParameters, satConstants = initialize(5000, aLimits, activeFraction)
     sigma = 2000
     timestep = 3
     acc = 20
@@ -75,6 +78,6 @@ def test_non_parallel():
 
 if __name__ == '__main__':
     start = time.time()
-    test_non_parallel()
+    main2()
     finish = time.time()
     print(f"Finalized after {finish - start}s")

@@ -2,7 +2,6 @@
 import numpy as np
 from numba import jit
 from probability_distributions import half_normal
-from calculations import initialize
 
 
 @jit(nopython=True)
