@@ -85,26 +85,43 @@ def collision_probability(sat1, sat2, satParameters, satConstants, sigma, timest
     return colProb
 
 
-@jit(nopython=True)
-def calculation_slices(satParameters, numberOfWorkers):
-    numberOfCalculations = int(satParameters.shape[0] ** 2 / 2 - satParameters.shape[0] / 2)
+#@jit(nopython=True)
+def calculation_slices(satIndices, numberOfWorkers):
+    numberOfCalculations = 0
+    for ii, ind in enumerate(satIndices):
+        numberOfCalculations += ind
+        if ii != len(satIndices) - 1:
+            numberOfCalculations += satIndices[ii + 1] - ind - 1
     calculationsPerWorker = np.ceil(numberOfCalculations / numberOfWorkers)
     print(f"calculations per worker: {int(calculationsPerWorker)}")
-    slices = [0]
-    for NN in range(satParameters.shape[0]):
-        sliceCalculations = int(NN ** 2 / 2 - NN / 2) - int(slices[-1] ** 2 / 2 - slices[-1] / 2)
-        if sliceCalculations >= calculationsPerWorker:
-            slices.append(NN)
-    if not slices[-1] == satParameters.shape[0]:
-        slices.append(satParameters.shape[0])
+    slices = []
+    indices = []
+    sliceCalculations = 0
+    for ii, ind in enumerate(satIndices):
+        if sliceCalculations < calculationsPerWorker:
+            indices.append(ind)
+            sliceCalculations += ind
+            if ii != len(satIndices) - 1:
+                numberOfCalculations += satIndices[ii + 1] - ind - 1
+            if ind == satIndices[-1]:
+                slices.append(indices)
+        else:
+            slices.append(indices)
+            sliceCalculations = 0
+            indices = [ind]
+
+    lastIndice = satIndices[-1]
+    #while slices[-1][-1] != lastIndice:
+    #    slices[-1].append(slices[-1][-1] + 1)
+
     return slices
 
 
 @jit(nopython=True)
-def sparse_prob_matrix(satParameters, satConstants, sigma, timestep, lowerBound, upperBound, worker, acc=20):
+def sparse_prob_matrix(satParameters, satConstants, sigma, timestep, satIndices, acc=20):
     sparseProbList = []
     probThresh = 10 ** (-10)
-    for sat1 in range(lowerBound, upperBound, 1):
+    for sat1 in satIndices:
         for sat2 in range(sat1):
             colProb = collision_probability(sat1, sat2, satParameters, satConstants, sigma, timestep, acc)
             if colProb > probThresh:

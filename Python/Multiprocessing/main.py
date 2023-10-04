@@ -38,7 +38,7 @@ def main2():
     print("Test parallel calculation")
     aLimits = [200_000, 2_000_000]
     activeFraction = 0.3
-    satParameters, satConstants = initialize(20000, aLimits, activeFraction)
+    satParameters, satConstants = initialize(2000, aLimits, activeFraction)
     sigma = 2000
     timestep = 3
     acc = 20
@@ -46,10 +46,16 @@ def main2():
     availableCores = multiprocessing.cpu_count()
     print("Number of CPU cores:", availableCores)
     numberOfWorkers = availableCores
-    calculationSlices = calculation_slices(satParameters, numberOfWorkers)
+    satIndices = []
+    for ii in range(satParameters.shape[0]):
+        satIndices.append(ii)
+    calculationSlices = calculation_slices(satIndices, numberOfWorkers)
     for ii in range(len(calculationSlices) - 1):
-        workerCalculations = (calculationSlices[ii + 1] ** 2 / 2 - calculationSlices[ii + 1] / 2 -
-                              (calculationSlices[ii] ** 2 / 2 - calculationSlices[ii] / 2))
+        if ii == 0:
+            workerCalculations = calculationSlices[ii][-1] ** 2 / 2 - calculationSlices[ii][-1]
+        else:
+            workerCalculations = (calculationSlices[ii][-1] ** 2 / 2 - calculationSlices[ii][-1] / 2 -
+                                  (calculationSlices[ii -1][-1] ** 2 / 2 - calculationSlices[ii - 1][-1] / 2))
         print(f"Worker {ii + 1}: Calculations: {workerCalculations}")
     with Pool() as pool:
         processes = []
