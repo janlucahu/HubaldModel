@@ -46,28 +46,26 @@ def main2():
     availableCores = multiprocessing.cpu_count()
     print("Number of CPU cores:", availableCores)
     numberOfWorkers = availableCores
-    satIndices = []
-    for ii in range(satParameters.shape[0]):
+    satIndices = [20, 77, 564]
+    for ii in range(800, satParameters.shape[0], 1):
         satIndices.append(ii)
     calculationSlices = calculation_slices(satIndices, numberOfWorkers)
-    for ii in range(len(calculationSlices) - 1):
-        if ii == 0:
-            workerCalculations = calculationSlices[ii][-1] ** 2 / 2 - calculationSlices[ii][-1]
-        else:
-            workerCalculations = (calculationSlices[ii][-1] ** 2 / 2 - calculationSlices[ii][-1] / 2 -
-                                  (calculationSlices[ii -1][-1] ** 2 / 2 - calculationSlices[ii - 1][-1] / 2))
-        print(f"Worker {ii + 1}: Calculations: {workerCalculations}")
+    results = []
     with Pool() as pool:
         processes = []
-        for ii in range(len(calculationSlices) - 1):
-            lower = calculationSlices[ii]
-            upper = calculationSlices[ii + 1]
-            p = pool.apply_async(sparse_prob_matrix, args=[satParameters, satConstants, sigma, timestep, lower, upper,
-                                                           ii, acc])
+        for sliceIndices in calculationSlices:
+            p = pool.apply_async(sparse_prob_matrix, args=[satParameters, satConstants, sigma, timestep,
+                                                           sliceIndices, acc])
             processes.append(p)
 
         for process in processes:
-            process.get()
+            result = process.get()  # Get the result from each process
+            results.append(result)  # Store the result in the results list
+
+        # Stack the results into one big array
+        probMatrix = np.concatenate(results, axis=0)
+
+        return probMatrix
 
 
 def test_non_parallel():
@@ -84,6 +82,7 @@ def test_non_parallel():
 
 if __name__ == '__main__':
     start = time.time()
-    main2()
+    probMatrix = main2()
+    print(probMatrix)
     finish = time.time()
     print(f"Finalized after {finish - start}s")

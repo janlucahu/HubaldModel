@@ -92,10 +92,12 @@ def calculation_slices(satIndices, numberOfWorkers):
         numberOfCalculations += ind
         if ii != len(satIndices) - 1:
             numberOfCalculations += satIndices[ii + 1] - ind - 1
+    print(f"Total number of calculations: {numberOfCalculations}")
     calculationsPerWorker = np.ceil(numberOfCalculations / numberOfWorkers)
     print(f"calculations per worker: {int(calculationsPerWorker)}")
     slices = []
     indices = []
+    numCalculations = []
     sliceCalculations = 0
     for ii, ind in enumerate(satIndices):
         if sliceCalculations < calculationsPerWorker:
@@ -105,15 +107,15 @@ def calculation_slices(satIndices, numberOfWorkers):
                 numberOfCalculations += satIndices[ii + 1] - ind - 1
             if ind == satIndices[-1]:
                 slices.append(indices)
+                numCalculations.append(sliceCalculations)
         else:
             slices.append(indices)
+            numCalculations.append(sliceCalculations)
             sliceCalculations = 0
             indices = [ind]
 
-    lastIndice = satIndices[-1]
-    #while slices[-1][-1] != lastIndice:
-    #    slices[-1].append(slices[-1][-1] + 1)
-
+    for ii, calculations in enumerate(numCalculations):
+        print(f"Worker {ii + 1}: Calculations: {calculations}")
     return slices
 
 
