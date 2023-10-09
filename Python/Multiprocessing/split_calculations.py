@@ -119,7 +119,7 @@ def calculation_slices(satIndices, numberOfWorkers):
     return slices
 
 
-@jit(nopython=True)
+#@jit(nopython=True)
 def sparse_prob_matrix(satParameters, satConstants, sigma, timestep, satIndices, acc=20):
     sparseProbList = []
     probThresh = 10 ** (-10)

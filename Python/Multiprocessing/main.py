@@ -34,20 +34,14 @@ def main():
             process.get()
 
 
-def main2():
+def main2(satParameters, satConstants, sigma, timestep, acc):
     print("Test parallel calculation")
-    aLimits = [200_000, 2_000_000]
-    activeFraction = 0.3
-    satParameters, satConstants = initialize(2000, aLimits, activeFraction)
-    sigma = 2000
-    timestep = 3
-    acc = 20
 
     availableCores = multiprocessing.cpu_count()
     print("Number of CPU cores:", availableCores)
     numberOfWorkers = availableCores
-    satIndices = [20, 77, 564]
-    for ii in range(800, satParameters.shape[0], 1):
+    satIndices = []
+    for ii in range(0, satParameters.shape[0], 1):
         satIndices.append(ii)
     calculationSlices = calculation_slices(satIndices, numberOfWorkers)
     results = []
@@ -68,21 +62,68 @@ def main2():
         return probMatrix
 
 
-def test_non_parallel():
+def test_non_parallel(satParameters, satConstants, sigma, timestep, acc):
     print("Test non parallel calculation")
+
+    satIndices = []
+    for ii in range(0, satParameters.shape[0], 1):
+        satIndices.append(ii)
+    probMatrix = sparse_prob_matrix(satParameters, satConstants, sigma, timestep, satIndices, acc)
+
+    return probMatrix
+
+
+def benchmark_computation(startingSats):
     aLimits = [200_000, 2_000_000]
     activeFraction = 0.3
-    satParameters, satConstants = initialize(5000, aLimits, activeFraction)
     sigma = 2000
     timestep = 3
     acc = 20
 
-    probMatrix = sparse_prob_matrix(satParameters, satConstants, sigma, timestep, 0, satParameters.shape[0], 0, acc)
+    single = []
+    multi = []
+    singleArr = []
+    multiArr = []
+    for sats in startingSats:
+        satParameters, satConstants = initialize(sats, aLimits, activeFraction)
+
+        start = time.time()
+        probMatrix = test_non_parallel(satParameters, satConstants, sigma, timestep, acc)
+        print(probMatrix.shape[0])
+        finish = time.time()
+        elapsedTime = finish - start
+        print(f"Finalized after {elapsedTime}s")
+        single.append(elapsedTime)
+        singleArr.append(probMatrix.shape[0])
+        print("Single-core computation:")
+        print(single)
+        print(singleArr)
+
+        start = time.time()
+        probMatrix = main2(satParameters, satConstants, sigma, timestep, acc)
+        print(probMatrix.shape[0])
+        finish = time.time()
+        elapsedTime = finish - start
+        print(f"Finalized after {elapsedTime}s")
+        multi.append(elapsedTime)
+        multiArr.append(probMatrix.shape[0])
+        print("Multi-core computation:")
+        print(multi)
+        print(multiArr)
+
+    return single, singleArr, multi, multiArr
 
 
 if __name__ == '__main__':
-    start = time.time()
-    probMatrix = main2()
-    print(probMatrix)
-    finish = time.time()
-    print(f"Finalized after {finish - start}s")
+    startingSats = [1000, 2000, 5000, 10000, 15000, 20000, 30000, 40000, 50000]
+    single, singleArr, multi, multiArr = benchmark_computation(startingSats)
+
+    print("")
+    print("Satellites")
+    print(startingSats)
+    print("Single-core computation:")
+    print(single)
+    print(singleArr)
+    print("Multi-core computation:")
+    print(multi)
+    print(multiArr)
