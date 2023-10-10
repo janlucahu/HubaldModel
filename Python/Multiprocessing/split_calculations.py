@@ -2,6 +2,7 @@
 import numpy as np
 from numba import jit
 from probability_distributions import half_normal
+from multiprocessing import Pool
 
 
 @jit(nopython=True)
@@ -132,3 +133,38 @@ def sparse_prob_matrix(satParameters, satConstants, sigma, timestep, satIndices,
     sparseProbMatrix = np.array(sparseProbList).reshape(-1, 3)
 
     return sparseProbMatrix
+
+
+def sparse_prob_matrix2(satParameters, satConstants, sigma, timestep, satIndices, acc=20):
+    sparseProbList = []
+    probThresh = 10 ** (-10)
+    for ii, sat1 in enumerate(satIndices):
+        for sat2 in range(satParameters.shape[0]):
+            if sat2 not in satIndices[0:ii]:
+
+                colProb = collision_probability(sat1, sat2, satParameters, satConstants, sigma, timestep, acc)
+                if colProb > probThresh:
+                    sparseProbList.extend([sat1, sat2, colProb])
+
+    sparseProbMatrix = np.array(sparseProbList).reshape(-1, 3)
+
+    return sparseProbMatrix
+
+
+def build_prob_matrix(calculationSlices, satParameters, satConstants, sigma, timestep, acc):
+    results = []
+    with Pool() as pool:
+        processes = []
+        for sliceIndices in calculationSlices:
+            p = pool.apply_async(sparse_prob_matrix, args=[satParameters, satConstants, sigma, timestep,
+                                                           sliceIndices, acc])
+            processes.append(p)
+
+        for process in processes:
+            result = process.get()  # Get the result from each process
+            results.append(result)  # Store the result in the results list
+
+        # Stack the results into one big array
+        probMatrix = np.concatenate(results, axis=0)
+
+    return probMatrix
