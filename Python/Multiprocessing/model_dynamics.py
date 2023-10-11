@@ -1,8 +1,7 @@
 import numpy as np
 from probability_distributions import linear_distribution
-from calculations import initialize, collision_probability
-from split_calculations import calculation_slices, sparse_prob_matrix, build_prob_matrix
-from multiprocessing import Pool
+from calculations import initialize
+from split_calculations import calculation_slices, build_prob_matrix, collision_probability
 
 
 def small_fragment(colProbMatrix, satParameters, satConstants, smallFragments, mm, bb, timestep, sigma, accuracy):
@@ -99,7 +98,6 @@ def satellite_collision(colProbMatrix, satParameters, satConstants, smallFragmen
 def deorbit_and_launch(colProbMatrix, satParameters, satConstants, aLimits, timestep, sigma, accuracy, freeIndices,
                        startsPerTimestep, deorbitsPerTimestep, numberOfWorkers):
 
-    probThresh = 10 ** (-10)
     deorbitingSats = np.random.randint(0, deorbitsPerTimestep)
     oldSats = []
     for oldSat in range(len(satParameters)):
@@ -117,10 +115,12 @@ def deorbit_and_launch(colProbMatrix, satParameters, satConstants, aLimits, time
             mask = np.any(colProbMatrix == randOldSat, axis=1)
             colProbMatrix = colProbMatrix[~mask]
 
-    launchedSats = np.random.randint(0, startsPerTimestep)
+    launchedSats = np.random.randint(1, startsPerTimestep)
     newPars, newCons = initialize(launchedSats, aLimits, 1, plane=False)
     launchIndices = []
     satIndices = []
+
+    print(f"Sats launched: {launchedSats}")
 
     if len(freeIndices) > 0 and len(freeIndices) >= launchedSats:
         satIndices = freeIndices[0:launchedSats]
@@ -137,13 +137,15 @@ def deorbit_and_launch(colProbMatrix, satParameters, satConstants, aLimits, time
         colProbMatrix = np.vstack((colProbMatrix, probMatrix))
 
     elif len(freeIndices) > 0 and len(freeIndices) < launchedSats:
-        satIndices = freeIndices
+        satIndices = []
+        index = 0
         for ii, newSat in enumerate(freeIndices):
             satParameters[newSat] = newPars[ii]
             satConstants[newSat] = newCons[ii]
+            satIndices.append(newSat)
         for ii in range(launchedSats - len(freeIndices)):
             currentSatNr = satParameters.shape[0]
-            index = launchedSats - len(freeIndices) + ii
+            index = len(freeIndices) + ii
             satParameters = np.vstack((satParameters, newPars[index]))
             satConstants = np.vstack((satConstants, newCons[index]))
             satIndices.append(currentSatNr)
@@ -151,8 +153,7 @@ def deorbit_and_launch(colProbMatrix, satParameters, satConstants, aLimits, time
         calculationSlices = calculation_slices(satIndices, numberOfWorkers)
         launchIndices = satIndices
 
-        probMatrix = build_prob_matrix(calculationSlices, satParameters, satConstants, sigma, timestep,
-                                       accuracy)
+        probMatrix = build_prob_matrix(calculationSlices, satParameters, satConstants, sigma, timestep, accuracy)
         colProbMatrix = np.vstack((colProbMatrix, probMatrix))
 
     else:
@@ -162,14 +163,14 @@ def deorbit_and_launch(colProbMatrix, satParameters, satConstants, aLimits, time
             satParameters = np.vstack((satParameters, newPars[ii]))
             satConstants = np.vstack((satConstants, newCons[ii]))
             satIndices.append(currentSatNr)
-            calculation_slices(satIndices, numberOfWorkers)
-            launchIndices = satIndices
 
-            probMatrix = build_prob_matrix(calculationSlices, satParameters, satConstants, sigma, timestep,
-                                           accuracy)
-            colProbMatrix = np.vstack((colProbMatrix, probMatrix))
+        launchIndices = satIndices
+        calculationSlices = calculation_slices(satIndices, numberOfWorkers)
+        probMatrix = build_prob_matrix(calculationSlices, satParameters, satConstants, sigma, timestep,
+                                       accuracy)
+        colProbMatrix = np.vstack((colProbMatrix, probMatrix))
 
-    #if len(launchIndices) > 0:
-        #print(f'Launch of new satellites: {launchIndices}')
+    if len(launchIndices) > 0:
+        print(f'Launch of new satellites: {launchIndices}')
 
     return colProbMatrix, satParameters, satConstants, freeIndices

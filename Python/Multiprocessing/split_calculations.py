@@ -140,7 +140,7 @@ def sparse_prob_matrix2(satParameters, satConstants, sigma, timestep, satIndices
     probThresh = 10 ** (-10)
     for ii, sat1 in enumerate(satIndices):
         for sat2 in range(satParameters.shape[0]):
-            if sat2 not in satIndices[0:ii]:
+            if sat2 not in satIndices[0:ii] and sat1 != sat2:
 
                 colProb = collision_probability(sat1, sat2, satParameters, satConstants, sigma, timestep, acc)
                 if colProb > probThresh:
@@ -156,7 +156,7 @@ def build_prob_matrix(calculationSlices, satParameters, satConstants, sigma, tim
     with Pool() as pool:
         processes = []
         for sliceIndices in calculationSlices:
-            p = pool.apply_async(sparse_prob_matrix, args=[satParameters, satConstants, sigma, timestep,
+            p = pool.apply_async(sparse_prob_matrix2, args=[satParameters, satConstants, sigma, timestep,
                                                            sliceIndices, acc])
             processes.append(p)
 
