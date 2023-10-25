@@ -40,7 +40,7 @@ def collect_data(collectedData, tt, collisions, satParameters, smallFragments, l
     return collectedData
 
 
-def plot_data(simulationData):
+def plot_data(simulationData, saveDir):
     '''
     Plots the gathered simulation data.
     Args:
@@ -83,10 +83,5 @@ def plot_data(simulationData):
     axs[1, 1].set_title('Fragments over time')
 
     plt.tight_layout()
-    currentDir = os.getcwd()
-    currentTime = time.strftime("%a %b %d %H:%M:%S %Y")  # Get the current time in the desired format
-    currentTime = currentTime.replace(" ", "_")  # Replace spaces with underscores
-    currentTime = currentTime[4:]
-    currentTime = currentTime.replace(":", "-")  # Replace colons with hyphens or any other desired character
-    saveDir = os.path.join(currentDir, os.path.abspath("output/" + currentTime + ".png"))
+    saveDir = os.path.join(saveDir, "hubald_simulation.png")
     plt.savefig(saveDir, dpi=600)

@@ -1,13 +1,15 @@
+import os
 import time
 import multiprocessing
 import numpy as np
 from model_dynamics import small_fragment, large_fragment, satellite_collision, deorbit_and_launch
 from data_handling import collect_data
 from calculations import initialize
-from split_calculations import calculation_slices, sparse_prob_matrix, build_prob_matrix
+from split_calculations import indice_slices, sparse_prob_matrix3, build_prob_matrix2, indice_slices
+from file_io import save_arrays
 
 
-def hubald_model(input_parameters, accuracy=20):
+def hubald_model(input_parameters, saveDir, accuracy=20):
     '''
     Simulates the development of the population of the simulated orbit after starting with a given amount of satellites.
     The dynamics of the model work as following: Satellites are categorized as either active or inactive, distinguished
@@ -52,9 +54,12 @@ def hubald_model(input_parameters, accuracy=20):
     satIndices = []
     for ii in range(0, satParameters.shape[0], 1):
         satIndices.append(ii)
-    calculationSlices = calculation_slices(satIndices, numWorkers)
+    calculationSlices = indice_slices(satIndices, satParameters, numWorkers)
 
-    colProbMatrix = build_prob_matrix(calculationSlices, satParameters, satConstants, sigma, timestep, accuracy)
+    colProbMatrix = build_prob_matrix2(calculationSlices, satParameters, satConstants, sigma, timestep, accuracy)
+
+    arraysList = [satParameters, satConstants, colProbMatrix]
+    save_arrays(arraysList, saveDir)
 
     finish = time.time()
     print(f"Matrix built after {finish - start}s")
@@ -68,7 +73,7 @@ def hubald_model(input_parameters, accuracy=20):
         smallFragmentCols = satsStruck
 
         # m, b = 1 / 10000 / 12 / 100000 * timestep, 0
-        m, b = fragmentColProb /  12 / 100000 * timestep, 0
+        m, b = fragmentColProb / 12 / 100000 * timestep, 0
         fragmentArgs = (colProbMatrix, satParameters, satConstants, smallFragments, largeFragments, freeIndices, m, b)
         colProbMatrix, satParameters, satConstants, fragments, satsStruck, freeIndices = large_fragment(*fragmentArgs)
         largeFragmentsCols = satsStruck

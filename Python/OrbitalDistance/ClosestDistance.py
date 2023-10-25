@@ -28,4 +28,7 @@ def main():
 
 
 if __name__ == '__main__':
+    start = time.time()
     main()
+    finish = time.time()
+    print(f"Process finished after {finish - start}s")

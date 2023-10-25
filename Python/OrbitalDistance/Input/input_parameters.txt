@@ -1,6 +1,6 @@
 starting_sats=10000
 sigma=2000
-fragmentCollisionProb=0.001
+fragment_collision_prob=0.001
 active_percentage=0.3
 aLimits=[200000,2000000]
 small_fragments=100000000

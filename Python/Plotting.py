@@ -3,7 +3,7 @@
 import matplotlib.pyplot as plt
 import numpy as np
 import ast
-
+"""
 directory = 'C:\\Users\\jlhub\\Documents\\Studium\\HubaldModel\\HubaldKessler\\data\\size10000\\'
 
 with open(directory + 'sats10000_size10000.txt') as file:
@@ -15,7 +15,7 @@ with open(directory + 'sats10000_size10000.txt') as file:
         if i == 5:
             cols = line
         if i == 7:
-            time = line
+            time = line"""
 
 def get_data(file):
     with open(directory + file) as fp:
@@ -82,6 +82,7 @@ def plot_lists(xx, yy, scatter=False, log=False, logValues=False, fit=False,
 
 
 def main():
+    """
     sats, dens, cols, calcTime = merge_data(4, 10, 10000)
 
     plot_lists(dens, cols, scatter=True, log=True, logValues=False, fit=False,
@@ -92,6 +93,19 @@ def main():
 
     plot_lists(dens, calcTime, fit=True,
                 xlab='Satellite density', ylab='Calculation Time in s')
+                """
+    sats = [1000, 2000, 5000, 10000, 15000, 20000, 30000, 40000, 50000, 75000, 100000]
+    single = [12.486984968185425, 39.39278316497803, 242.03981280326843, 962.6959290504456, 2166.925658226013, 3831.294944047928, 8622.896792888641, 15316.554593086243, 23922.916858911514, 54102.562933921814, 96028.11221194267]
+    multi = [9.93146800994873, 15.893611907958984, 59.121577978134155, 210.30724382400513, 467.563912153244, 821.8911366462708, 1833.5937569141388, 3240.694380044937, 5045.069607019424, 11282.964400053024, 20048.669051885605]
+
+    plt.plot(sats, single, label='single')
+    plt.plot(sats, multi, label='multi')
+    plt.xlabel("Number of satellites")
+    plt.ylabel("Calculation time (s)")
+    plt.title("Calculation time comparison of single and multi-core computation")
+    plt.grid(True)
+    plt.legend()
+    plt.show()
 
 
 if __name__ == '__main__':

@@ -58,6 +58,14 @@ def read_input_file(file_path=os.path.abspath(os.getcwd() + '/input/input_parame
     return input_parameters
 
 
+def save_arrays(arrays, outputDir):
+    arrayNames = ["satParameters", "satConstants", "probabilityMatrix"]
+    for ii, arr in enumerate(arrays):
+        fileName = arrayNames[ii] + ".csv"
+        fileDir = os.path.join(outputDir, fileName)
+        np.savetxt(fileDir, arr, delimiter=',')
+
+
 def create_header(timestamps, input_parameters):
     """
     Creates a list containing lines to be printed into the output .csv file header.
@@ -103,7 +111,7 @@ def write_results_to_csv(simulationData, fileHeader, output_directory=os.path.ab
     currentTime = currentTime.replace(" ", "_")  # Replace spaces with underscores
     currentTime = currentTime[4:]
     currentTime = currentTime.replace(":", "-")  # Replace colons with hyphens or any other desired character
-    outputFileNameame = "hubald_simulation_" + currentTime + ".csv"
+    outputFileNameame = "hubald_simulation.csv"
     filepath = os.path.join(output_directory, outputFileNameame)
     transposedData = np.transpose(simulationData)
 

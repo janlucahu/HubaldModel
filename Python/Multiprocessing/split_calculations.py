@@ -86,13 +86,14 @@ def collision_probability(sat1, sat2, satParameters, satConstants, sigma, timest
     return colProb
 
 
-#@jit(nopython=True)
-def calculation_slices(satIndices, numberOfWorkers):
+@jit(nopython=True)
+def calculation_slices(satIndices, satParameters, numberOfWorkers):
     numberOfCalculations = 0
+    alreadyCalculated = 0
+    numberOfSatellites = satParameters.shape[0]
     for ii, ind in enumerate(satIndices):
-        numberOfCalculations += ind
-        if ii != len(satIndices) - 1:
-            numberOfCalculations += satIndices[ii + 1] - ind - 1
+        numberOfCalculations += numberOfSatellites - 1 - alreadyCalculated
+        alreadyCalculated += 1
     print(f"Total number of calculations: {numberOfCalculations}")
     calculationsPerWorker = np.ceil(numberOfCalculations / numberOfWorkers)
     print(f"calculations per worker: {int(calculationsPerWorker)}")
@@ -120,7 +121,45 @@ def calculation_slices(satIndices, numberOfWorkers):
     return slices
 
 
-#@jit(nopython=True)
+def remove_duplicates(lst):
+    seen = set()
+    result = []
+
+    for sublist in lst:
+        sorted_sublist = sorted(sublist)
+        sublist_tuple = tuple(sorted_sublist)
+        if sublist_tuple not in seen:
+            seen.add(sublist_tuple)
+            result.append(sublist)
+
+    return result
+
+def indice_slices(satIndices, satParameters, numWorkers):
+    indiceSlices = []
+    for sat1 in satIndices:
+        for sat2 in range(satParameters.shape[0]):
+            if sat1 != sat2:
+                indiceSlices.append([sat1, sat2])
+    indiceSlices = remove_duplicates(indiceSlices)
+
+    calculationsPerWorker = np.ceil(len(indiceSlices) / numWorkers)
+    calculationSlices = []
+    slice = []
+
+    pairs = 0
+    for pair in indiceSlices:
+        if len(slice) < calculationsPerWorker:
+                slice.append(pair)
+                if pair == indiceSlices[-1]:
+                    calculationSlices.append(slice)
+        else:
+            calculationSlices.append(slice)
+            slice = [pair]
+
+    return calculationSlices
+
+
+@jit(nopython=True)
 def sparse_prob_matrix(satParameters, satConstants, sigma, timestep, satIndices, acc=20):
     sparseProbList = []
     probThresh = 10 ** (-10)
@@ -135,6 +174,7 @@ def sparse_prob_matrix(satParameters, satConstants, sigma, timestep, satIndices,
     return sparseProbMatrix
 
 
+@jit(nopython=True)
 def sparse_prob_matrix2(satParameters, satConstants, sigma, timestep, satIndices, acc=20):
     sparseProbList = []
     probThresh = 10 ** (-10)
@@ -151,6 +191,21 @@ def sparse_prob_matrix2(satParameters, satConstants, sigma, timestep, satIndices
     return sparseProbMatrix
 
 
+def sparse_prob_matrix3(satParameters, satConstants, sigma, timestep, satIndices, acc=20):
+    sparseProbList = []
+    probThresh = 10 ** (-10)
+    for pair in satIndices:
+        sat1 = pair[0]
+        sat2 = pair[1]
+        colProb = collision_probability(sat1, sat2, satParameters, satConstants, sigma, timestep, acc)
+        if colProb > probThresh:
+            sparseProbList.extend([sat1, sat2, colProb])
+
+    sparseProbMatrix = np.array(sparseProbList).reshape(-1, 3)
+
+    return sparseProbMatrix
+
+
 def build_prob_matrix(calculationSlices, satParameters, satConstants, sigma, timestep, acc):
     results = []
     with Pool() as pool:
@@ -158,6 +213,25 @@ def build_prob_matrix(calculationSlices, satParameters, satConstants, sigma, tim
         for sliceIndices in calculationSlices:
             p = pool.apply_async(sparse_prob_matrix2, args=[satParameters, satConstants, sigma, timestep,
                                                            sliceIndices, acc])
+            processes.append(p)
+
+        for process in processes:
+            result = process.get()  # Get the result from each process
+            results.append(result)  # Store the result in the results list
+
+        # Stack the results into one big array
+        probMatrix = np.concatenate(results, axis=0)
+
+    return probMatrix
+
+
+def build_prob_matrix2(calculationSlices, satParameters, satConstants, sigma, timestep, acc):
+    results = []
+    with Pool() as pool:
+        processes = []
+        for sliceIndices in calculationSlices:
+            p = pool.apply_async(sparse_prob_matrix3, args=[satParameters, satConstants, sigma, timestep,
+                                                            sliceIndices, acc])
             processes.append(p)
 
         for process in processes:

@@ -3,7 +3,7 @@ import multiprocessing
 import numpy as np
 from calculations import initialize
 from collision_probability import calc_collision_probability
-from split_calculations import calculation_slices, sparse_prob_matrix, build_prob_matrix
+from split_calculations import calculation_slices, sparse_prob_matrix, build_prob_matrix, indice_slices
 from multiprocessing import Pool
 
 
@@ -103,15 +103,12 @@ def benchmark_computation(startingSats):
 
 
 if __name__ == '__main__':
-    startingSats = [3000]#, 2000, 5000, 10000, 15000, 20000, 30000, 40000, 50000]
-    single, singleArr, multi, multiArr = benchmark_computation(startingSats)
+    indices = [3, 5, 8]
+    satParameters, satConstants = initialize(20, [200_000, 2_000_000], 0.3)
+    for ii in range(15, satParameters.shape[0], 1):
+        indices.append(ii)
 
-    print("")
-    print("Satellites")
-    print(startingSats)
-    print("Single-core computation:")
-    print(single)
-    print(singleArr)
-    print("Multi-core computation:")
-    print(multi)
-    print(multiArr)
+    slices = indice_slices(indices, satParameters, 10)
+    for ii in range(len(slices)):
+        print(len(slices[ii]))
+    print(slices)

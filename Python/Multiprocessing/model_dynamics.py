@@ -1,7 +1,7 @@
 import numpy as np
 from probability_distributions import linear_distribution
 from calculations import initialize
-from split_calculations import calculation_slices, build_prob_matrix, collision_probability
+from split_calculations import indice_slices, build_prob_matrix2, collision_probability
 
 
 def small_fragment(colProbMatrix, satParameters, satConstants, smallFragments, mm, bb, timestep, sigma, accuracy):
@@ -129,10 +129,10 @@ def deorbit_and_launch(colProbMatrix, satParameters, satConstants, aLimits, time
             satParameters[newSat] = newPars[ii]
             satConstants[newSat] = newCons[ii]
         del freeIndices[0:launchedSats]
-        calculationSlices = calculation_slices(satIndices, numberOfWorkers)
+        calculationSlices = indice_slices(satIndices, satParameters, numberOfWorkers)
         launchIndices = satIndices
 
-        probMatrix = build_prob_matrix(calculationSlices, satParameters, satConstants, sigma, timestep,
+        probMatrix = build_prob_matrix2(calculationSlices, satParameters, satConstants, sigma, timestep,
                                        accuracy)
         colProbMatrix = np.vstack((colProbMatrix, probMatrix))
 
@@ -150,10 +150,10 @@ def deorbit_and_launch(colProbMatrix, satParameters, satConstants, aLimits, time
             satConstants = np.vstack((satConstants, newCons[index]))
             satIndices.append(currentSatNr)
         del freeIndices[0:-1]
-        calculationSlices = calculation_slices(satIndices, numberOfWorkers)
+        calculationSlices = indice_slices(satIndices, satParameters, numberOfWorkers)
         launchIndices = satIndices
 
-        probMatrix = build_prob_matrix(calculationSlices, satParameters, satConstants, sigma, timestep, accuracy)
+        probMatrix = build_prob_matrix2(calculationSlices, satParameters, satConstants, sigma, timestep, accuracy)
         colProbMatrix = np.vstack((colProbMatrix, probMatrix))
 
     else:
@@ -165,8 +165,8 @@ def deorbit_and_launch(colProbMatrix, satParameters, satConstants, aLimits, time
             satIndices.append(currentSatNr)
 
         launchIndices = satIndices
-        calculationSlices = calculation_slices(satIndices, numberOfWorkers)
-        probMatrix = build_prob_matrix(calculationSlices, satParameters, satConstants, sigma, timestep,
+        calculationSlices = indice_slices(satIndices, satParameters, numberOfWorkers)
+        probMatrix = build_prob_matrix2(calculationSlices, satParameters, satConstants, sigma, timestep,
                                        accuracy)
         colProbMatrix = np.vstack((colProbMatrix, probMatrix))
 
