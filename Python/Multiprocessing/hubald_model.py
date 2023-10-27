@@ -5,7 +5,7 @@ import numpy as np
 from model_dynamics import small_fragment, large_fragment, satellite_collision, deorbit_and_launch
 from data_handling import collect_data
 from calculations import initialize
-from split_calculations import indice_slices, sparse_prob_matrix3, build_prob_matrix2, indice_slices
+from split_calculations import build_prob_matrix, calculation_slices
 from file_io import save_arrays
 
 
@@ -54,9 +54,15 @@ def hubald_model(input_parameters, saveDir, accuracy=20):
     satIndices = []
     for ii in range(0, satParameters.shape[0], 1):
         satIndices.append(ii)
-    calculationSlices = indice_slices(satIndices, satParameters, numWorkers)
+    calculationSlices = calculation_slices(satIndices, satParameters, numWorkers)
+    totalCalculations = int(satParameters.shape[0] ** 2 / 2 - satParameters.shape[0] / 2)
 
-    colProbMatrix = build_prob_matrix2(calculationSlices, satParameters, satConstants, sigma, timestep, accuracy)
+    print("Calculating probability matrix")
+    print(f"Total calculations: {totalCalculations}")
+    start = time.time()
+    colProbMatrix = build_prob_matrix(calculationSlices, satParameters, satConstants, sigma, timestep, accuracy)
+    finish = time.time()
+    print(f"Matrix built after {round(finish - start), 2}s")
 
     arraysList = [satParameters, satConstants, colProbMatrix]
     save_arrays(arraysList, saveDir)

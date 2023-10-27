@@ -134,28 +134,33 @@ def remove_duplicates(lst):
 
     return result
 
-def indice_slices(satIndices, satParameters, numWorkers):
+
+def indice_slices(satIndices, satParameters, numWorkers, init=False):
     indiceSlices = []
     for sat1 in satIndices:
-        for sat2 in range(satParameters.shape[0]):
-            if sat1 != sat2:
-                indiceSlices.append([sat1, sat2])
-    indiceSlices = remove_duplicates(indiceSlices)
-
-    calculationsPerWorker = np.ceil(len(indiceSlices) / numWorkers)
-    calculationSlices = []
-    slice = []
-
-    pairs = 0
-    for pair in indiceSlices:
-        if len(slice) < calculationsPerWorker:
-                slice.append(pair)
-                if pair == indiceSlices[-1]:
-                    calculationSlices.append(slice)
+        print(sat1)
+        if not init:
+            for sat2 in range(satParameters.shape[0]):
+                if sat1 != sat2:
+                    indiceSlices.append((sat1, sat2))
         else:
-            calculationSlices.append(slice)
-            slice = [pair]
+            for sat2 in range(sat1):
+                indiceSlices.append((sat1, sat2))
 
+    if not init:
+        indiceSlices = remove_duplicates(indiceSlices)
+
+    calculationsPerWorker = int(np.ceil(len(indiceSlices) / numWorkers))
+    calculationSlices = []
+    lower = 0
+    upper = calculationsPerWorker
+    for ii in range(numWorkers):
+        if upper < len(indiceSlices):
+            calculationSlices.append(indiceSlices[lower:upper])
+            lower += calculationsPerWorker
+            upper += calculationsPerWorker
+        else:
+            calculationSlices.append(indiceSlices[lower:-1])
     return calculationSlices
 
 
@@ -195,8 +200,7 @@ def sparse_prob_matrix3(satParameters, satConstants, sigma, timestep, satIndices
     sparseProbList = []
     probThresh = 10 ** (-10)
     for pair in satIndices:
-        sat1 = pair[0]
-        sat2 = pair[1]
+        sat1, sat2 = pair
         colProb = collision_probability(sat1, sat2, satParameters, satConstants, sigma, timestep, acc)
         if colProb > probThresh:
             sparseProbList.extend([sat1, sat2, colProb])
