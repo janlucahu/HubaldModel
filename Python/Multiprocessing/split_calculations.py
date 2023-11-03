@@ -138,7 +138,6 @@ def remove_duplicates(lst):
 def indice_slices(satIndices, satParameters, numWorkers, init=False):
     indiceSlices = []
     for sat1 in satIndices:
-        print(sat1)
         if not init:
             for sat2 in range(satParameters.shape[0]):
                 if sat1 != sat2:

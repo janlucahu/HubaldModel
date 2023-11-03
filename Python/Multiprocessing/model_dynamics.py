@@ -132,11 +132,10 @@ def deorbit_and_launch(colProbMatrix, satParameters, satConstants, aLimits, time
         calculationSlices = indice_slices(satIndices, satParameters, numberOfWorkers)
         launchIndices = satIndices
 
-        probMatrix = build_prob_matrix2(calculationSlices, satParameters, satConstants, sigma, timestep,
-                                       accuracy)
+        probMatrix = build_prob_matrix2(calculationSlices, satParameters, satConstants, sigma, timestep, accuracy)
         colProbMatrix = np.vstack((colProbMatrix, probMatrix))
 
-    elif len(freeIndices) > 0 and len(freeIndices) < launchedSats:
+    elif 0 < len(freeIndices) < launchedSats:
         satIndices = []
         index = 0
         for ii, newSat in enumerate(freeIndices):
@@ -166,8 +165,7 @@ def deorbit_and_launch(colProbMatrix, satParameters, satConstants, aLimits, time
 
         launchIndices = satIndices
         calculationSlices = indice_slices(satIndices, satParameters, numberOfWorkers)
-        probMatrix = build_prob_matrix2(calculationSlices, satParameters, satConstants, sigma, timestep,
-                                       accuracy)
+        probMatrix = build_prob_matrix2(calculationSlices, satParameters, satConstants, sigma, timestep, accuracy)
         colProbMatrix = np.vstack((colProbMatrix, probMatrix))
 
     if len(launchIndices) > 0:

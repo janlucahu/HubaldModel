@@ -66,6 +66,18 @@ def save_arrays(arrays, outputDir):
         np.savetxt(fileDir, arr, delimiter=',')
 
 
+def read_arrays(arrayDir):
+    try:
+        # Load the CSV file into a numpy array
+        data = np.genfromtxt(arrayDir, delimiter=',')
+
+        return data
+
+    except IOError as e:
+        print("Error reading CSV file:", str(e))
+        return None
+
+
 def create_header(timestamps, input_parameters):
     """
     Creates a list containing lines to be printed into the output .csv file header.
@@ -127,7 +139,8 @@ def write_results_to_csv(simulationData, fileHeader, output_directory=os.path.ab
             writer.writerow([line])
         writer.writerow([])
         writer.writerow(["Time", "Collisions per iteration", "Total collisions", "Total satellites",
-                          "Active satellites", "Passive satellites", "Small fragments", "Large fragments"])
+                         "Active satellites", "Passive satellites", "Small fragments", "Large fragments",
+                         "Small fragment collisions", "Large fragment collisions"])
         writer.writerows(transposedData)
 
 

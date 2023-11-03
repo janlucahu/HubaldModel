@@ -55,9 +55,13 @@ def plot_data(simulationData, saveDir):
     totalSatellites = simulationData[3]
     activeSatellites = simulationData[4]
     inactiveSatellites = simulationData[5]
-    numberOfFragments = simulationData[6]
+    smallFragments = simulationData[6]
+    largeFragments = simulationData[7]
+    totalFragments = smallFragments + largeFragments
+    smallFragCols = simulationData[8]
+    largeFragCols = simulationData[9]
 
-    fig, axs = plt.subplots(2, 2, figsize=(12, 8))
+    fig, axs = plt.subplots(3, 2, figsize=(12, 8))
 
     axs[0, 0].plot(tt, collisionsPerIteration)
     axs[0, 0].set_xlabel('Time')
@@ -77,10 +81,23 @@ def plot_data(simulationData, saveDir):
     axs[1, 0].set_title('Active and inactive satellites over time')
     axs[1, 0].legend()
 
-    axs[1, 1].plot(tt, numberOfFragments)
+    axs[1, 1].plot(tt, smallFragments, label="small")
+    axs[1, 1].plot(tt, largeFragments, label="large")
+    axs[1, 1].plot(tt, totalFragments, label="total")
     axs[1, 1].set_xlabel('Time')
     axs[1, 1].set_ylabel('Number of fragments')
     axs[1, 1].set_title('Fragments over time')
+
+    axs[2, 0].plot(tt, smallFragCols, label="small")
+    axs[2, 0].plot(tt, largeFragCols, label="large")
+    axs[2, 0].set_xlabel("Time")
+    axs[2, 0].set_ylabel("Fragment collisions per timestep")
+    axs[2, 0].set_title("Fragment collisions per iteration")
+
+    axs[2, 1].plot(totalFragments, totalSatellites)
+    axs[2, 1].set_xlabel("Total number of fragments")
+    axs[2, 1].set_ylabel("Total number of satellites")
+    axs[2, 1].set_title("Total satellites as function of total fragments")
 
     plt.tight_layout()
     saveDir = os.path.join(saveDir, "hubald_simulation.png")

@@ -6,10 +6,10 @@ from model_dynamics import small_fragment, large_fragment, satellite_collision, 
 from data_handling import collect_data
 from calculations import initialize
 from split_calculations import build_prob_matrix, calculation_slices
-from file_io import save_arrays
+from file_io import save_arrays, read_arrays
 
 
-def hubald_model(input_parameters, saveDir, accuracy=20):
+def hubald_model(input_parameters, saveDir, reuseArrays="", accuracy=20):
     '''
     Simulates the development of the population of the simulated orbit after starting with a given amount of satellites.
     The dynamics of the model work as following: Satellites are categorized as either active or inactive, distinguished
@@ -46,29 +46,33 @@ def hubald_model(input_parameters, saveDir, accuracy=20):
     collectedData = np.empty((10, tmax // timestep))
     freeIndices = []
 
-    start = time.time()
-    satParameters, satConstants = initialize(startingSats, aLimits, activePercentage, plane=False)
     availableCores = multiprocessing.cpu_count()
-    print("Number of CPU cores:", availableCores)
     numWorkers = availableCores
-    satIndices = []
-    for ii in range(0, satParameters.shape[0], 1):
-        satIndices.append(ii)
-    calculationSlices = calculation_slices(satIndices, satParameters, numWorkers)
-    totalCalculations = int(satParameters.shape[0] ** 2 / 2 - satParameters.shape[0] / 2)
 
-    print("Calculating probability matrix")
-    print(f"Total calculations: {totalCalculations}")
-    start = time.time()
-    colProbMatrix = build_prob_matrix(calculationSlices, satParameters, satConstants, sigma, timestep, accuracy)
-    finish = time.time()
-    print(f"Matrix built after {round(finish - start), 2}s")
+    if reuseArrays:
+        satParameters = read_arrays(os.path.join(reuseArrays, "satParameters.csv"))
+        satConstants = read_arrays(os.path.join(reuseArrays, "satConstants.csv"))
+        colProbMatrix = read_arrays(os.path.join(reuseArrays, "probabilityMatrix.csv"))
+        print(f"Successfully imported array of {satParameters.shape[0]} satellites")
+    else:
+        satParameters, satConstants = initialize(startingSats, aLimits, activePercentage, plane=False)
+        print("Number of CPU cores:", availableCores)
+        satIndices = []
+        for ii in range(0, satParameters.shape[0], 1):
+            satIndices.append(ii)
+        calculationSlices = calculation_slices(satIndices, satParameters, numWorkers)
+        totalCalculations = int(satParameters.shape[0] ** 2 / 2 - satParameters.shape[0] / 2)
+
+        print("Calculating probability matrix")
+        print(f"Total calculations: {totalCalculations}")
+        start = time.time()
+        colProbMatrix = build_prob_matrix(calculationSlices, satParameters, satConstants, sigma, timestep, accuracy)
+        finish = time.time()
+        print(f"Matrix built after {round(finish - start), 2}s")
 
     arraysList = [satParameters, satConstants, colProbMatrix]
     save_arrays(arraysList, saveDir)
 
-    finish = time.time()
-    print(f"Matrix built after {finish - start}s")
     counter = 0
     for tt in range(0, tmax, timestep):
         print(f"Iteration {tt} of {tmax}")
