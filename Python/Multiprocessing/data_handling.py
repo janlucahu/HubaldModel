@@ -87,12 +87,14 @@ def plot_data(simulationData, saveDir):
     axs[1, 1].set_xlabel('Time')
     axs[1, 1].set_ylabel('Number of fragments')
     axs[1, 1].set_title('Fragments over time')
+    axs[1, 1].legend()
 
     axs[2, 0].plot(tt, smallFragCols, label="small")
     axs[2, 0].plot(tt, largeFragCols, label="large")
     axs[2, 0].set_xlabel("Time")
     axs[2, 0].set_ylabel("Fragment collisions per timestep")
     axs[2, 0].set_title("Fragment collisions per iteration")
+    axs[2, 0].legend()
 
     axs[2, 1].plot(totalFragments, totalSatellites)
     axs[2, 1].set_xlabel("Total number of fragments")
