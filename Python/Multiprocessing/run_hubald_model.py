@@ -25,6 +25,7 @@ for startingSats in startingSatsList:
                     new_values["sigma"] = sigma
                     new_values["starts_per_timestep"] = launches
                     new_values["deorbits_per_timestep"] = deorbits
+                    new_values["fragment_collision_prob"] = colProb
                     update_input_file(new_values)
                     with open("main.py") as script:
                         exec(script.read())

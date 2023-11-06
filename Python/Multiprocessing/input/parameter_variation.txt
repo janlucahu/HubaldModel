@@ -1,5 +1,5 @@
 starting_sats=[50000]
 sigma=[2000]
-starts_per_timestep=[100,500]
+starts_per_timestep=[10,20]
 deorbits_per_timestep=[10]
-fragment_collision_prob=[0.0001,0.0005,0.001,0.005,0.01]
+fragment_collision_prob=[0.0001,0.0005]

@@ -41,6 +41,8 @@ def main():
     fileHeader = create_header(timestamps, inputParameters)
     write_results_to_csv(simulationData, fileHeader, saveDir)
 
+    print("Process finished.")
+
 
 if __name__ == '__main__':
     main()
