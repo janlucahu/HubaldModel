@@ -83,11 +83,11 @@ def plot_data(simulationData, saveDir):
 
     axs[1, 1].plot(tt, smallFragments, label="small")
     axs[1, 1].plot(tt, largeFragments, label="large")
-    axs[1, 1].plot(tt, totalFragments, label="total")
     axs[1, 1].set_xlabel('Time')
     axs[1, 1].set_ylabel('Number of fragments')
     axs[1, 1].set_title('Fragments over time')
     axs[1, 1].legend()
+
 
     axs[2, 0].plot(tt, smallFragCols, label="small")
     axs[2, 0].plot(tt, largeFragCols, label="large")
