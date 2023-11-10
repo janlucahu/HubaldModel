@@ -99,7 +99,6 @@ def plot_data(simulationData, saveDir):
     axs[2, 1].set_xlabel('Time')
     axs[2, 1].set_ylabel('Number of fragments')
     axs[2, 1].set_title('Large fragments over time')
-    axs[2, 1].legend()
 
     plt.tight_layout()
     saveDir = os.path.join(saveDir, "hubald_simulation.png")
