@@ -40,7 +40,7 @@ def collect_data(collectedData, tt, collisions, satParameters, smallFragments, l
     return collectedData
 
 
-def plot_data(simulationData, saveDir):
+def plot_data(simulationData, saveDir, input_parameters):
     '''
     Plots the gathered simulation data.
     Args:
@@ -49,6 +49,17 @@ def plot_data(simulationData, saveDir):
     Returns:
         None.
     '''
+    startingSats = input_parameters.get("starting_sats")
+    sigma = input_parameters.get("sigma")
+    fragmentColProb = input_parameters.get("fragment_collision_prob")
+    activePercentage = input_parameters.get("active_percentage")
+    smallStartFragments = input_parameters.get("small_fragments")
+    largeStartFragments = input_parameters.get("large_fragments")
+    timestep = input_parameters.get("timestep")
+    tmax = input_parameters.get("tmax")
+    startsPerTimestep = input_parameters.get("starts_per_timestep")
+    deorbitsPerTimestep = input_parameters.get("deorbits_per_timestep")
+
     tt = simulationData[0]
     collisionsPerIteration = simulationData[1]
     totalCollisions = simulationData[2]
@@ -85,8 +96,6 @@ def plot_data(simulationData, saveDir):
     axs[1, 1].set_xlabel('Time')
     axs[1, 1].set_ylabel('Number of fragments')
     axs[1, 1].set_title('Small fragments over time')
-    axs[1, 1].legend()
-
 
     axs[2, 0].plot(tt, smallFragCols, label="small")
     axs[2, 0].plot(tt, largeFragCols, label="large")
@@ -99,6 +108,8 @@ def plot_data(simulationData, saveDir):
     axs[2, 1].set_xlabel('Time')
     axs[2, 1].set_ylabel('Number of fragments')
     axs[2, 1].set_title('Large fragments over time')
+
+    fig.suptitle(f"starting satellites: {startingSats},    starts: {startsPerTimestep},    deorbits: {deorbitsPerTimestep}\nactive percentage: {activePercentage},    sigma: {sigma},    fragment collision p: {fragmentColProb}\nsmall fragments: {smallStartFragments},    large fragments: {largeStartFragments}")
 
     plt.tight_layout()
     saveDir = os.path.join(saveDir, "hubald_simulation.png")

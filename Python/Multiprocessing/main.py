@@ -28,15 +28,15 @@ def main():
     destinationFile = os.path.join(saveDir, os.path.basename(inputFile))
     shutil.copy(inputFile, destinationFile)
 
-    arraysDir = os.path.abspath("/Users/janlucal/Documents/GitHub/HubaldModel/Python/Multiprocessing/Input/Matrices/50000/1")
-    simulationData, colProbMatrix = hubald_model(inputParameters, saveDir, reuseArrays=False)
+    arraysDir = os.path.abspath("/Users/janlucal/Documents/GitHub/HubaldModel/Python/Multiprocessing/Input/Matrices/10000/1")
+    simulationData, colProbMatrix = hubald_model(inputParameters, saveDir, reuseArrays=arraysDir)
     print(f'Number of collisions: {int(simulationData[2][-1])}')
     finish = time.time()
     elapsedTime = finish - start
     print(f'Process finished after: {round(elapsedTime, 2)}s')
     endingTime = time.asctime()
 
-    plot_data(simulationData, saveDir)
+    plot_data(simulationData, saveDir, inputParameters)
     timestamps = [startingTime, endingTime, elapsedTime]
     fileHeader = create_header(timestamps, inputParameters)
     write_results_to_csv(simulationData, fileHeader, saveDir)
