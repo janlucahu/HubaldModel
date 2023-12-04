@@ -1,0 +1,11 @@
+starting_sats=50000
+sigma=2000
+fragment_collision_prob=0.0001
+active_percentage=0.8
+aLimits=[200000,2000000]
+small_fragments=1000000000
+large_fragments=100000
+timestep=3
+tmax=1200
+starts_per_timestep=200
+deorbits_per_timestep=20

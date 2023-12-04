@@ -98,7 +98,7 @@ def satellite_collision(colProbMatrix, satParameters, satConstants, smallFragmen
 def deorbit_and_launch(colProbMatrix, satParameters, satConstants, aLimits, timestep, sigma, accuracy, freeIndices,
                        startsPerTimestep, deorbitsPerTimestep, numberOfWorkers):
 
-    deorbitingSats = np.random.randint(0, deorbitsPerTimestep)
+    deorbitingSats = deorbitsPerTimestep
     oldSats = []
     for oldSat in range(len(satParameters)):
         if satParameters[oldSat][6] == 0:
@@ -115,7 +115,7 @@ def deorbit_and_launch(colProbMatrix, satParameters, satConstants, aLimits, time
             mask = np.any(colProbMatrix == randOldSat, axis=1)
             colProbMatrix = colProbMatrix[~mask]
 
-    launchedSats = np.random.randint(1, startsPerTimestep)
+    launchedSats = startsPerTimestep
     newPars, newCons = initialize(launchedSats, aLimits, 1, plane=False)
     launchIndices = []
     satIndices = []

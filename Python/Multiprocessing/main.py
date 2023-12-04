@@ -28,7 +28,7 @@ def main():
     destinationFile = os.path.join(saveDir, os.path.basename(inputFile))
     shutil.copy(inputFile, destinationFile)
 
-    arraysDir = os.path.abspath("/Users/janlucal/Documents/GitHub/HubaldModel/Python/Multiprocessing/Input/Matrices/10000/1")
+    arraysDir = os.path.abspath("/Users/janlucal/Documents/GitHub/HubaldModel/Python/Multiprocessing/Input/Matrices/50000/1")
     simulationData, colProbMatrix = hubald_model(inputParameters, saveDir, reuseArrays=arraysDir)
     print(f'Number of collisions: {int(simulationData[2][-1])}')
     finish = time.time()
