@@ -1,4 +1,3 @@
-import time
 import numpy as np
 from probability_distributions import half_normal
 
@@ -20,7 +19,6 @@ def calc_collision_probability(parameters1, parameters2, const1, const2, sigma, 
     Returns:
         minDistance (float): Closest approach distance between two satellites.
     '''
-    start = time.time()
 
     sinE1 = sinE2 = sinE
     cosE1 = cosE2 = cosE
@@ -67,9 +65,5 @@ def calc_collision_probability(parameters1, parameters2, const1, const2, sigma, 
         colProb = 1 - (1 - colProbPerApproach) ** numberOfApproaches
     else:
         colProb = 0
-
-    finish = time.time()
-    elapsed_time = np.round(finish - start, 6)
-    #print(f"Finished after {elapsed_time}s")
 
     return colProb
