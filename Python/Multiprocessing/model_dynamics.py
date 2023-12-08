@@ -1,7 +1,7 @@
 import numpy as np
 from probability_distributions import linear_distribution
 from calculations import initialize
-from split_calculations import indice_slices, build_prob_matrix2, collision_probability
+from split_calculations import indice_slices, build_prob_matrix2, collision_probability, col_prob_stat
 
 
 def small_fragment(colProbMatrix, satParameters, satConstants, smallFragments, mm, bb, timestep, sigma, accuracy):
@@ -167,6 +167,133 @@ def deorbit_and_launch(colProbMatrix, satParameters, satConstants, aLimits, time
         calculationSlices = indice_slices(satIndices, satParameters, numberOfWorkers)
         probMatrix = build_prob_matrix2(calculationSlices, satParameters, satConstants, sigma, timestep, accuracy)
         colProbMatrix = np.vstack((colProbMatrix, probMatrix))
+
+    if len(launchIndices) > 0:
+        print(f'Launch of new satellites: {launchIndices}')
+
+    return colProbMatrix, satParameters, satConstants, freeIndices
+
+
+def small_stat(colProbMatrix, satParameters, satConstants, smallFragments, mm, bb, timestep, sigma, accuracy,
+               distances):
+    probThresh = 10 ** (-10)
+    satellitesStruck = 0
+    activeSatParameters = satParameters[:, -1] == 1
+    activeSatellites = np.count_nonzero(activeSatParameters)
+    for _ in range(activeSatellites):
+        pp = np.random.rand()
+        fragmentCollisionProb = linear_distribution(smallFragments, mm, bb)
+        if pp < fragmentCollisionProb:
+            struckSat, act = np.where(satParameters == 1)
+            randSat = struckSat[np.random.randint(0, len(struckSat))]
+            satParameters[randSat][6] = 0
+            #print(f'Satellite {randSat} struck by fragment')
+            satellitesStruck += 1
+
+            mask = np.any(colProbMatrix == randSat, axis=1)
+            colProbMatrix = colProbMatrix[~mask]
+
+            for sat2 in range(satParameters.shape[0]):
+                if not sat2 == randSat:
+                    colProb = col_prob_stat(distances, randSat, sat2, satParameters, satConstants, sigma, timestep,
+                                            accuracy)
+                    if colProb > probThresh:
+                        newRow = np.array([randSat, sat2, colProb])
+                        colProbMatrix = np.vstack((colProbMatrix, newRow))
+
+    return colProbMatrix, satParameters, satellitesStruck
+
+
+def deorbit_launch_stat(colProbMatrix, satParameters, satConstants, aLimits, timestep, sigma, accuracy, freeIndices,
+                        startsPerTimestep, deorbitsPerTimestep, numberOfWorkers, distances):
+
+    colProbThresh = 10 ** (-10)
+
+    deorbitingSats = deorbitsPerTimestep
+    oldSats = []
+    for oldSat in range(len(satParameters)):
+        if satParameters[oldSat][6] == 0:
+            oldSats.append(oldSat)
+    if len(oldSats) > deorbitingSats:
+        for _ in range(deorbitingSats):
+            randIndex = np.random.randint(0, len(oldSats))
+            randOldSat = oldSats[randIndex]
+            del oldSats[randIndex]
+            #print(f'Deorbitation of satellite {randOldSat}')
+            satParameters[randOldSat][:] = np.array([0, 0, 0, 0, 0, 0, -1])
+            freeIndices.append(randOldSat)
+
+            mask = np.any(colProbMatrix == randOldSat, axis=1)
+            colProbMatrix = colProbMatrix[~mask]
+
+    launchedSats = startsPerTimestep
+    newPars, newCons = initialize(launchedSats, aLimits, 1, plane=False)
+    launchIndices = []
+    satIndices = []
+
+    print(f"Sats launched: {launchedSats}")
+
+    if len(freeIndices) > 0 and len(freeIndices) >= launchedSats:
+        satIndices = freeIndices[0:launchedSats]
+        satIndices = np.sort(satIndices, kind='quicksort')[::-1]
+        usedIndice = []
+        for ii, newSat in enumerate(satIndices):
+            satParameters[newSat] = newPars[ii]
+            satConstants[newSat] = newCons[ii]
+            for sat2 in range(satParameters.shape[0]):
+                if sat2 not in usedIndice:
+                    colProb = col_prob_stat(distances, newSat, sat2, satParameters, satConstants, sigma, timestep)
+                    if colProb > colProbThresh:
+                        newRow = np.array([newSat, sat2, colProb])
+                        colProbMatrix = np.vstack((colProbMatrix, newRow))
+                    usedIndice.append(newSat)
+
+
+    elif 0 < len(freeIndices) < launchedSats:
+        for ii, newSat in enumerate(freeIndices):
+            satIndices.append(newSat)
+            satParameters[newSat] = newPars[ii]
+            satConstants[newSat] = newCons[ii]
+        currentSatNr = satParameters.shape[0]
+        for ii in range(launchedSats - len(freeIndices)):
+            index = currentSatNr + ii
+            satIndices.append(index)
+            satParameters = np.vstack((satParameters, newPars[ii + len(freeIndices)]))
+            satConstants = np.vstack((satConstants, newCons[ii + len(freeIndices)]))
+
+        satIndices = np.sort(satIndices, kind='quicksort')[::-1]
+        usedIndice = []
+        for ii, newSat in enumerate(satIndices):
+            satParameters[newSat] = newPars[ii]
+            satConstants[newSat] = newCons[ii]
+            for sat2 in range(satParameters.shape[0]):
+                if sat2 not in usedIndice:
+                    colProb = col_prob_stat(distances, newSat, sat2, satParameters, satConstants, sigma, timestep)
+                    if colProb > colProbThresh:
+                        newRow = np.array([newSat, sat2, colProb])
+                        colProbMatrix = np.vstack((colProbMatrix, newRow))
+                    usedIndice.append(newSat)
+
+    else:
+        for ii in range(launchedSats):
+            currentSatNr = satParameters.shape[0]
+            launchIndices.append(currentSatNr)
+            satParameters = np.vstack((satParameters, newPars[ii]))
+            satConstants = np.vstack((satConstants, newCons[ii]))
+            satIndices.append(currentSatNr)
+
+        satIndices = np.sort(satIndices, kind='quicksort')[::-1]
+        usedIndice = []
+        for ii, newSat in enumerate(satIndices):
+            satParameters[newSat] = newPars[ii]
+            satConstants[newSat] = newCons[ii]
+            for sat2 in range(satParameters.shape[0]):
+                if sat2 not in usedIndice:
+                    colProb = col_prob_stat(distances, newSat, sat2, satParameters, satConstants, sigma, timestep)
+                    if colProb > colProbThresh:
+                        newRow = np.array([newSat, sat2, colProb])
+                        colProbMatrix = np.vstack((colProbMatrix, newRow))
+                    usedIndice.append(newSat)
 
     if len(launchIndices) > 0:
         print(f'Launch of new satellites: {launchIndices}')

@@ -71,7 +71,7 @@ def dis_matrix_single(nrOfSats):
 
     return distances
 
-sats = [1000, 2000, 3000]
+sats = [20000]
 distances = []
 norm = True
 for ii, satNr in enumerate(sats):
@@ -82,7 +82,6 @@ for ii, satNr in enumerate(sats):
     dis, bins = np.histogram(distance, bins)
     if norm:
         dis = dis / np.sum(distance)
-        bins = bins / np.sum(distance)
 
     plt.plot(bins[0:-1], dis, label=f'{satNr}')
 

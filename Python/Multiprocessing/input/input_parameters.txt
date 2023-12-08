@@ -1,3 +1,4 @@
+distance_mode=statistical
 starting_sats=50000
 sigma=2000
 fragment_collision_prob=0.0001

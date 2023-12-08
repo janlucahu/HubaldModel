@@ -2,7 +2,7 @@ import os
 import shutil
 import time
 from data_handling import plot_data
-from hubald_model import hubald_model
+from hubald_model import hubald_model, hubald_model_statistical
 from file_io import read_input_file, write_results_to_csv, create_header
 
 
@@ -17,6 +17,7 @@ def main():
     startingTime = time.asctime()
     inputFile = os.path.abspath(os.getcwd() + '/input/input_parameters.txt')
     inputParameters = read_input_file(inputFile)
+    distance_mode = inputParameters.get("distance_mode")
 
     currentDir = os.getcwd()
     currentTime = time.strftime("%a %b %d %H:%M:%S %Y")  # Get the current time in the desired format
@@ -29,7 +30,10 @@ def main():
     shutil.copy(inputFile, destinationFile)
 
     arraysDir = os.path.abspath("/Users/janlucal/Documents/GitHub/HubaldModel/Python/Multiprocessing/Input/Matrices/50000/1")
-    simulationData, colProbMatrix = hubald_model(inputParameters, saveDir, reuseArrays=arraysDir)
+    if distance_mode != "statistical":
+        simulationData, colProbMatrix = hubald_model(inputParameters, saveDir, reuseArrays=arraysDir)
+    else:
+        simulationData, colProbMatrix = hubald_model_statistical(inputParameters, saveDir, reuseArrays=arraysDir)
     print(f'Number of collisions: {int(simulationData[2][-1])}')
     finish = time.time()
     elapsedTime = finish - start
