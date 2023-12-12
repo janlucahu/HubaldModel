@@ -247,11 +247,10 @@ def sparse_prob_matrix3(satParameters, satConstants, sigma, timestep, satIndices
     return sparseProbMatrix
 
 
-def distance_matrix(satParameters, satConstants, satIndices, acc=20):
+def distance_matrix(satParameters, satConstants, lower, upper, acc=20):
     distanceList = []
-    for ii, sat1 in enumerate(satIndices):
-        for sat2 in range(satParameters.shape[0]):
-            if sat2 not in satIndices[0:ii] and sat1 != sat2:
+    for sat1 in range(lower, upper, 1):
+        for sat2 in range(sat1):
 
                 distance = find_minimum(satParameters[sat1], satParameters[sat2], satConstants[sat1],
                                         satConstants[sat2], acc=acc)
@@ -260,6 +259,31 @@ def distance_matrix(satParameters, satConstants, satIndices, acc=20):
     distanceArray = np.array(distanceList)
 
     return distanceArray
+
+
+def stat_prob_matrix(satParameters, satConstants, lower, upper, timestep, sigma, acc=20):
+    probList = []
+    monthsToSeconds = 30 * 24 * 60 * 60
+    for sat1 in range(lower, upper, 1):
+        for sat2 in range(sat1):
+            closestDistance = find_minimum(satParameters[sat1], satParameters[sat2], satConstants[sat1],
+                                           satConstants[sat2], acc=acc)
+
+            activeSatellite = satParameters[sat1][6] + satParameters[sat2][6]  # = false if both are inactive
+            synodicPeriod = 1 / np.abs(1 / satParameters[sat1][5] - 1 / satParameters[sat2][5])
+            numberOfApproaches = int(timestep * monthsToSeconds / synodicPeriod)
+            if activeSatellite:
+                colProbPerApproach = half_normal(closestDistance, sigma, True)
+            else:
+                colProbPerApproach = half_normal(closestDistance, sigma, False)
+            colProb = 1 - (1 - colProbPerApproach) ** numberOfApproaches
+            if colProb > 0:
+                print(colProb)
+            probList.append(colProb)
+
+    probArray = np.array(probList)
+
+    return probArray
 
 
 def build_prob_matrix(calculationSlices, satParameters, satConstants, sigma, timestep, acc):
@@ -300,14 +324,27 @@ def build_prob_matrix2(calculationSlices, satParameters, satConstants, sigma, ti
     return probMatrix
 
 
-def build_dis_matrix(calculationSlices, satParameters, satConstants, acc):
+def build_dis_matrix(satParameters, satConstants, numWorkers, acc):
     results = []
+    numSats = satParameters.shape[0]
+    numberOfCalculations = int(numSats ** 2 / 2 - numSats / 2)
+    calcsPerWorker = np.ceil(numberOfCalculations / numWorkers)
+    satIndices = [0]
+    for ind in range(numSats):
+        lastInd = satIndices[-1]
+        calcsPerSlice = int(ind ** 2 / 2 - ind / 2) - int(lastInd ** 2 / 2 - lastInd / 2)
+        if calcsPerSlice >= calcsPerWorker:
+            satIndices.append(ind)
+        if ind == numSats - 1:
+            satIndices.append(numSats)
+
+    print(satIndices)
     with Pool() as pool:
         processes = []
-        for sliceIndices in calculationSlices:
-            sliceIndices = np.trim_zeros(sliceIndices, 'b')
-            print(sliceIndices.shape[0])
-            p = pool.apply_async(distance_matrix, args=[satParameters, satConstants, sliceIndices, acc])
+        for ii in range(len(satIndices) - 1):
+            lower = satIndices[ii]
+            upper = satIndices[ii + 1]
+            p = pool.apply_async(distance_matrix, args=[satParameters, satConstants, lower, upper, acc])
             processes.append(p)
 
         for process in processes:
@@ -320,7 +357,40 @@ def build_dis_matrix(calculationSlices, satParameters, satConstants, acc):
     return disMatrix
 
 
-def col_prob_stat(distances, sat1, sat2, satParameters, satConstants, sigma, timestep):
+def build_stat_prob_matrix(satParameters, satConstants, numWorkers, timestep, sigma, acc):
+    results = []
+    numSats = satParameters.shape[0]
+    numberOfCalculations = int(numSats ** 2 / 2 - numSats / 2)
+    calcsPerWorker = np.ceil(numberOfCalculations / numWorkers)
+    satIndices = [0]
+    for ind in range(numSats):
+        lastInd = satIndices[-1]
+        calcsPerSlice = int(ind ** 2 / 2 - ind / 2) - int(lastInd ** 2 / 2 - lastInd / 2)
+        if calcsPerSlice >= calcsPerWorker:
+            satIndices.append(ind)
+        if ind == numSats - 1:
+            satIndices.append(numSats)
+
+    print(satIndices)
+    with Pool() as pool:
+        processes = []
+        for ii in range(len(satIndices) - 1):
+            lower = satIndices[ii]
+            upper = satIndices[ii + 1]
+            p = pool.apply_async(stat_prob_matrix, args=[satParameters, satConstants, lower, upper, timestep, sigma, acc])
+            processes.append(p)
+
+        for process in processes:
+            result = process.get()  # Get the result from each process
+            results.append(result)  # Store the result in the results list
+
+        # Stack the results into one big array
+        disMatrix = np.concatenate(results, axis=0)
+
+    return disMatrix
+
+
+def col_prob_stat(distances, sat1, sat2, satParameters, sigma, timestep):
     if satParameters[sat1][6] != -1 and satParameters[sat2][6] != -1:
         monthsToSeconds = 30 * 24 * 60 * 60
         activeSatellite = satParameters[sat1][6] + satParameters[sat2][6]  # = false if both are inactive
@@ -333,6 +403,18 @@ def col_prob_stat(distances, sat1, sat2, satParameters, satConstants, sigma, tim
             colProbPerApproach = half_normal(closestDistance, sigma, False)
 
         colProb = 1 - (1 - colProbPerApproach) ** numberOfApproaches
+    else:
+        colProb = 0
+
+    return colProb
+
+
+def col_prob_stat2(probabilities, sat1, sat2, satParameters, sigma, timestep):
+    if satParameters[sat1][6] != -1 and satParameters[sat2][6] != -1:
+        colProb = np.random.choice(probabilities)
+        activeSatellite = satParameters[sat1][6] + satParameters[sat2][6]  # = false if both are inactive
+        if activeSatellite:
+            colProb = colProb / 10
     else:
         colProb = 0
 

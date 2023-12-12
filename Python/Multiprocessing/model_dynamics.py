@@ -1,7 +1,7 @@
 import numpy as np
 from probability_distributions import linear_distribution
 from calculations import initialize
-from split_calculations import indice_slices, build_prob_matrix2, collision_probability, col_prob_stat
+from split_calculations import indice_slices, build_prob_matrix2, collision_probability, col_prob_stat, col_prob_stat2
 
 
 def small_fragment(colProbMatrix, satParameters, satConstants, smallFragments, mm, bb, timestep, sigma, accuracy):
@@ -174,8 +174,7 @@ def deorbit_and_launch(colProbMatrix, satParameters, satConstants, aLimits, time
     return colProbMatrix, satParameters, satConstants, freeIndices
 
 
-def small_stat(colProbMatrix, satParameters, satConstants, smallFragments, mm, bb, timestep, sigma, accuracy,
-               distances):
+def small_stat(colProbMatrix, satParameters, smallFragments, mm, bb, timestep, sigma, distances):
     probThresh = 10 ** (-10)
     satellitesStruck = 0
     activeSatParameters = satParameters[:, -1] == 1
@@ -195,8 +194,7 @@ def small_stat(colProbMatrix, satParameters, satConstants, smallFragments, mm, b
 
             for sat2 in range(satParameters.shape[0]):
                 if not sat2 == randSat:
-                    colProb = col_prob_stat(distances, randSat, sat2, satParameters, satConstants, sigma, timestep,
-                                            accuracy)
+                    colProb = col_prob_stat2(distances, randSat, sat2, satParameters, sigma, timestep)
                     if colProb > probThresh:
                         newRow = np.array([randSat, sat2, colProb])
                         colProbMatrix = np.vstack((colProbMatrix, newRow))
@@ -204,8 +202,8 @@ def small_stat(colProbMatrix, satParameters, satConstants, smallFragments, mm, b
     return colProbMatrix, satParameters, satellitesStruck
 
 
-def deorbit_launch_stat(colProbMatrix, satParameters, satConstants, aLimits, timestep, sigma, accuracy, freeIndices,
-                        startsPerTimestep, deorbitsPerTimestep, numberOfWorkers, distances):
+def deorbit_launch_stat(colProbMatrix, satParameters, satConstants, aLimits, timestep, sigma, freeIndices,
+                        startsPerTimestep, deorbitsPerTimestep, distances):
 
     colProbThresh = 10 ** (-10)
 
@@ -241,13 +239,12 @@ def deorbit_launch_stat(colProbMatrix, satParameters, satConstants, aLimits, tim
             satParameters[newSat] = newPars[ii]
             satConstants[newSat] = newCons[ii]
             for sat2 in range(satParameters.shape[0]):
-                if sat2 not in usedIndice:
-                    colProb = col_prob_stat(distances, newSat, sat2, satParameters, satConstants, sigma, timestep)
+                if sat2 not in usedIndice and sat2 != newSat:
+                    colProb = col_prob_stat2(distances, newSat, sat2, satParameters, sigma, timestep)
                     if colProb > colProbThresh:
                         newRow = np.array([newSat, sat2, colProb])
                         colProbMatrix = np.vstack((colProbMatrix, newRow))
                     usedIndice.append(newSat)
-
 
     elif 0 < len(freeIndices) < launchedSats:
         for ii, newSat in enumerate(freeIndices):
@@ -267,8 +264,8 @@ def deorbit_launch_stat(colProbMatrix, satParameters, satConstants, aLimits, tim
             satParameters[newSat] = newPars[ii]
             satConstants[newSat] = newCons[ii]
             for sat2 in range(satParameters.shape[0]):
-                if sat2 not in usedIndice:
-                    colProb = col_prob_stat(distances, newSat, sat2, satParameters, satConstants, sigma, timestep)
+                if sat2 not in usedIndice and sat2 != newSat:
+                    colProb = col_prob_stat2(distances, newSat, sat2, satParameters, sigma, timestep)
                     if colProb > colProbThresh:
                         newRow = np.array([newSat, sat2, colProb])
                         colProbMatrix = np.vstack((colProbMatrix, newRow))
@@ -288,8 +285,8 @@ def deorbit_launch_stat(colProbMatrix, satParameters, satConstants, aLimits, tim
             satParameters[newSat] = newPars[ii]
             satConstants[newSat] = newCons[ii]
             for sat2 in range(satParameters.shape[0]):
-                if sat2 not in usedIndice:
-                    colProb = col_prob_stat(distances, newSat, sat2, satParameters, satConstants, sigma, timestep)
+                if sat2 not in usedIndice and sat2 != newSat:
+                    colProb = col_prob_stat2(distances, newSat, sat2, satParameters, sigma, timestep)
                     if colProb > colProbThresh:
                         newRow = np.array([newSat, sat2, colProb])
                         colProbMatrix = np.vstack((colProbMatrix, newRow))

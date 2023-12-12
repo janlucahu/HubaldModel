@@ -60,6 +60,9 @@ def read_input_file(file_path=os.path.abspath(os.getcwd() + '/input/input_parame
 
 def save_arrays(arrays, outputDir):
     arrayNames = ["satParameters", "satConstants", "probabilityMatrix"]
+    for arr in arrays:
+        if len(arr.shape) < 2:
+            arrayNames = ["satParameters", "satConstants", "distances"]
     for ii, arr in enumerate(arrays):
         fileName = arrayNames[ii] + ".csv"
         fileDir = os.path.join(outputDir, fileName)

@@ -7,7 +7,7 @@ from model_dynamics import (small_fragment, large_fragment, satellite_collision,
                             deorbit_launch_stat)
 from data_handling import collect_data
 from calculations import initialize
-from split_calculations import build_prob_matrix, calculation_slices, build_dis_matrix, calculation_slices2
+from split_calculations import build_prob_matrix, calculation_slices, build_dis_matrix, calculation_slices2, build_stat_prob_matrix
 from file_io import save_arrays, read_arrays
 
 
@@ -62,15 +62,14 @@ def hubald_model(input_parameters, saveDir, reuseArrays="", accuracy=20):
         satIndices = []
         for ii in range(0, satParameters.shape[0], 1):
             satIndices.append(ii)
-        calculationSlices = calculation_slices2(satIndices, satParameters, numWorkers)
-        print(calculationSlices)
+        calculationSlices = calculation_slices(satIndices, satParameters, numWorkers)
         totalCalculations = int(satParameters.shape[0] ** 2 / 2 - satParameters.shape[0] / 2)
 
         print("Calculating probability matrix")
         print(f"Total calculations: {totalCalculations}")
         saveDistances = True
         if saveDistances and not reuseArrays:
-            distanceArray = build_dis_matrix(calculationSlices, satParameters, satConstants, accuracy)
+            distanceArray = build_stat_prob_matrix(satParameters, satConstants, numWorkers, timestep, sigma, accuracy)
             arraysList = [satParameters, satConstants, distanceArray]
             save_arrays(arraysList, saveDir)
             sys.exit("Distance array has been created.")
@@ -155,8 +154,10 @@ def hubald_model_statistical(input_parameters, saveDir, reuseArrays="", accuracy
     collectedData = np.empty((10, tmax // timestep))
     freeIndices = []
 
-    distancesFile = os.path.abspath("/Users/janlucal/Documents/GitHub/HubaldModel/Python/Multiprocessing/Input/Matrices/50000/1")
+    print("Importing distance matrix...")
+    distancesFile = os.path.abspath("/Users/janlucal/Documents/GitHub/HubaldModel/Python/Multiprocessing/Input/Matrices/probabilities/5000.csv")
     distances = np.genfromtxt(distancesFile, delimiter=',')
+    print(f"Distance matrix imported containing {distances.shape[0]} values")
 
     availableCores = multiprocessing.cpu_count()
     numWorkers = availableCores
@@ -180,7 +181,7 @@ def hubald_model_statistical(input_parameters, saveDir, reuseArrays="", accuracy
         print(f"Total calculations: {totalCalculations}")
         saveDistances = True
         if saveDistances and not reuseArrays:
-            distanceArray = build_dis_matrix(calculationSlices, satParameters, satConstants, accuracy)
+            distanceArray = build_dis_matrix(satParameters, satConstants, numWorkers, accuracy)
             arraysList = [satParameters, satConstants, distanceArray]
             save_arrays(arraysList, saveDir)
             sys.exit("Distance array has been created.")
@@ -198,9 +199,8 @@ def hubald_model_statistical(input_parameters, saveDir, reuseArrays="", accuracy
         print(f"Iteration {tt} of {tmax}")
         # m, b = 1 / 10000 / 12 / 100000000 * timestep, 0
         m, b = fragmentColProb / 12 / 100000000 * timestep, 0
-        colProbMatrix, satParameters, satsStruck = small_stat(colProbMatrix, satParameters, satConstants,
-                                                              smallFragments, m, b, timestep, sigma, accuracy,
-                                                              distances)
+        colProbMatrix, satParameters, satsStruck = small_stat(colProbMatrix, satParameters, smallFragments, m, b,
+                                                              timestep, sigma, distances)
         smallFragmentCols = satsStruck
 
         # m, b = 1 / 10000 / 12 / 100000 * timestep, 0
@@ -216,10 +216,9 @@ def hubald_model_statistical(input_parameters, saveDir, reuseArrays="", accuracy
 
         colProbMatrix, satParameters, satConstants, freeIndices = deorbit_launch_stat(colProbMatrix, satParameters,
                                                                                       satConstants, aLimits, timestep,
-                                                                                      sigma, accuracy, freeIndices,
+                                                                                      sigma, freeIndices,
                                                                                       startsPerTimestep,
-                                                                                      deorbitsPerTimestep, numWorkers,
-                                                                                      distances)
+                                                                                      deorbitsPerTimestep, distances)
         nonZeroRows = satParameters[:, 0] != 0
         numberOfSatellites = np.count_nonzero(nonZeroRows)
         print(f'Number of satellites: {numberOfSatellites}    Iteration: {tt}')
