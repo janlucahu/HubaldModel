@@ -99,12 +99,6 @@ def col_matrix_single(nrOfSats):
     return probabilities
 
 
-# Define the chunk size and file paths
-chunk_size = 1_000_000  # Adjust the chunk size as per your requirements
-input_file = "/Users/janlucal/Documents/GitHub/HubaldModel/Python/Multiprocessing/Input/Matrices/probabilities/50000.csv"
-output_file = "/Users/janlucal/Documents/GitHub/HubaldModel/Python/Multiprocessing/Input/Matrices/probabilities/50000_reduced.csv"
-
-
 # Function to process each chunk and write non-zero elements to a file
 def process_chunk(chunk):
     # Identify zero elements and mark their indices
@@ -122,7 +116,12 @@ def exponential_decay(x, a, b, c):
     return a * np.exp(-b * x) + c
 
 
-"""
+# Define the chunk size and file paths
+chunk_size = 1_000_000  # Adjust the chunk size as per your requirements
+input_file = "/Users/janlucal/Documents/GitHub/HubaldModel/Python/Multiprocessing/Input/Matrices/probabilities/20000.csv"
+output_file = "/Users/janlucal/Documents/GitHub/HubaldModel/Python/Multiprocessing/Input/Matrices/probabilities/20000_reduced.csv"
+
+
 # Read the input CSV file in chunks
 reader = pd.read_csv(input_file, header=None, chunksize=chunk_size)
 for chunk in reader:
@@ -130,8 +129,6 @@ for chunk in reader:
     process_chunk(chunk)
 
 """
-
-
 print("Importing data")
 data = np.genfromtxt("/Users/janlucal/Documents/GitHub/HubaldModel/Python/Multiprocessing/Input/Matrices/probabilities/50000_reduced.csv")
 print("Import succesful")
@@ -147,6 +144,7 @@ y = prob
 popt, pcov = curve_fit(exponential_decay, x, y)
 
 # Get the optimized parameters
+print(popt)
 a_opt, b_opt, c_opt = popt
 
 # Generate the fitted curve
@@ -183,7 +181,7 @@ plt.xlabel('Value')
 plt.ylabel('Frequency')
 plt.legend()
 plt.show()
-
+"""
 """
 sats = [50000]
 probabilities = []
