@@ -155,7 +155,7 @@ def hubald_model_statistical(input_parameters, saveDir, reuseArrays="", accuracy
     freeIndices = []
 
     print("Importing distance matrix...")
-    distancesFile = os.path.abspath("/Users/janlucal/Documents/GitHub/HubaldModel/Python/Multiprocessing/Input/Matrices/probabilities/5000.csv")
+    distancesFile = os.path.abspath("/Users/janlucal/Documents/GitHub/HubaldModel/Python/Multiprocessing/Input/Matrices/distances/1000.csv")
     distances = np.genfromtxt(distancesFile, delimiter=',')
     print(f"Distance matrix imported containing {distances.shape[0]} values")
 
@@ -179,7 +179,7 @@ def hubald_model_statistical(input_parameters, saveDir, reuseArrays="", accuracy
 
         print("Calculating probability matrix")
         print(f"Total calculations: {totalCalculations}")
-        saveDistances = True
+        saveDistances = False
         if saveDistances and not reuseArrays:
             distanceArray = build_dis_matrix(satParameters, satConstants, numWorkers, accuracy)
             arraysList = [satParameters, satConstants, distanceArray]

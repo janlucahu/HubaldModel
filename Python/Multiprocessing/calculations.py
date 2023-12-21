@@ -1,4 +1,5 @@
 import numpy as np
+from numba import jit
 
 
 EMIN, EMAX = 0, 0.3
@@ -8,6 +9,7 @@ OMIN, OMAX = 0, 1.0 * np.pi
 TMIN, TMAX = 1.5, 8
 
 
+@jit(nopython=True)
 def constants(satParameters):
     '''
     Calculate constants used to calculate the orbits of the satellites.
@@ -34,7 +36,7 @@ def constants(satParameters):
 
     return satConstants
 
-
+@jit(nopython=True)
 def initialize(nrOfSats, alimits, activeFraction, plane=False):
     '''
     Initializes random orbital parameters for a given number of satellites.

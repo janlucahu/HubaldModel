@@ -32,7 +32,7 @@ def main():
 
     arraysDir = os.path.abspath("/Users/janlucal/Documents/GitHub/HubaldModel/Python/Multiprocessing/Input/Matrices/50000/1")
     if distanceMode == "standard":
-        simulationData, colProbMatrix = hubald_model(inputParameters, saveDir, reuseArrays="")
+        simulationData, colProbMatrix = hubald_model(inputParameters, saveDir, reuseArrays=arraysDir)
     elif distanceMode == "statistical":
         print("Statistical distance mode employed.")
         simulationData, colProbMatrix = hubald_model_statistical(inputParameters, saveDir, reuseArrays=arraysDir)

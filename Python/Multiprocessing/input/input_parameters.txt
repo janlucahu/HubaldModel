@@ -1,5 +1,5 @@
 distance_mode=statistical
-starting_sats=50000
+starting_sats=1000
 sigma=2000
 fragment_collision_prob=0.0005
 active_percentage=0.8
@@ -8,5 +8,5 @@ small_fragments=1000000000
 large_fragments=100000
 timestep=3
 tmax=1200
-starts_per_timestep=100
-deorbits_per_timestep=10
+starts_per_timestep=50
+deorbits_per_timestep=5

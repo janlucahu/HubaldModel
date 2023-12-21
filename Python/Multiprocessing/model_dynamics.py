@@ -194,7 +194,9 @@ def small_stat(colProbMatrix, satParameters, smallFragments, mm, bb, timestep, s
 
             for sat2 in range(satParameters.shape[0]):
                 if not sat2 == randSat:
-                    colProb = col_prob_stat2(distances, randSat, sat2, satParameters, sigma, timestep)
+                    randNum = np.random.randint(0, distances.shape[0])
+                    dist = distances[randNum]
+                    colProb = col_prob_stat2(dist, randSat, sat2, satParameters, sigma, timestep)
                     if colProb > probThresh:
                         newRow = np.array([randSat, sat2, colProb])
                         colProbMatrix = np.vstack((colProbMatrix, newRow))
@@ -230,9 +232,11 @@ def deorbit_launch_stat(colProbMatrix, satParameters, satConstants, aLimits, tim
     satIndices = []
 
     print(f"Sats launched: {launchedSats}")
+    print(freeIndices)
 
     if len(freeIndices) > 0 and len(freeIndices) >= launchedSats:
         satIndices = freeIndices[0:launchedSats]
+        del freeIndices[0:launchedSats]
         satIndices = np.sort(satIndices, kind='quicksort')[::-1]
         usedIndice = []
         for ii, newSat in enumerate(satIndices):
@@ -240,7 +244,9 @@ def deorbit_launch_stat(colProbMatrix, satParameters, satConstants, aLimits, tim
             satConstants[newSat] = newCons[ii]
             for sat2 in range(satParameters.shape[0]):
                 if sat2 not in usedIndice and sat2 != newSat:
-                    colProb = col_prob_stat2(distances, newSat, sat2, satParameters, sigma, timestep)
+                    randNum = np.random.randint(0, distances.shape[0])
+                    dist = distances[randNum]
+                    colProb = col_prob_stat2(dist, newSat, sat2, satParameters, sigma, timestep)
                     if colProb > colProbThresh:
                         newRow = np.array([newSat, sat2, colProb])
                         colProbMatrix = np.vstack((colProbMatrix, newRow))
@@ -257,15 +263,17 @@ def deorbit_launch_stat(colProbMatrix, satParameters, satConstants, aLimits, tim
             satIndices.append(index)
             satParameters = np.vstack((satParameters, newPars[ii + len(freeIndices)]))
             satConstants = np.vstack((satConstants, newCons[ii + len(freeIndices)]))
+        del freeIndices[0:-1]
 
         satIndices = np.sort(satIndices, kind='quicksort')[::-1]
         usedIndice = []
         for ii, newSat in enumerate(satIndices):
-            satParameters[newSat] = newPars[ii]
-            satConstants[newSat] = newCons[ii]
+            print(f"{ii} of {len(satIndices)}")
             for sat2 in range(satParameters.shape[0]):
                 if sat2 not in usedIndice and sat2 != newSat:
-                    colProb = col_prob_stat2(distances, newSat, sat2, satParameters, sigma, timestep)
+                    randNum = np.random.randint(0, distances.shape[0])
+                    dist = distances[randNum]
+                    colProb = col_prob_stat2(dist, newSat, sat2, satParameters, sigma, timestep)
                     if colProb > colProbThresh:
                         newRow = np.array([newSat, sat2, colProb])
                         colProbMatrix = np.vstack((colProbMatrix, newRow))
@@ -286,7 +294,9 @@ def deorbit_launch_stat(colProbMatrix, satParameters, satConstants, aLimits, tim
             satConstants[newSat] = newCons[ii]
             for sat2 in range(satParameters.shape[0]):
                 if sat2 not in usedIndice and sat2 != newSat:
-                    colProb = col_prob_stat2(distances, newSat, sat2, satParameters, sigma, timestep)
+                    randNum = np.random.randint(0, distances.shape[0])
+                    dist = distances[randNum]
+                    colProb = col_prob_stat2(dist, newSat, sat2, satParameters, sigma, timestep)
                     if colProb > colProbThresh:
                         newRow = np.array([newSat, sat2, colProb])
                         colProbMatrix = np.vstack((colProbMatrix, newRow))

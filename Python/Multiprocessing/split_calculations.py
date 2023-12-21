@@ -3,6 +3,7 @@ import numpy as np
 from numba import jit
 from probability_distributions import half_normal
 from multiprocessing import Pool
+import warnings
 
 
 @jit(nopython=True)
@@ -277,8 +278,6 @@ def stat_prob_matrix(satParameters, satConstants, lower, upper, timestep, sigma,
             else:
                 colProbPerApproach = half_normal(closestDistance, sigma, False)
             colProb = 1 - (1 - colProbPerApproach) ** numberOfApproaches
-            if colProb > 0:
-                print(colProb)
             probList.append(colProb)
 
     probArray = np.array(probList)
@@ -409,12 +408,24 @@ def col_prob_stat(distances, sat1, sat2, satParameters, sigma, timestep):
     return colProb
 
 
-def col_prob_stat2(probabilities, sat1, sat2, satParameters, sigma, timestep):
+def col_prob_stat2(dist, sat1, sat2, satParameters, sigma, timestep):
     if satParameters[sat1][6] != -1 and satParameters[sat2][6] != -1:
-        colProb = np.random.choice(probabilities)
-        activeSatellite = satParameters[sat1][6] + satParameters[sat2][6]  # = false if both are inactive
-        if activeSatellite:
-            colProb = colProb / 10
+        warnings.simplefilter('error')
+        try:
+            monthsToSeconds = 30 * 24 * 60 * 60
+            activeSatellite = satParameters[sat1][6] + satParameters[sat2][6]  # = false if both are inactive
+            synodicPeriod = 1 / np.abs(1 / satParameters[sat1][5] - 1 / satParameters[sat2][5])
+            numberOfApproaches = int(timestep * monthsToSeconds / synodicPeriod)
+            if activeSatellite:
+                colProbPerApproach = half_normal(dist, sigma, True)
+            else:
+                colProbPerApproach = half_normal(dist, sigma, False)
+
+            colProb = 1 - (1 - colProbPerApproach) ** numberOfApproaches
+        except:
+            T1 = satParameters[sat1][5]
+            T2 = satParameters[sat2][5]
+            activeSatellite = satParameters[sat1][6] + satParameters[sat2][6]  # = false if both are inactive
     else:
         colProb = 0
 
