@@ -116,141 +116,156 @@ def exponential_decay(x, a, b, c):
     return a * np.exp(-b * x) + c
 
 
-# Define the chunk size and file paths
-chunk_size = 1_000_000  # Adjust the chunk size as per your requirements
-input_file = "/Users/janlucal/Documents/GitHub/HubaldModel/Python/Multiprocessing/Input/Matrices/probabilities/20000.csv"
-output_file = "/Users/janlucal/Documents/GitHub/HubaldModel/Python/Multiprocessing/Input/Matrices/probabilities/20000_reduced.csv"
+if __name__ == '__main__':
 
+    # Define the chunk size and file paths
+    chunk_size = 1_000_000  # Adjust the chunk size as per your requirements
+    input_file = "/Users/janlucal/Documents/GitHub/HubaldModel/Python/Multiprocessing/Input/Matrices/probabilities/20000.csv"
+    output_file = "/Users/janlucal/Documents/GitHub/HubaldModel/Python/Multiprocessing/Input/Matrices/probabilities/20000_reduced.csv"
 
-# Read the input CSV file in chunks
-reader = pd.read_csv(input_file, header=None, chunksize=chunk_size)
-for chunk in reader:
-    # Process the chunk
-    process_chunk(chunk)
+    """
+    # Read the input CSV file in chunks
+    reader = pd.read_csv(input_file, header=None, chunksize=chunk_size)
+    for chunk in reader:
+        # Process the chunk
+        process_chunk(chunk)
+    """
 
-"""
-print("Importing data")
-data = np.genfromtxt("/Users/janlucal/Documents/GitHub/HubaldModel/Python/Multiprocessing/Input/Matrices/probabilities/50000_reduced.csv")
-print("Import succesful")
-prob = np.sort(data)[::-1]
-xx = np.linspace(0, prob.shape[0], prob.shape[0])
-non_zero = np.nonzero(prob)
+    print("Importing data")
+    data = np.genfromtxt("/Users/janlucal/Documents/GitHub/HubaldModel/Python/Multiprocessing/Input/Matrices/probabilities/50000_reduced.csv")
+    print("Import succesful")
+    prob = np.sort(data)[::-1]
+    for _ in range(1000):
+        prob = np.append(prob, 0)
+    xx = np.linspace(0, prob.shape[0], prob.shape[0])
+    non_zero = np.nonzero(prob)
 
-# Generate example data
-x = np.linspace(0, prob.shape[0], prob.shape[0])
-y = prob
+    # Generate example data
+    x = np.linspace(0, prob.shape[0], prob.shape[0])
+    y = prob
 
-# Fit the exponential decay function to the data
-popt, pcov = curve_fit(exponential_decay, x, y)
+    # Fit the exponential decay function to the data
+    popt, pcov = curve_fit(exponential_decay, x, y)
 
-# Get the optimized parameters
-print(popt)
-a_opt, b_opt, c_opt = popt
+    # Get the optimized parameters
+    print(popt)
+    a_opt, b_opt, c_opt = popt
 
-# Generate the fitted curve
-y_fit = exponential_decay(x, a_opt, b_opt, c_opt)
+    # Generate the fitted curve
+    y_fit = exponential_decay(x, a_opt, b_opt, c_opt)
+    y_fit2 = exponential_decay(x, 1, 1.3*b_opt, 0)
+    y_fit3 = exponential_decay(x, 1, 1.3*b_opt*x.shape[0], 0)
+    print(x.shape[0])
 
-# Plot the original data and the fitted curve
-plt.scatter(x, y, label='Data')
-plt.plot(x, y_fit, label='Fit')
-plt.xlabel('x')
-plt.ylabel('y')
-plt.legend()
-plt.show()
+    # Plot the original data and the fitted curve
+    plt.scatter(x, y, label='Data')
+    plt.plot(x, y_fit, label='Fit1')
+    plt.plot(x, y_fit2, label='Fit2')
 
-# Exclude zero and negative values
-data = data[data > 0]
+    plt.xlabel('x')
+    plt.ylabel('y')
+    plt.legend()
+    plt.show()
 
-# Create logarithmically spaced bins
-min_value = data.min()
-max_value = data.max()
-epsilon = 0  # Small positive offset to avoid zero values
-bin_edges = np.logspace(np.log10(min_value + epsilon), np.log10(max_value + epsilon), num=30)
+    # Exclude zero and negative values
+    data = data[data > 0]
 
-# Compute the histogram
-hist, _ = np.histogram(data, bins=bin_edges)
+    # Create logarithmically spaced bins
+    min_value = data.min()
+    max_value = data.max()
+    epsilon = 0  # Small positive offset to avoid zero values
+    bin_edges = np.logspace(np.log10(min_value + epsilon), np.log10(max_value + epsilon), num=30)
 
-# Calculate the bin centers
-bin_centers = np.sqrt(bin_edges[:-1] * bin_edges[1:])
+    # Compute the histogram
+    hist, _ = np.histogram(data, bins=bin_edges)
 
-# Plot the double logarithmic histogram
-plt.plot(bin_centers, hist, 'bo', label='Data')
-plt.xscale("log")
+    # Calculate the bin centers
+    bin_centers = np.sqrt(bin_edges[:-1] * bin_edges[1:])
 
-plt.xlabel('Value')
-plt.ylabel('Frequency')
-plt.legend()
-plt.show()
-"""
-"""
-sats = [50000]
-probabilities = []
-norm = True
-for ii, satNr in enumerate(sats):
-    probability = col_matrix_single(satNr)
-    fileName = "probabilities.csv"
-    currentDir = os.getcwd()
-    outputDir = os.path.join(currentDir, os.path.abspath("output"))
-    fileDir = os.path.join(outputDir, fileName)
-    np.savetxt(fileDir, probability, delimiter=',')
-    probabilities.append(probability)
-    bins = range(0, int(np.max(probability)), 10000)
+    # Plot the double logarithmic histogram
+    plt.plot(bin_centers, hist, 'bo', label='Data')
+    plt.xscale("log")
 
-    dis, bins = np.histogram(probability, bins)
-    if norm:
-        dis = dis / np.sum(probability)
+    plt.xlabel('Value')
+    plt.ylabel('Frequency')
+    plt.legend()
+    plt.show()
 
-    plt.plot(bins[0:-1], dis, label=f'{satNr}')
+    plt.plot(x/x.shape[0], y_fit2)
+    plt.plot(x, y_fit3)
+    plt.show()
 
-plt.legend()
-plt.plot()
+    print(exponential_decay(0.00001, 1, 13*8.78182914e-02*x.shape[0], 0))
 
-
-
-start = time.time()
-distance = np.genfromtxt("/Users/janlucal/Documents/GitHub/HubaldModel/Python/Multiprocessing/Input/Matrices/distances/20000.csv")
-end = time.time()
-print(f"Array imported after {round(end - start, 2)}s")
-
-stat_distances = np.empty(20000)
-start = time.time()
-for ii in range(stat_distances.shape[0]):
-    ind = np.random.randint(0, distance.shape[0])
-    stat_distances[ii] = distance[ind]
-end = time.time()
-print(f"Statistical distances built after {round(end - start, 2)}")
-
-bins = range(0, int(np.max(stat_distances)), 10000)
-dis, bins = np.histogram(stat_distances, bins)
-dis = dis / np.sum(stat_distances)
-plt.plot(bins[0:-1], dis, label='statistical distances')
-
-bins = range(0, int(np.max(distance)), 10000)
-dis, bins = np.histogram(distance, bins)
-dis = dis / np.sum(distance)
-plt.plot(bins[0:-1], dis, label='distance distribution')
-
-start = time.time()
-normalized_dist = distance / np.sum(distance)
-cdf = np.cumsum(normalized_dist)
-end = time.time()
-print(f"Statistical preparation finished after {round(end - start, 2)}")
-
-stat_distances2 = np.empty(20000)
-start = time.time()
-for ii in range(stat_distances2.shape[0]):
-    random_num = np.random.uniform()
-    sample_index = np.searchsorted(cdf, random_num)
-    sampled_distance = distance[sample_index]
-    stat_distances2[ii] = sampled_distance
-end = time.time()
-print(f"Second statistical distances built after {round(end - start, 2)}")
-
-bins = range(0, int(np.max(stat_distances2)), 10000)
-dis, bins = np.histogram(stat_distances2, bins)
-dis = dis / np.sum(stat_distances2)
-plt.plot(bins[0:-1], dis, label='statistical distances 2')
-
-plt.legend()
-plt.show()
-"""
+    """
+    sats = [50000]
+    probabilities = []
+    norm = True
+    for ii, satNr in enumerate(sats):
+        probability = col_matrix_single(satNr)
+        fileName = "probabilities.csv"
+        currentDir = os.getcwd()
+        outputDir = os.path.join(currentDir, os.path.abspath("output"))
+        fileDir = os.path.join(outputDir, fileName)
+        np.savetxt(fileDir, probability, delimiter=',')
+        probabilities.append(probability)
+        bins = range(0, int(np.max(probability)), 10000)
+    
+        dis, bins = np.histogram(probability, bins)
+        if norm:
+            dis = dis / np.sum(probability)
+    
+        plt.plot(bins[0:-1], dis, label=f'{satNr}')
+    
+    plt.legend()
+    plt.plot()
+    
+    
+    
+    start = time.time()
+    distance = np.genfromtxt("/Users/janlucal/Documents/GitHub/HubaldModel/Python/Multiprocessing/Input/Matrices/distances/20000.csv")
+    end = time.time()
+    print(f"Array imported after {round(end - start, 2)}s")
+    
+    stat_distances = np.empty(20000)
+    start = time.time()
+    for ii in range(stat_distances.shape[0]):
+        ind = np.random.randint(0, distance.shape[0])
+        stat_distances[ii] = distance[ind]
+    end = time.time()
+    print(f"Statistical distances built after {round(end - start, 2)}")
+    
+    bins = range(0, int(np.max(stat_distances)), 10000)
+    dis, bins = np.histogram(stat_distances, bins)
+    dis = dis / np.sum(stat_distances)
+    plt.plot(bins[0:-1], dis, label='statistical distances')
+    
+    bins = range(0, int(np.max(distance)), 10000)
+    dis, bins = np.histogram(distance, bins)
+    dis = dis / np.sum(distance)
+    plt.plot(bins[0:-1], dis, label='distance distribution')
+    
+    start = time.time()
+    normalized_dist = distance / np.sum(distance)
+    cdf = np.cumsum(normalized_dist)
+    end = time.time()
+    print(f"Statistical preparation finished after {round(end - start, 2)}")
+    
+    stat_distances2 = np.empty(20000)
+    start = time.time()
+    for ii in range(stat_distances2.shape[0]):
+        random_num = np.random.uniform()
+        sample_index = np.searchsorted(cdf, random_num)
+        sampled_distance = distance[sample_index]
+        stat_distances2[ii] = sampled_distance
+    end = time.time()
+    print(f"Second statistical distances built after {round(end - start, 2)}")
+    
+    bins = range(0, int(np.max(stat_distances2)), 10000)
+    dis, bins = np.histogram(stat_distances2, bins)
+    dis = dis / np.sum(stat_distances2)
+    plt.plot(bins[0:-1], dis, label='statistical distances 2')
+    
+    plt.legend()
+    plt.show()
+    """

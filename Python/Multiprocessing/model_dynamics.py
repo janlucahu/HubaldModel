@@ -2,6 +2,7 @@ import numpy as np
 from probability_distributions import linear_distribution
 from calculations import initialize
 from split_calculations import indice_slices, build_prob_matrix2, collision_probability, col_prob_stat, col_prob_stat2
+from distance_distribution import exponential_decay
 
 
 def small_fragment(colProbMatrix, satParameters, satConstants, smallFragments, mm, bb, timestep, sigma, accuracy):

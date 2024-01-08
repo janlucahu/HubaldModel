@@ -7,7 +7,8 @@ from model_dynamics import (small_fragment, large_fragment, satellite_collision,
                             deorbit_launch_stat)
 from data_handling import collect_data
 from calculations import initialize
-from split_calculations import build_prob_matrix, calculation_slices, build_dis_matrix, calculation_slices2, build_stat_prob_matrix
+from split_calculations import (build_prob_matrix, calculation_slices, build_dis_matrix, calculation_slices2,
+                                build_stat_prob_matrix)
 from file_io import save_arrays, read_arrays
 
 
