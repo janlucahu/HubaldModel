@@ -36,6 +36,7 @@ def constants(satParameters):
 
     return satConstants
 
+
 @jit(nopython=True)
 def initialize(nrOfSats, alimits, activeFraction, plane=False):
     '''

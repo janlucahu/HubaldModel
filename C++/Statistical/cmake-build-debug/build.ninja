@@ -51,13 +51,13 @@ build cmake_object_order_depends_target_Statistical: phony || CMakeFiles/Statist
 
 build CMakeFiles/Statistical.dir/main.cpp.obj: CXX_COMPILER__Statistical_Debug C$:/Users/jlhub/Documents/Studium/Masterarbeit/HubaldModell/HubaldModel/C++/Statistical/main.cpp || cmake_object_order_depends_target_Statistical
   DEP_FILE = CMakeFiles\Statistical.dir\main.cpp.obj.d
-  FLAGS = -g -fdiagnostics-color=always
+  FLAGS = -O3 -g -fdiagnostics-color=always
   OBJECT_DIR = CMakeFiles\Statistical.dir
   OBJECT_FILE_DIR = CMakeFiles\Statistical.dir
 
 build CMakeFiles/Statistical.dir/statistical_hubald_model.cpp.obj: CXX_COMPILER__Statistical_Debug C$:/Users/jlhub/Documents/Studium/Masterarbeit/HubaldModell/HubaldModel/C++/Statistical/statistical_hubald_model.cpp || cmake_object_order_depends_target_Statistical
   DEP_FILE = CMakeFiles\Statistical.dir\statistical_hubald_model.cpp.obj.d
-  FLAGS = -g -fdiagnostics-color=always
+  FLAGS = -O3 -g -fdiagnostics-color=always
   OBJECT_DIR = CMakeFiles\Statistical.dir
   OBJECT_FILE_DIR = CMakeFiles\Statistical.dir
 
@@ -70,7 +70,7 @@ build CMakeFiles/Statistical.dir/statistical_hubald_model.cpp.obj: CXX_COMPILER_
 # Link the executable Statistical.exe
 
 build Statistical.exe: CXX_EXECUTABLE_LINKER__Statistical_Debug CMakeFiles/Statistical.dir/main.cpp.obj CMakeFiles/Statistical.dir/statistical_hubald_model.cpp.obj
-  FLAGS = -g
+  FLAGS = -O3 -g
   LINK_LIBRARIES = -lkernel32 -luser32 -lgdi32 -lwinspool -lshell32 -lole32 -loleaut32 -luuid -lcomdlg32 -ladvapi32
   OBJECT_DIR = CMakeFiles\Statistical.dir
   POST_BUILD = cd .

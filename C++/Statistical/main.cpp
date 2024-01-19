@@ -1,10 +1,13 @@
 #include <iostream>
+#include <chrono>
 #include <vector>
 
 #include "statistical_hubald_model.h"
 
 int main() {
-    int num_sats = 10000;
+    auto start = std::chrono::high_resolution_clock::now();
+
+    int num_sats = 1000;
     double earth_radius = 6370000;
     double a_low = earth_radius + 200000;
     double a_high = earth_radius + 2000000;
@@ -14,11 +17,6 @@ int main() {
     std::vector<std::vector<double>> sat_parameters = result.first;
     std::vector<std::vector<double>> sat_constants = result.second;
 
-    std::vector<double> parameters1 = sat_parameters[0];
-    std::vector<double> parameters2 = sat_parameters[1];
-    std::vector<double> constants1 = sat_constants[0];
-    std::vector<double> constants2 = sat_constants[1];
-
     int accuracy = 20;
     std::vector<std::vector<double>> sin = calculate_trig(accuracy, 's');
     std::vector<std::vector<double>> cos = calculate_trig(accuracy, 'c');
@@ -27,6 +25,7 @@ int main() {
     int time_step = 3;
     double col_prob;
     for (int i = 0; i < num_sats; ++i) {
+        // std::cout << i << " of " << num_sats << std::endl;
         for (int j = 0; j < i; ++j) {
             int sat1 = i;
             int sat2 = j;
@@ -37,5 +36,10 @@ int main() {
             }
         }
     }
+    auto end = std::chrono::high_resolution_clock::now();
+    std::chrono::duration<double> duration = end - start;
+    double seconds = duration.count();
+    std::cout << "Process finished after " << seconds << "s." << std::endl;
+
     return 0;
 }
