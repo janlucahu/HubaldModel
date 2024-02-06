@@ -84,7 +84,7 @@ def find_minimum(parameters1, parameters2, acc=100, repetitions=3):
     a1, a2 = parameters1[0], parameters2[0]
     e1, e2 = parameters1[1], parameters2[1]
 
-    const1, const2 = constants(parameters1, parameters2)
+    const1, const2 = constants2(parameters1, parameters2)
     P11_1, P12_1, P21_1, P22_1, P31_1, P32_1 = const1
     P11_2, P12_2, P21_2, P22_2, P31_2, P32_2 = const2
 
@@ -160,7 +160,7 @@ def plot_distance(parameters1, parameters2, acc=100):
     a1, a2 = parameters1[0], parameters2[0]
     e1, e2 = parameters1[1], parameters2[1]
 
-    const1, const2 = constants(parameters1, parameters2)
+    const1, const2 = constants2(parameters1, parameters2)
     P11_1, P12_1, P21_1, P22_1, P31_1, P32_1 = const1
     P11_2, P12_2, P21_2, P22_2, P31_2, P32_2 = const2
 
@@ -199,7 +199,7 @@ def plot_distance(parameters1, parameters2, acc=100):
         minPoints.append([angles[0], angles[1], minDistances[ii]])
 
     fig = plt.figure()
-    ax = fig.gca(projection='3d')
+    ax = fig.add_subplot(111, projection='3d')
     surf = ax.plot_surface(E1, E2, dist, cmap='coolwarm', vmin=dist.min(),
                            vmax=dist.max())
 
@@ -222,7 +222,7 @@ def plot_distance(parameters1, parameters2, acc=100):
     plt.show()
 
 
-def plot_orbits(parameters):
+def plot_orbits(parameters, indices):
     '''
     Plots a set orbit depending on thier respective orbital parameters.
 
@@ -235,7 +235,7 @@ def plot_orbits(parameters):
     fig = plt.figure(figsize=(8, 8))
     ax = fig.add_subplot(111, projection='3d')
 
-    for nn in range(len(parameters)):
+    for nn in indices:
 
         aa = parameters[nn][0]
         ee = parameters[nn][1]
@@ -287,7 +287,8 @@ def main():
 
     plot_distance(parameters[0], parameters[1], acc=20)
     if plotOrbits:
-        plot_orbits(parameters[0:2])
+        indices = [0, 2, 4, 6, 8]
+        plot_orbits(parameters, indices)
 
 
 if __name__ == '__main__':

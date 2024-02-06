@@ -75,35 +75,29 @@ std::pair<std::vector<std::vector<double>>, std::vector<std::vector<double>>> in
 }
 
 std::vector<std::vector<double>> calculate_trig(int accuracy, char mode) {
-    std::vector<double> E_1(accuracy);
-    std::vector<double> E_2(accuracy);
-
-    for (int i = 0; i < accuracy; ++i) {
-        E_1[i] = i * 2 * M_PI / accuracy;
-        E_2[i] = i * 2 * M_PI / accuracy;
-    }
-
     std::vector<std::vector<double>> EE(accuracy, std::vector<double>(accuracy));
-
     for (int i = 0; i < accuracy; ++i) {
         for (int j = 0; j < accuracy; ++j) {
-            EE[i][j] = E_1[j];
+            EE[i][j] = j * 2 * M_PI / accuracy;
         }
     }
 
     std::vector<std::vector<double>> trig_E(accuracy, std::vector<double>(accuracy));
 
-    for (int i = 0; i < accuracy; ++i) {
-        for (int j = 0; j < accuracy; ++j) {
-            if (mode == 's') {
+    if (mode == 's') {
+        for (int i = 0; i < accuracy; ++i) {
+            for (int j = 0; j < accuracy; ++j) {
                 trig_E[i][j] = std::sin(EE[i][j]);
             }
-            else {
+        }
+    }
+    else {
+        for (int i = 0; i < accuracy; ++i) {
+            for (int j = 0; j < accuracy; ++j) {
                 trig_E[i][j] = std::cos(EE[i][j]);
             }
         }
     }
-
     return trig_E;
 }
 
@@ -134,7 +128,7 @@ double find_minimum (std::vector<double> parameters1, std::vector<double> parame
     for (int i = 0; i < accuracy; ++i) {
         for (int j = 0; j < accuracy; ++j) {
             X1[i][j] = a1 * (cos[i][j] - e1);
-            Y1[i][j] = a1 * std::sqrt(1 - e1 * e1) * sin[i][j];
+            Y1[i][j] = a1 * std::sqrt(1 - std::pow(e1, 2)) * sin[i][j];
         }
     }
 
@@ -154,7 +148,7 @@ double find_minimum (std::vector<double> parameters1, std::vector<double> parame
     for (int i = 0; i < accuracy; ++i) {
         for (int j = 0; j < accuracy; ++j) {
             X2[i][j] = a2 * (cos[i][j] - e2);
-            Y2[i][j] = a2 * std::sqrt(1 - e2 * e2) * sin[i][j];
+            Y2[i][j] = a2 * std::sqrt(1 - std::pow(e2, 2)) * sin[i][j];
         }
     }
 
@@ -173,18 +167,20 @@ double find_minimum (std::vector<double> parameters1, std::vector<double> parame
     int ind = 0;
     for (int i = 0; i < accuracy; ++i) {
         for (int j = 0; j < accuracy; ++j) {
-            double dist;
-            dist = std::sqrt(std::pow(x1[i][j] - x2[i][j], 2) + std::pow(y1[i][j] - y2[i][j], 2)
-                    + std::pow(z1[i][j] - z2[i][j], 2));
+            double dist_squared;
+            dist_squared = std::pow(x1[i][j] - x2[i][j], 2) + std::pow(y1[i][j] - y2[i][j], 2)
+                    + std::pow(z1[i][j] - z2[i][j], 2);
 
-            distances[ind] = dist;
+            distances[ind] = dist_squared;
             ++ind;
         }
     }
     auto minimum_element = std::min_element(distances.begin(), distances.end());
+    double minimum_distance_squared = 0;
     double minimum_distance = 0;
     if (minimum_element != distances.end()) {
-        minimum_distance = *minimum_element;
+        minimum_distance_squared = *minimum_element;
+        minimum_distance = std::sqrt(minimum_distance_squared);
     }
     return minimum_distance;
 }
