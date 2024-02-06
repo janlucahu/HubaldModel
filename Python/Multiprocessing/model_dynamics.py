@@ -4,6 +4,8 @@ from calculations import initialize
 from split_calculations import indice_slices, build_prob_matrix2, collision_probability, col_prob_stat, col_prob_stat2
 from distance_distribution import exponential_decay
 
+b = 261000
+
 
 def small_fragment(colProbMatrix, satParameters, satConstants, smallFragments, mm, bb, timestep, sigma, accuracy):
     probThresh = 10 ** (-10)
@@ -175,7 +177,7 @@ def deorbit_and_launch(colProbMatrix, satParameters, satConstants, aLimits, time
     return colProbMatrix, satParameters, satConstants, freeIndices
 
 
-def small_stat(colProbMatrix, satParameters, smallFragments, mm, bb, timestep, sigma, distances):
+def small_stat(colProbMatrix, satParameters, smallFragments, mm, bb, timestep, sigma):
     probThresh = 10 ** (-10)
     satellitesStruck = 0
     activeSatParameters = satParameters[:, -1] == 1
@@ -195,9 +197,8 @@ def small_stat(colProbMatrix, satParameters, smallFragments, mm, bb, timestep, s
 
             for sat2 in range(satParameters.shape[0]):
                 if not sat2 == randSat:
-                    randNum = np.random.randint(0, distances.shape[0])
-                    dist = distances[randNum]
-                    colProb = col_prob_stat2(dist, randSat, sat2, satParameters, sigma, timestep)
+                    randNum = np.random.rand()
+                    colProb = exponential_decay(randNum, 1, b, 0)
                     if colProb > probThresh:
                         newRow = np.array([randSat, sat2, colProb])
                         colProbMatrix = np.vstack((colProbMatrix, newRow))
@@ -206,7 +207,7 @@ def small_stat(colProbMatrix, satParameters, smallFragments, mm, bb, timestep, s
 
 
 def deorbit_launch_stat(colProbMatrix, satParameters, satConstants, aLimits, timestep, sigma, freeIndices,
-                        startsPerTimestep, deorbitsPerTimestep, distances):
+                        startsPerTimestep, deorbitsPerTimestep):
 
     colProbThresh = 10 ** (-10)
 
@@ -245,9 +246,8 @@ def deorbit_launch_stat(colProbMatrix, satParameters, satConstants, aLimits, tim
             satConstants[newSat] = newCons[ii]
             for sat2 in range(satParameters.shape[0]):
                 if sat2 not in usedIndice and sat2 != newSat:
-                    randNum = np.random.randint(0, distances.shape[0])
-                    dist = distances[randNum]
-                    colProb = col_prob_stat2(dist, newSat, sat2, satParameters, sigma, timestep)
+                    randNum = np.random.rand()
+                    colProb = exponential_decay(randNum, 1, b, 0)
                     if colProb > colProbThresh:
                         newRow = np.array([newSat, sat2, colProb])
                         colProbMatrix = np.vstack((colProbMatrix, newRow))
@@ -272,9 +272,8 @@ def deorbit_launch_stat(colProbMatrix, satParameters, satConstants, aLimits, tim
             print(f"{ii} of {len(satIndices)}")
             for sat2 in range(satParameters.shape[0]):
                 if sat2 not in usedIndice and sat2 != newSat:
-                    randNum = np.random.randint(0, distances.shape[0])
-                    dist = distances[randNum]
-                    colProb = col_prob_stat2(dist, newSat, sat2, satParameters, sigma, timestep)
+                    randNum = np.random.rand()
+                    colProb = exponential_decay(randNum, 1, b, 0)
                     if colProb > colProbThresh:
                         newRow = np.array([newSat, sat2, colProb])
                         colProbMatrix = np.vstack((colProbMatrix, newRow))
@@ -295,9 +294,8 @@ def deorbit_launch_stat(colProbMatrix, satParameters, satConstants, aLimits, tim
             satConstants[newSat] = newCons[ii]
             for sat2 in range(satParameters.shape[0]):
                 if sat2 not in usedIndice and sat2 != newSat:
-                    randNum = np.random.randint(0, distances.shape[0])
-                    dist = distances[randNum]
-                    colProb = col_prob_stat2(dist, newSat, sat2, satParameters, sigma, timestep)
+                    randNum = np.random.rand()
+                    colProb = exponential_decay(randNum, 1, b, 0)
                     if colProb > colProbThresh:
                         newRow = np.array([newSat, sat2, colProb])
                         colProbMatrix = np.vstack((colProbMatrix, newRow))

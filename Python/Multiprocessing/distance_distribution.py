@@ -153,9 +153,11 @@ if __name__ == '__main__':
 
     # Generate the fitted curve
     y_fit = exponential_decay(x, a_opt, b_opt, c_opt)
-    y_fit2 = exponential_decay(x, 1, 1.3*b_opt, 0)
-    y_fit3 = exponential_decay(x, 1, 1.3*b_opt*x.shape[0], 0)
-    print(x.shape[0])
+
+    adjustment = 2 * b_opt * x.shape[0]
+    print(adjustment)
+    y_fit2 = exponential_decay(x, 1, adjustment, 0)
+    print(exponential_decay(0.5, 1, adjustment, 0))
 
     # Plot the original data and the fitted curve
     plt.scatter(x, y, label='Data')
@@ -167,105 +169,28 @@ if __name__ == '__main__':
     plt.legend()
     plt.show()
 
-    # Exclude zero and negative values
-    data = data[data > 0]
+    logarithmic_plot = False
+    if logarithmic_plot:
+        # Exclude zero and negative values
+        data = data[data > 0]
 
-    # Create logarithmically spaced bins
-    min_value = data.min()
-    max_value = data.max()
-    epsilon = 0  # Small positive offset to avoid zero values
-    bin_edges = np.logspace(np.log10(min_value + epsilon), np.log10(max_value + epsilon), num=30)
+        # Create logarithmically spaced bins
+        min_value = data.min()
+        max_value = data.max()
+        epsilon = 0  # Small positive offset to avoid zero values
+        bin_edges = np.logspace(np.log10(min_value + epsilon), np.log10(max_value + epsilon), num=30)
 
-    # Compute the histogram
-    hist, _ = np.histogram(data, bins=bin_edges)
+        # Compute the histogram
+        hist, _ = np.histogram(data, bins=bin_edges)
 
-    # Calculate the bin centers
-    bin_centers = np.sqrt(bin_edges[:-1] * bin_edges[1:])
+        # Calculate the bin centers
+        bin_centers = np.sqrt(bin_edges[:-1] * bin_edges[1:])
 
-    # Plot the double logarithmic histogram
-    plt.plot(bin_centers, hist, 'bo', label='Data')
-    plt.xscale("log")
+        # Plot the double logarithmic histogram
+        plt.plot(bin_centers, hist, 'bo', label='Data')
+        plt.xscale("log")
 
-    plt.xlabel('Value')
-    plt.ylabel('Frequency')
-    plt.legend()
-    plt.show()
-
-    plt.plot(x/x.shape[0], y_fit2)
-    plt.plot(x, y_fit3)
-    plt.show()
-
-    print(exponential_decay(0.00001, 1, 13*8.78182914e-02*x.shape[0], 0))
-
-    """
-    sats = [50000]
-    probabilities = []
-    norm = True
-    for ii, satNr in enumerate(sats):
-        probability = col_matrix_single(satNr)
-        fileName = "probabilities.csv"
-        currentDir = os.getcwd()
-        outputDir = os.path.join(currentDir, os.path.abspath("output"))
-        fileDir = os.path.join(outputDir, fileName)
-        np.savetxt(fileDir, probability, delimiter=',')
-        probabilities.append(probability)
-        bins = range(0, int(np.max(probability)), 10000)
-    
-        dis, bins = np.histogram(probability, bins)
-        if norm:
-            dis = dis / np.sum(probability)
-    
-        plt.plot(bins[0:-1], dis, label=f'{satNr}')
-    
-    plt.legend()
-    plt.plot()
-    
-    
-    
-    start = time.time()
-    distance = np.genfromtxt("/Users/janlucal/Documents/GitHub/HubaldModel/Python/Multiprocessing/Input/Matrices/distances/20000.csv")
-    end = time.time()
-    print(f"Array imported after {round(end - start, 2)}s")
-    
-    stat_distances = np.empty(20000)
-    start = time.time()
-    for ii in range(stat_distances.shape[0]):
-        ind = np.random.randint(0, distance.shape[0])
-        stat_distances[ii] = distance[ind]
-    end = time.time()
-    print(f"Statistical distances built after {round(end - start, 2)}")
-    
-    bins = range(0, int(np.max(stat_distances)), 10000)
-    dis, bins = np.histogram(stat_distances, bins)
-    dis = dis / np.sum(stat_distances)
-    plt.plot(bins[0:-1], dis, label='statistical distances')
-    
-    bins = range(0, int(np.max(distance)), 10000)
-    dis, bins = np.histogram(distance, bins)
-    dis = dis / np.sum(distance)
-    plt.plot(bins[0:-1], dis, label='distance distribution')
-    
-    start = time.time()
-    normalized_dist = distance / np.sum(distance)
-    cdf = np.cumsum(normalized_dist)
-    end = time.time()
-    print(f"Statistical preparation finished after {round(end - start, 2)}")
-    
-    stat_distances2 = np.empty(20000)
-    start = time.time()
-    for ii in range(stat_distances2.shape[0]):
-        random_num = np.random.uniform()
-        sample_index = np.searchsorted(cdf, random_num)
-        sampled_distance = distance[sample_index]
-        stat_distances2[ii] = sampled_distance
-    end = time.time()
-    print(f"Second statistical distances built after {round(end - start, 2)}")
-    
-    bins = range(0, int(np.max(stat_distances2)), 10000)
-    dis, bins = np.histogram(stat_distances2, bins)
-    dis = dis / np.sum(stat_distances2)
-    plt.plot(bins[0:-1], dis, label='statistical distances 2')
-    
-    plt.legend()
-    plt.show()
-    """
+        plt.xlabel('Value')
+        plt.ylabel('Frequency')
+        plt.legend()
+        plt.show()

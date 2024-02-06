@@ -4,7 +4,7 @@
 #include "statistical_hubald_model.h"
 
 int main() {
-    int num_sats = 10000;
+    int num_sats = 100;
     double earth_radius = 6370000;
     double a_low = earth_radius + 200000;
     double a_high = earth_radius + 2000000;

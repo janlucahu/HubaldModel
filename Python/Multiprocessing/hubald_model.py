@@ -155,11 +155,6 @@ def hubald_model_statistical(input_parameters, saveDir, reuseArrays="", accuracy
     collectedData = np.empty((10, tmax // timestep))
     freeIndices = []
 
-    print("Importing distance matrix...")
-    distancesFile = os.path.abspath("/Users/janlucal/Documents/GitHub/HubaldModel/Python/Multiprocessing/Input/Matrices/distances/1000.csv")
-    distances = np.genfromtxt(distancesFile, delimiter=',')
-    print(f"Distance matrix imported containing {distances.shape[0]} values")
-
     availableCores = multiprocessing.cpu_count()
     numWorkers = availableCores
 
@@ -201,7 +196,7 @@ def hubald_model_statistical(input_parameters, saveDir, reuseArrays="", accuracy
         # m, b = 1 / 10000 / 12 / 100000000 * timestep, 0
         m, b = fragmentColProb / 12 / 100000000 * timestep, 0
         colProbMatrix, satParameters, satsStruck = small_stat(colProbMatrix, satParameters, smallFragments, m, b,
-                                                              timestep, sigma, distances)
+                                                              timestep, sigma)
         smallFragmentCols = satsStruck
 
         # m, b = 1 / 10000 / 12 / 100000 * timestep, 0
@@ -219,7 +214,7 @@ def hubald_model_statistical(input_parameters, saveDir, reuseArrays="", accuracy
                                                                                       satConstants, aLimits, timestep,
                                                                                       sigma, freeIndices,
                                                                                       startsPerTimestep,
-                                                                                      deorbitsPerTimestep, distances)
+                                                                                      deorbitsPerTimestep)
         nonZeroRows = satParameters[:, 0] != 0
         numberOfSatellites = np.count_nonzero(nonZeroRows)
         print(f'Number of satellites: {numberOfSatellites}    Iteration: {tt}')
