@@ -42,7 +42,7 @@ def plot_orbits(parameters, indices):
     fig = plt.figure(figsize=(8, 8))
     ax = fig.add_subplot(111, projection='3d')
 
-    for nn in indices:
+    for nn in indices[0:2]:
 
         aa = parameters[nn][0]
         ee = parameters[nn][1]
@@ -59,15 +59,19 @@ def plot_orbits(parameters, indices):
 
         ax.plot(xx, yy, zz)
 
+    # ax.set_xlim(xmin, xmax)
+    # ax.set_ylim(ymin, ymax)
+    # ax.set_zlim(zmin, zmax)
+
     ax.set_xlabel('X')
     ax.set_ylabel('Y')
     ax.set_zlabel('Z')
 
     ax.axis('off')
 
-    save_path = os.path.join("C:\\Users\\jlhub\\Documents\\Studium\\Masterarbeit\\HubaldModell\\HubaldModel\\Python\\Plotting", "endangered_orbits.png")
-    plt.savefig(save_path, bbox_inches='tight', pad_inches=0, dpi=2000)
-    plt.close(fig)  # Close the figure
+    save_path = os.path.join("C:\\Users\\jlhub\\Documents\\Studium\\Masterarbeit\\HubaldModell\\HubaldModel\\Python\\Plotting", "zoomed_orbits.png")
+    plt.savefig(save_path, bbox_inches='tight', pad_inches=0, dpi=600)
+    #plt.close(fig)  # Close the figure
 
 
 def plot_points(directory, sample_percentage=100):
@@ -223,7 +227,7 @@ def plot_points(directory, sample_percentage=100):
     ax.legend()
 
     save_path = os.path.join("C:\\Users\\jlhub\\Documents\\Studium\\Masterarbeit\\HubaldModell\\HubaldModel\\Python\\Plotting", "orbital_positions.png")
-    plt.savefig(save_path, bbox_inches='tight', pad_inches=0, dpi=2000)
+    plt.savefig(save_path, bbox_inches='tight', pad_inches=0, dpi=600)
     plt.close(fig)  # Close the figure
 
     return satellite_parameters, satellite_positions, red_level, yellow_level

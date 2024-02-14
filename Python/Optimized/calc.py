@@ -121,7 +121,8 @@ def find_minimum(parameters1: np.ndarray[np.float64, 1], parameters2: np.ndarray
 
     dist_squared = (x1 - x2) ** 2 + (y1 - y2) ** 2 + (z1 - z2) ** 2
 
-    minimum_distance = np.min(dist_squared)
+    minimum_distance_squared = np.min(dist_squared)
+    minimum_distance = np.sqrt(minimum_distance_squared)
 
     return minimum_distance
 

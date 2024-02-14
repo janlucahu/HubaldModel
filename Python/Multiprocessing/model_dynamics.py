@@ -67,7 +67,7 @@ def satellite_collision(colProbMatrix, satParameters, satConstants, smallFragmen
     collisionsInIteration = 0
     shift = 0
     for ii in range(colProbMatrix.shape[0]):
-        pp = np.random.rand()
+        pp = np.random.uniform(0, 1)
         if pp < colProbMatrix[ii - shift][-1]:
             collisionsInIteration += 1
             sat1 = int(colProbMatrix[ii - shift][0])
