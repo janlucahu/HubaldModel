@@ -8,7 +8,7 @@ from data_handling import read_csv, plot_data
 from calc import initialize, calculate_trig
 from prob_matrix import build_prob_matrix, build_prob_matrix_parallel
 from dynamics import small_fragment, large_fragment, satellite_collision, deorbits, starts
-from file_io import read_input_file, create_header, write_results_to_csv
+from file_io import read_input_file, create_header, write_results_to_csv, save_arrays
 
 
 @jit(nopython=True)
@@ -84,7 +84,7 @@ def kessler_model(sat_parameters: np.ndarray[np.float64, 2], sat_constants: np.n
         simulation_data[8][counter] = small_frag_collisions
         simulation_data[9][counter] = large_frag_collisions
 
-    return simulation_data
+    return simulation_data, sat_parameters, sat_constants, col_prob_matrix
 
 
 def simulation(input_file):
@@ -143,18 +143,20 @@ def simulation(input_file):
 
     elif matrix_mode == "import":
         print("Importing data.")
-        path = r"C:\Users\jlhub\Documents\Studium\Masterarbeit\HubaldModell\HubaldModel\Python\Multiprocessing\input\Matrices\50000\1"
+        path = r"/Users/janlucal/Documents/GitHub/HubaldModel/Python/Optimized/input/Matrices/50000/1"
         sat_parameters = read_csv(path + r"/satParameters.csv")
         sat_constants = read_csv(path + r"/satConstants.csv")
         col_prob_matrix = read_csv(path + r"/probabilityMatrix.csv")
     else:
         raise ValueError("Invalid initial matrix mode. Check Input file.")
+    start_arrays = {"sat_parameters": sat_parameters, "sat_constants": sat_constants, "prob_matrix": col_prob_matrix}
+    save_arrays(start_arrays, save_dir)
 
     print("Kessler model employed.\n")
-    sim_data = kessler_model(sat_parameters, sat_constants, col_prob_matrix, num_sats, sigma, frag_col_prob,
-                             active_fraction, a_low, a_high, num_small_fragments, num_large_fragments,
-                             starts_per_timestep, deorbits_per_timestep, time_step, tmax, matrix_mode, num_workers,
-                             launch_mode)
+    model_args = (sat_parameters, sat_constants, col_prob_matrix, num_sats, sigma, frag_col_prob, active_fraction,
+                  a_low, a_high, num_small_fragments, num_large_fragments, starts_per_timestep, deorbits_per_timestep,
+                  time_step, tmax, matrix_mode, num_workers, launch_mode)
+    sim_data, sat_parameters, sat_constants, col_prob_matrix = kessler_model(*model_args)
     finish = time.time()
     elapsed_time = finish - start
     ending_time = time.asctime()
@@ -164,6 +166,8 @@ def simulation(input_file):
     time_stamps = [starting_time, ending_time, elapsed_time]
     file_header = create_header(time_stamps, input_parameters)
     write_results_to_csv(sim_data, file_header, save_dir)
+    end_arrays = {"sat_parameters": sat_parameters, "sat_constants": sat_constants, "prob_matrix": col_prob_matrix}
+    save_arrays(end_arrays, save_dir, end=True)
     print("Process finished.\n\n")
 
 

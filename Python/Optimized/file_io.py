@@ -58,13 +58,12 @@ def read_input_file(file_path=os.path.abspath(os.getcwd() + '/input/input_parame
     return input_parameters
 
 
-def save_arrays(arrays, outputDir):
-    arrayNames = ["satParameters", "satConstants", "probabilityMatrix"]
-    for arr in arrays:
-        if len(arr.shape) < 2:
-            arrayNames = ["satParameters", "satConstants", "distances"]
-    for ii, arr in enumerate(arrays):
-        fileName = arrayNames[ii] + ".csv"
+def save_arrays(arrays, outputDir, end=False):
+    for key, arr in arrays.items():
+        if not end:
+            fileName = key + "_start" + ".csv"
+        else:
+            fileName = key + "_end" + ".csv"
         fileDir = os.path.join(outputDir, fileName)
         np.savetxt(fileDir, arr, delimiter=',')
 

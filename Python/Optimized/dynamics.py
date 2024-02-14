@@ -42,7 +42,7 @@ def small_fragment(col_prob_matrix: np.ndarray[np.float64, 2], sat_parameters: n
                     col_prob_matrix[ind, 2] = col_prob
                 else:
                     removed_index = np.empty((col_prob_matrix.shape[0] - 1, col_prob_matrix.shape[1]),
-                                              dtype=types.float64)
+                                             dtype=types.float64)
 
                     removed_index[:ind] = col_prob_matrix[:ind]
                     removed_index[ind:] = col_prob_matrix[ind + 1:]

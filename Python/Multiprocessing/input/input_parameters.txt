@@ -8,5 +8,5 @@ small_fragments=1000000000
 large_fragments=100000
 timestep=3
 tmax=1200
-starts_per_timestep=100
-deorbits_per_timestep=10
+starts_per_timestep=200
+deorbits_per_timestep=20

@@ -1,0 +1,29 @@
+Hubald model simulation data
+""
+starting_time = Wed Feb 14 16:27:17 2024
+finishing_time = Wed Feb 14 16:39:17 2024
+elapsed_time = 720.2356050014496 s
+distance_mode = standard
+starting_sats = 50000
+sigma = 2000
+fragment_collision_prob = 0.0002
+active_percentage = 0.8
+aLimits = [6570000, 8370000]
+small_fragments = 1000000000
+large_fragments = 100000
+timestep = 3
+tmax = 30
+starts_per_timestep = 200
+deorbits_per_timestep = 20
+
+Time;Collisions per iteration;Total collisions;Total satellites;Active satellites;Passive satellites;Small fragments;Large fragments;Small fragment collisions;Large fragment collisions
+0.0;21.0;21.0;50136.0;15121.0;35015.0;1000100000.0;100400.0;7.0;2.0
+3.0;3.0;24.0;50309.0;15310.0;34999.0;1000100000.0;100400.0;10.0;0.0
+6.0;3.0;27.0;50480.0;15496.0;34984.0;1000200000.0;100800.0;13.0;2.0
+9.0;1.0;28.0;50655.0;15692.0;34963.0;1000300000.0;101200.0;3.0;2.0
+12.0;0.0;28.0;50834.0;15884.0;34950.0;1000300000.0;101200.0;7.0;0.0
+15.0;3.0;31.0;51006.0;16071.0;34935.0;1000350000.0;101400.0;12.0;1.0
+18.0;1.0;32.0;51181.0;16266.0;34915.0;1000450000.0;101800.0;3.0;2.0
+21.0;1.0;33.0;51357.0;16457.0;34900.0;1000500000.0;102000.0;7.0;1.0
+24.0;0.0;33.0;51533.0;16646.0;34887.0;1000650000.0;102600.0;8.0;3.0
+27.0;0.0;33.0;51708.0;16831.0;34877.0;1000850000.0;103400.0;13.0;4.0

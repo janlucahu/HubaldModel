@@ -248,7 +248,6 @@ def parallel_update(sat_parameters: np.ndarray[np.float64, 2], sat_constants: np
     return col_prob_matrix, sat_parameters, sat_constants
 
 
-@jit(nopython=True)
 def pool_update(sat_parameters: np.ndarray[np.float64, 2], sat_constants: np.ndarray[np.float64, 2],
                 sigma: float, time_step: int, accuracy: int, prob_thresh: float, sin: np.ndarray[np.float64, 2],
                 cos: np.ndarray[np.float64, 2], col_prob_matrix: np.ndarray[np.float64, 2],
@@ -267,12 +266,12 @@ def pool_update(sat_parameters: np.ndarray[np.float64, 2], sat_constants: np.nda
         num_new_parameters = int(launched_sats - len(indices))
     else:
         num_new_parameters = int(0)
-    new_indices = np.empty(num_new_parameters, dtype=types.int64)
+    new_indices = np.empty(num_new_parameters, dtype=np.int64)
     for ii in range(num_new_parameters):
         new_indices[ii] = sat_parameters.shape[0] + ii
 
     # indices of all newly launched satellites
-    extended_indices = np.empty(indices.shape[0] + new_indices.shape[0], dtype=types.int64)
+    extended_indices = np.empty(indices.shape[0] + new_indices.shape[0], dtype=np.int64)
     extended_indices[:indices.shape[0]] = indices
     extended_indices[indices.shape[0]:] = new_indices
 

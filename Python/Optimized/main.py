@@ -5,7 +5,7 @@ from model import simulation
 def main():
     print("Main script started.")
     input_files_path = os.path.abspath(
-        r"C:\Users\jlhub\Documents\Studium\Masterarbeit\HubaldModell\HubaldModel\Python\Optimized\input")
+        r"/Users/janlucal/Documents/GitHub/HubaldModel/Python/Optimized/input")
     input_files = []
     for entry in os.scandir(input_files_path):
         if entry.is_file() and entry.name.endswith(".txt"):
