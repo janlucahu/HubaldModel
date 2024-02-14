@@ -27,3 +27,10 @@ Python/OrbitalDistance/output/hubald_simulation_Fri Sep 22 21:56:48 2023.csv
 Python/OrbitalDistance/__pycache__/data_handling.cpython-310.pyc
 Python/OrbitalDistance/__pycache__/file_io.cpython-310.pyc
 *.json
+Python/Multiprocessing/Input/Matrices/distances/1000.csv
+Python/Multiprocessing/Input/Matrices/distances/20000.csv
+Python/Multiprocessing/Input/Matrices/distances/5000.csv
+Python/Multiprocessing/Input/Matrices/probabilities/20000.csv
+Python/Multiprocessing/Input/Matrices/probabilities/50000.csv
+Python/Multiprocessing/Input/Matrices/probabilities/5000.csv
+Python/Multiprocessing/output/probabilities.csv
