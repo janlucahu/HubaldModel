@@ -194,6 +194,11 @@ def starts(col_prob_matrix: np.ndarray[np.float64, 2], sat_parameters: np.ndarra
                                                                          time_step, accuracy, prob_thresh, sin, cos,
                                                                          col_prob_matrix, launched_sats, a_low, a_high,
                                                                          active_fraction, plane, num_workers)
+    # elif mode == "pool":
+    #     col_prob_matrix, sat_parameters, sat_constants = pool_update(sat_parameters, sat_constants, sigma,
+    #                                                                  time_step, accuracy, prob_thresh, sin, cos,
+    #                                                                  col_prob_matrix, launched_sats, a_low, a_high,
+    #                                                                  active_fraction, plane, num_workers)
     else:
         raise ValueError("Unsupported collision probability update mode.")
 

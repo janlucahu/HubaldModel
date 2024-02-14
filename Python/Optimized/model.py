@@ -6,7 +6,7 @@ from numba import jit
 from numba import types
 from data_handling import read_csv, plot_data
 from calc import initialize, calculate_trig
-from prob_matrix import build_prob_matrix
+from prob_matrix import build_prob_matrix, build_prob_matrix_parallel
 from dynamics import small_fragment, large_fragment, satellite_collision, deorbits, starts
 from file_io import read_input_file, create_header, write_results_to_csv
 
@@ -16,7 +16,7 @@ def kessler_model(sat_parameters: np.ndarray[np.float64, 2], sat_constants: np.n
                   col_prob_matrix: np.ndarray[np.float64, 2], num_sats: int, sigma: float, frag_col_prob: float,
                   active_fraction: float, a_low: float, a_high: float, num_small_fragments: int,
                   num_large_fragments: int, starts_per_timestep: int, deorbits_per_timestep: int, time_step: int,
-                  tmax: int, mode: str, num_workers: int) -> np.ndarray[np.float64, 2]:
+                  tmax: int, mode: str, num_workers: int, launch_mode: str) -> np.ndarray[np.float64, 2]:
 
     plane = False
     earth_radius = float(6_370_000)
@@ -65,9 +65,8 @@ def kessler_model(sat_parameters: np.ndarray[np.float64, 2], sat_constants: np.n
         col_prob_matrix, sat_parameters, sat_constants = deorbits(*deorbit_args)
 
         # satellite starts1
-        mode = "single"
         start_args = (col_prob_matrix, sat_parameters, sat_constants, num_workers, sigma, time_step, accuracy,
-                      prob_thresh, sin, cos, starts_per_timestep, a_low, a_high, active_fraction, plane, mode)
+                      prob_thresh, sin, cos, starts_per_timestep, a_low, a_high, active_fraction, plane, launch_mode)
         col_prob_matrix, sat_parameters, sat_constants = starts(*start_args)
 
         inactive_sats = np.where(sat_parameters[:, -1] == 0)[0].shape[0]
@@ -105,6 +104,9 @@ def simulation(input_file):
 
     input_parameters = read_input_file(input_file)
     matrix_mode = input_parameters.get("matrix_mode")
+    launch_mode = input_parameters.get("launch_mode")
+    accuracy = input_parameters.get("accuracy")
+    prob_thresh = float(eval(input_parameters.get("prob_thresh")))
     num_sats = input_parameters.get("starting_sats")
     sigma = input_parameters.get("sigma")
     frag_col_prob = input_parameters.get("fragment_collision_prob")
@@ -125,19 +127,34 @@ def simulation(input_file):
 
     if matrix_mode == "calculate":
         print("Calculating starting matrix.")
+        sin = calculate_trig(accuracy, 's')
+        cos = calculate_trig(accuracy, 'c')
         sat_parameters, sat_constants = initialize(num_sats, a_low, a_high, active_fraction, False)
-        col_prob_matrix = np.empty((0, 3))
+        if launch_mode == "single":
+            lower_bound = int(0)
+            upper_bound = sat_parameters.shape[0]
+            col_prob_matrix = build_prob_matrix(sat_parameters, sat_constants, sigma, time_step, accuracy, prob_thresh,
+                                                sin, cos, lower_bound, upper_bound)
+        elif launch_mode == "njit":
+            col_prob_matrix = build_prob_matrix_parallel(sat_parameters, sat_constants, sigma, time_step, accuracy, prob_thresh,
+                                                         sin, cos, num_workers)
+        else:
+            raise ValueError("Invalid initial launch mode. Check Input file.")
+
     elif matrix_mode == "import":
         print("Importing data.")
         path = r"C:\Users\jlhub\Documents\Studium\Masterarbeit\HubaldModell\HubaldModel\Python\Multiprocessing\input\Matrices\50000\1"
         sat_parameters = read_csv(path + r"/satParameters.csv")
         sat_constants = read_csv(path + r"/satConstants.csv")
         col_prob_matrix = read_csv(path + r"/probabilityMatrix.csv")
+    else:
+        raise ValueError("Invalid initial matrix mode. Check Input file.")
 
     print("Kessler model employed.\n")
     sim_data = kessler_model(sat_parameters, sat_constants, col_prob_matrix, num_sats, sigma, frag_col_prob,
                              active_fraction, a_low, a_high, num_small_fragments, num_large_fragments,
-                             starts_per_timestep, deorbits_per_timestep, time_step, tmax, matrix_mode, num_workers)
+                             starts_per_timestep, deorbits_per_timestep, time_step, tmax, matrix_mode, num_workers,
+                             launch_mode)
     finish = time.time()
     elapsed_time = finish - start
     ending_time = time.asctime()

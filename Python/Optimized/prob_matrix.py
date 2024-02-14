@@ -237,6 +237,7 @@ def parallel_update(sat_parameters: np.ndarray[np.float64, 2], sat_constants: np
 
     results = []
     for worker in prange(num_workers):
+        print()
         result = update(indices, sat_parameters, sat_constants, sigma, time_step, accuracy, sin, cos, prob_thresh,
                         worker, num_workers)
         results.append(result)
