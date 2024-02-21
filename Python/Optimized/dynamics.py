@@ -194,12 +194,20 @@ def starts(col_prob_matrix: np.ndarray[np.float64, 2], sat_parameters: np.ndarra
                                                                          time_step, accuracy, prob_thresh, sin, cos,
                                                                          col_prob_matrix, launched_sats, a_low, a_high,
                                                                          active_fraction, plane, num_workers)
-    # elif mode == "pool":
-    #     col_prob_matrix, sat_parameters, sat_constants = pool_update(sat_parameters, sat_constants, sigma,
-    #                                                                  time_step, accuracy, prob_thresh, sin, cos,
-    #                                                                  col_prob_matrix, launched_sats, a_low, a_high,
-    #                                                                  active_fraction, plane, num_workers)
     else:
         raise ValueError("Unsupported collision probability update mode.")
 
+    return col_prob_matrix, sat_parameters, sat_constants
+
+
+def pool_starts(col_prob_matrix: np.ndarray[np.float64, 2], sat_parameters: np.ndarray[np.float64, 2],
+                sat_constants: np.ndarray[np.float64, 2], num_workers: int, sigma: float, time_step: int, accuracy: int,
+                prob_thresh: float, sin: np.ndarray[np.float64, 2], cos: np.ndarray[np.float64, 2],
+                starts_per_timestep: int, a_low: float, a_high: float, active_fraction: float, plane: bool,
+                mode: str) -> tuple[np.ndarray[np.float64, 2], np.ndarray[np.float64, 2], np.ndarray[np.float64, 2]]:
+
+    launched_sats = int(starts_per_timestep)
+    col_prob_matrix, sat_parameters, sat_constants = pool_update(sat_parameters, sat_constants, sigma, time_step, accuracy,
+                                                                 prob_thresh, sin, cos, col_prob_matrix, launched_sats,
+                                                                 a_low, a_high, active_fraction, plane, num_workers)
     return col_prob_matrix, sat_parameters, sat_constants

@@ -7,7 +7,7 @@ from numba import jit
 from data_handling import read_csv, plot_data
 from calc import initialize, calculate_trig
 from prob_matrix import build_prob_matrix, build_prob_matrix_parallel
-from dynamics import small_fragment, large_fragment, satellite_collision, deorbits, starts
+from dynamics import small_fragment, large_fragment, satellite_collision, deorbits, starts, pool_starts
 from file_io import read_input_file, create_header, write_results_to_csv, save_arrays
 
 
@@ -27,7 +27,7 @@ def configure_logging(log_dir):
         logger.addHandler(console_handler)
 
 
-@jit(nopython=True)
+#@jit(nopython=True)
 def kessler_model(sat_parameters: np.ndarray[np.float64, 2], sat_constants: np.ndarray[np.float64, 2],
                   col_prob_matrix: np.ndarray[np.float64, 2], num_sats: int, sigma: float, frag_col_prob: float,
                   active_fraction: float, a_low: float, a_high: float, num_small_fragments: int,
@@ -54,10 +54,11 @@ def kessler_model(sat_parameters: np.ndarray[np.float64, 2], sat_constants: np.n
                                             sin, cos, lower_bound, upper_bound)
 
     simulation_data = np.empty((10, tmax // time_step))
+    total_sats = num_sats
     counter = 0
 
     for tt in range(0, tmax, time_step):
-        print(f"Timestep {tt} of {tmax}\n")
+        print(f"Timestep {tt} of {tmax}\nNumber of satellites: {total_sats}\n")
         # small fragment collisions
         mm_small = frag_col_prob / 12 / initial_small_fragments * time_step
         small_args = (col_prob_matrix, sat_parameters, sat_constants, num_small_fragments, mm_small, time_step, sigma,
@@ -83,7 +84,7 @@ def kessler_model(sat_parameters: np.ndarray[np.float64, 2], sat_constants: np.n
         # satellite starts1
         start_args = (col_prob_matrix, sat_parameters, sat_constants, num_workers, sigma, time_step, accuracy,
                       prob_thresh, sin, cos, starts_per_timestep, a_low, a_high, active_fraction, plane, launch_mode)
-        col_prob_matrix, sat_parameters, sat_constants = starts(*start_args)
+        col_prob_matrix, sat_parameters, sat_constants = pool_starts(*start_args)
 
         inactive_sats = np.where(sat_parameters[:, -1] == 0)[0].shape[0]
         active_sats = np.where(sat_parameters[:, -1] == 1)[0].shape[0]

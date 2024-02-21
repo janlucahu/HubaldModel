@@ -1,0 +1,64 @@
+2024-02-19 14:40:27,253 - INFO - Main script started.
+2024-02-19 14:40:27,253 - INFO - A total of 5 parameter set(s) will be simulated
+2024-02-19 14:40:27,253 - INFO - Simulation started with following input parameters:
+2024-02-19 14:40:27,253 - INFO - Input path:
+/Users/janlucal/Documents/GitHub/HubaldModel/Python/Optimized/batch/100.txt
+
+2024-02-19 14:40:27,255 - INFO - matrix_mode = import
+2024-02-19 14:40:27,255 - INFO - launch_mode = njit
+2024-02-19 14:40:27,255 - INFO - accuracy = 20
+2024-02-19 14:40:27,255 - INFO - prob_thresh = 10**(-15)
+2024-02-19 14:40:27,255 - INFO - starting_sats = 50000
+2024-02-19 14:40:27,255 - INFO - sigma = 2000
+2024-02-19 14:40:27,255 - INFO - fragment_collision_prob = 0.0004
+2024-02-19 14:40:27,255 - INFO - active_percentage = 0.8
+2024-02-19 14:40:27,255 - INFO - aLimits = [200000, 2000000]
+2024-02-19 14:40:27,255 - INFO - small_fragments = 100000000
+2024-02-19 14:40:27,255 - INFO - large_fragments = 100000
+2024-02-19 14:40:27,255 - INFO - timestep = 3
+2024-02-19 14:40:27,255 - INFO - tmax = 1200
+2024-02-19 14:40:27,255 - INFO - starts_per_timestep = 100
+2024-02-19 14:40:27,255 - INFO - deorbits_per_timestep = 10
+2024-02-19 14:40:27,255 - INFO - num_workers = 12
+2024-02-19 14:40:27,255 - INFO - Importing data.
+2024-02-19 14:40:28,217 - INFO - Kessler model employed.
+
+2024-02-19 17:22:00,545 - ERROR - An error occurred in the main script.
+Traceback (most recent call last):
+  File "/Users/janlucal/Documents/GitHub/HubaldModel/Python/Optimized/main.py", line 22, in main
+    simulation(input_file)
+  File "/Users/janlucal/Documents/GitHub/HubaldModel/Python/Optimized/model.py", line 176, in simulation
+    time_step, tmax, matrix_mode, num_workers, launch_mode)
+  File "/Users/janlucal/Documents/GitHub/HubaldModel/Python/Optimized/model.py", line 86, in kessler_model
+    prob_thresh, sin, cos, starts_per_timestep, a_low, a_high, active_fraction, plane, launch_mode)
+  File "/Users/janlucal/Documents/GitHub/HubaldModel/Python/Optimized/dynamics.py", line 210, in pool_starts
+    col_prob_matrix, sat_parameters, sat_constants = pool_update(sat_parameters, sat_constants, sigma, time_step, accuracy,
+  File "/Users/janlucal/Documents/GitHub/HubaldModel/Python/Optimized/prob_matrix.py", line 288, in pool_update
+    sat_parameters[ind] = new_parameters[ii]
+IndexError: index 100 is out of bounds for axis 0 with size 100
+2024-02-19 17:22:00,548 - INFO - Main script finished.
+2024-02-20 16:15:29,349 - INFO - Main script started.
+2024-02-20 16:15:29,349 - INFO - A total of 5 parameter set(s) will be simulated
+2024-02-20 16:15:29,349 - INFO - Simulation started with following input parameters:
+2024-02-20 16:15:29,349 - INFO - Input path:
+/Users/janlucal/Documents/GitHub/HubaldModel/Python/Optimized/batch/100.txt
+
+2024-02-20 16:15:29,350 - INFO - matrix_mode = import
+2024-02-20 16:15:29,350 - INFO - launch_mode = njit
+2024-02-20 16:15:29,350 - INFO - accuracy = 20
+2024-02-20 16:15:29,350 - INFO - prob_thresh = 10**(-15)
+2024-02-20 16:15:29,350 - INFO - starting_sats = 50000
+2024-02-20 16:15:29,350 - INFO - sigma = 2000
+2024-02-20 16:15:29,350 - INFO - fragment_collision_prob = 0.0004
+2024-02-20 16:15:29,350 - INFO - active_percentage = 0.8
+2024-02-20 16:15:29,350 - INFO - aLimits = [200000, 2000000]
+2024-02-20 16:15:29,350 - INFO - small_fragments = 100000000
+2024-02-20 16:15:29,350 - INFO - large_fragments = 100000
+2024-02-20 16:15:29,350 - INFO - timestep = 3
+2024-02-20 16:15:29,350 - INFO - tmax = 1200
+2024-02-20 16:15:29,350 - INFO - starts_per_timestep = 100
+2024-02-20 16:15:29,350 - INFO - deorbits_per_timestep = 10
+2024-02-20 16:15:29,350 - INFO - num_workers = 12
+2024-02-20 16:15:29,350 - INFO - Importing data.
+2024-02-20 16:15:30,257 - INFO - Kessler model employed.
+

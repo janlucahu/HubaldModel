@@ -278,6 +278,8 @@ def pool_update(sat_parameters: np.ndarray[np.float64, 2], sat_constants: np.nda
     # parameters of newly launched satellites
     new_parameters, new_constants = initialize(launched_sats, a_low, a_high, active_fraction, plane)
     for ii, ind in enumerate(indices):
+        if ii > num_new_parameters:
+            break
         sat_parameters[ind] = new_parameters[ii]
         sat_constants[ind] = new_constants[ii]
 
