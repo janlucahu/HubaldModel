@@ -58,7 +58,8 @@ def kessler_model(sat_parameters: np.ndarray[np.float64, 2], sat_constants: np.n
     counter = 0
 
     for tt in range(0, tmax, time_step):
-        print(f"Timestep {tt} of {tmax}\nNumber of satellites: {total_sats}\n")
+        ite_start = time.time()
+        print(f"Timestep {tt} of {tmax}\nNumber of satellites: {total_sats}")
         # small fragment collisions
         mm_small = frag_col_prob / 12 / initial_small_fragments * time_step
         small_args = (col_prob_matrix, sat_parameters, sat_constants, num_small_fragments, mm_small, time_step, sigma,
@@ -100,6 +101,9 @@ def kessler_model(sat_parameters: np.ndarray[np.float64, 2], sat_constants: np.n
         simulation_data[7][counter] = num_large_fragments
         simulation_data[8][counter] = small_frag_collisions
         simulation_data[9][counter] = large_frag_collisions
+
+        ite_end = time.time()
+        print(f"Iteration finished after {round(ite_end - ite_start, 2)}s\n")
 
     return simulation_data, sat_parameters, sat_constants, col_prob_matrix
 
