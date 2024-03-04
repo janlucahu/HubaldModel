@@ -271,9 +271,13 @@ def pool_update(sat_parameters: np.ndarray[np.float64, 2], sat_constants: np.nda
         new_indices[ii] = sat_parameters.shape[0] + ii
 
     # indices of all newly launched satellites
-    extended_indices = np.empty(indices.shape[0] + new_indices.shape[0], dtype=np.int64)
-    extended_indices[:indices.shape[0]] = indices
-    extended_indices[indices.shape[0]:] = new_indices
+    if launched_sats - len(indices) > 0:
+        extended_indices = np.empty(indices.shape[0] + new_indices.shape[0], dtype=np.int64)
+        extended_indices[:indices.shape[0]] = indices
+        extended_indices[indices.shape[0]:] = new_indices
+    else:
+        extended_indices = np.empty(launched_sats, dtype=np.int64)
+        extended_indices[:] = indices[:launched_sats]
 
     # parameters of newly launched satellites
     new_parameters, new_constants = initialize(launched_sats, a_low, a_high, active_fraction, plane)
