@@ -1,0 +1,56 @@
+2024-03-04 11:43:10,235 - INFO - Main script started.
+2024-03-04 11:43:10,236 - INFO - A total of 1 parameter set(s) will be simulated
+2024-03-04 11:43:10,236 - INFO - Simulation started with following input parameters:
+2024-03-04 11:43:10,236 - INFO - Input path:
+/Users/janlucal/Documents/GitHub/HubaldModel/Python/Optimized/input/input_parameters.txt
+
+2024-03-04 11:43:10,237 - INFO - matrix_mode = import
+2024-03-04 11:43:10,237 - INFO - launch_mode = pool
+2024-03-04 11:43:10,237 - INFO - accuracy = 20
+2024-03-04 11:43:10,237 - INFO - prob_thresh = 10**(-15)
+2024-03-04 11:43:10,238 - INFO - starting_sats = 50000
+2024-03-04 11:43:10,238 - INFO - sigma = 50000
+2024-03-04 11:43:10,238 - INFO - fragment_collision_prob = 0.0002
+2024-03-04 11:43:10,238 - INFO - active_percentage = 0.8
+2024-03-04 11:43:10,238 - INFO - aLimits = [200000, 2000000]
+2024-03-04 11:43:10,238 - INFO - small_fragments = 1000000000
+2024-03-04 11:43:10,238 - INFO - large_fragments = 100000
+2024-03-04 11:43:10,238 - INFO - timestep = 3
+2024-03-04 11:43:10,238 - INFO - tmax = 1200
+2024-03-04 11:43:10,238 - INFO - starts_per_timestep = 300
+2024-03-04 11:43:10,238 - INFO - deorbits_per_timestep = 30
+2024-03-04 11:43:10,238 - INFO - num_workers = 12
+2024-03-04 11:43:10,238 - INFO - Importing data.
+2024-03-04 11:43:11,174 - INFO - Kessler model employed.
+
+2024-03-04 17:08:38,987 - INFO - Simulation finished after: 19528.75s
+2024-03-04 17:08:38,987 - INFO - Writing results.
+2024-03-04 17:08:43,182 - INFO - Process finished.
+
+
+2024-03-04 17:08:43,183 - INFO - Main script finished.
+2024-03-05 11:30:13,739 - INFO - Main script started.
+2024-03-05 11:30:13,739 - INFO - A total of 1 parameter set(s) will be simulated
+2024-03-05 11:30:13,740 - INFO - Simulation started with following input parameters:
+2024-03-05 11:30:13,740 - INFO - Input path:
+/Users/janlucal/Documents/GitHub/HubaldModel/Python/Optimized/input/input_parameters.txt
+
+2024-03-05 11:30:13,740 - INFO - matrix_mode = import
+2024-03-05 11:30:13,740 - INFO - launch_mode = pool
+2024-03-05 11:30:13,740 - INFO - accuracy = 20
+2024-03-05 11:30:13,741 - INFO - prob_thresh = 10**(-15)
+2024-03-05 11:30:13,741 - INFO - starting_sats = 50000
+2024-03-05 11:30:13,741 - INFO - sigma = 50000
+2024-03-05 11:30:13,741 - INFO - fragment_collision_prob = 0.0002
+2024-03-05 11:30:13,741 - INFO - active_percentage = 0.8
+2024-03-05 11:30:13,741 - INFO - aLimits = [200000, 2000000]
+2024-03-05 11:30:13,741 - INFO - small_fragments = 1000000000
+2024-03-05 11:30:13,741 - INFO - large_fragments = 100000
+2024-03-05 11:30:13,741 - INFO - timestep = 3
+2024-03-05 11:30:13,741 - INFO - tmax = 1200
+2024-03-05 11:30:13,741 - INFO - starts_per_timestep = 300
+2024-03-05 11:30:13,741 - INFO - deorbits_per_timestep = 30
+2024-03-05 11:30:13,741 - INFO - num_workers = 12
+2024-03-05 11:30:13,741 - INFO - Importing data.
+2024-03-05 11:30:14,677 - INFO - Kessler model employed.
+
