@@ -3417,3 +3417,6894 @@ Timestep 723 of 1200
 
 
 
+2024-03-06 20:13:33,652 - INFO - Main script started.
+2024-03-06 20:13:33,653 - INFO - A total of 5 parameter set(s) will be simulated
+2024-03-06 20:13:33,653 - INFO - Simulation started with following input parameters:
+2024-03-06 20:13:33,653 - INFO - Input path:
+/Users/janlucal/Documents/GitHub/HubaldModel/Python/Optimized/batch2/100.txt
+
+2024-03-06 20:13:33,653 - INFO - matrix_mode = import
+2024-03-06 20:13:33,654 - INFO - launch_mode = njit
+2024-03-06 20:13:33,654 - INFO - accuracy = 20
+2024-03-06 20:13:33,654 - INFO - prob_thresh = 10**(-15)
+2024-03-06 20:13:33,654 - INFO - starting_sats = 50000
+2024-03-06 20:13:33,654 - INFO - sigma = 2000
+2024-03-06 20:13:33,654 - INFO - fragment_collision_prob = 0.0003
+2024-03-06 20:13:33,654 - INFO - active_percentage = 0.8
+2024-03-06 20:13:33,654 - INFO - aLimits = [200000, 2000000]
+2024-03-06 20:13:33,654 - INFO - small_fragments = 100000000
+2024-03-06 20:13:33,654 - INFO - large_fragments = 100000
+2024-03-06 20:13:33,654 - INFO - timestep = 3
+2024-03-06 20:13:33,654 - INFO - tmax = 1200
+2024-03-06 20:13:33,654 - INFO - starts_per_timestep = 100
+2024-03-06 20:13:33,654 - INFO - deorbits_per_timestep = 10
+2024-03-06 20:13:33,654 - INFO - num_workers = 12
+2024-03-06 20:13:33,654 - INFO - Importing data.
+2024-03-06 20:13:34,570 - INFO - Kessler model employed.
+
+Timestep 0 of 1200
+Number of satellites: 50000
+Iteration finished after 40.63s
+
+Timestep 3 of 1200
+Number of satellites: 50009
+Iteration finished after 40.09s
+
+Timestep 6 of 1200
+Number of satellites: 50091
+Iteration finished after 40.01s
+
+Timestep 9 of 1200
+Number of satellites: 50170
+Iteration finished after 40.32s
+
+Timestep 12 of 1200
+Number of satellites: 50249
+Iteration finished after 40.52s
+
+Timestep 15 of 1200
+Number of satellites: 50319
+Iteration finished after 41.03s
+
+Timestep 18 of 1200
+Number of satellites: 50398
+Iteration finished after 41.33s
+
+Timestep 21 of 1200
+Number of satellites: 50480
+Iteration finished after 41.45s
+
+Timestep 24 of 1200
+Number of satellites: 50561
+Iteration finished after 41.52s
+
+Timestep 27 of 1200
+Number of satellites: 50640
+Iteration finished after 41.63s
+
+Timestep 30 of 1200
+Number of satellites: 50722
+Iteration finished after 41.75s
+
+Timestep 33 of 1200
+Number of satellites: 50801
+Iteration finished after 41.69s
+
+Timestep 36 of 1200
+Number of satellites: 50877
+Iteration finished after 42.08s
+
+Timestep 39 of 1200
+Number of satellites: 50953
+Iteration finished after 42.47s
+
+Timestep 42 of 1200
+Number of satellites: 51037
+Iteration finished after 42.06s
+
+Timestep 45 of 1200
+Number of satellites: 51120
+Iteration finished after 41.9s
+
+Timestep 48 of 1200
+Number of satellites: 51202
+Iteration finished after 42.25s
+
+Timestep 51 of 1200
+Number of satellites: 51282
+Iteration finished after 42.16s
+
+Timestep 54 of 1200
+Number of satellites: 51363
+Iteration finished after 42.12s
+
+Timestep 57 of 1200
+Number of satellites: 51441
+Iteration finished after 42.28s
+
+Timestep 60 of 1200
+Number of satellites: 51516
+Iteration finished after 43.11s
+
+Timestep 63 of 1200
+Number of satellites: 51593
+Iteration finished after 42.27s
+
+Timestep 66 of 1200
+Number of satellites: 51673
+Iteration finished after 42.49s
+
+Timestep 69 of 1200
+Number of satellites: 51756
+Iteration finished after 42.52s
+
+Timestep 72 of 1200
+Number of satellites: 51840
+Iteration finished after 42.59s
+
+Timestep 75 of 1200
+Number of satellites: 51921
+Iteration finished after 42.46s
+
+Timestep 78 of 1200
+Number of satellites: 52002
+Iteration finished after 42.71s
+
+Timestep 81 of 1200
+Number of satellites: 52083
+Iteration finished after 42.74s
+
+Timestep 84 of 1200
+Number of satellites: 52163
+Iteration finished after 42.95s
+
+Timestep 87 of 1200
+Number of satellites: 52245
+Iteration finished after 42.79s
+
+Timestep 90 of 1200
+Number of satellites: 52323
+Iteration finished after 42.59s
+
+Timestep 93 of 1200
+Number of satellites: 52403
+Iteration finished after 42.9s
+
+Timestep 96 of 1200
+Number of satellites: 52481
+Iteration finished after 43.02s
+
+Timestep 99 of 1200
+Number of satellites: 52557
+Iteration finished after 42.98s
+
+Timestep 102 of 1200
+Number of satellites: 52632
+Iteration finished after 42.95s
+
+Timestep 105 of 1200
+Number of satellites: 52712
+Iteration finished after 42.99s
+
+Timestep 108 of 1200
+Number of satellites: 52794
+Iteration finished after 43.4s
+
+Timestep 111 of 1200
+Number of satellites: 52872
+Iteration finished after 43.62s
+
+Timestep 114 of 1200
+Number of satellites: 52949
+Iteration finished after 43.49s
+
+Timestep 117 of 1200
+Number of satellites: 53030
+Iteration finished after 43.49s
+
+Timestep 120 of 1200
+Number of satellites: 53114
+Iteration finished after 43.25s
+
+Timestep 123 of 1200
+Number of satellites: 53195
+Iteration finished after 43.6s
+
+Timestep 126 of 1200
+Number of satellites: 53278
+Iteration finished after 43.35s
+
+Timestep 129 of 1200
+Number of satellites: 53354
+Iteration finished after 43.55s
+
+Timestep 132 of 1200
+Number of satellites: 53437
+Iteration finished after 43.69s
+
+Timestep 135 of 1200
+Number of satellites: 53520
+Iteration finished after 43.42s
+
+Timestep 138 of 1200
+Number of satellites: 53602
+Iteration finished after 43.92s
+
+Timestep 141 of 1200
+Number of satellites: 53677
+Iteration finished after 43.44s
+
+Timestep 144 of 1200
+Number of satellites: 53750
+Iteration finished after 44.07s
+
+Timestep 147 of 1200
+Number of satellites: 53829
+Iteration finished after 43.81s
+
+Timestep 150 of 1200
+Number of satellites: 53905
+Iteration finished after 43.95s
+
+Timestep 153 of 1200
+Number of satellites: 53985
+Iteration finished after 43.88s
+
+Timestep 156 of 1200
+Number of satellites: 54064
+Iteration finished after 44.05s
+
+Timestep 159 of 1200
+Number of satellites: 54145
+Iteration finished after 44.26s
+
+Timestep 162 of 1200
+Number of satellites: 54225
+Iteration finished after 44.26s
+
+Timestep 165 of 1200
+Number of satellites: 54306
+Iteration finished after 44.18s
+
+Timestep 168 of 1200
+Number of satellites: 54385
+Iteration finished after 43.96s
+
+Timestep 171 of 1200
+Number of satellites: 54461
+Iteration finished after 44.41s
+
+Timestep 174 of 1200
+Number of satellites: 54535
+Iteration finished after 44.2s
+
+Timestep 177 of 1200
+Number of satellites: 54613
+Iteration finished after 43.95s
+
+Timestep 180 of 1200
+Number of satellites: 54691
+Iteration finished after 44.23s
+
+Timestep 183 of 1200
+Number of satellites: 54772
+Iteration finished after 43.88s
+
+Timestep 186 of 1200
+Number of satellites: 54849
+Iteration finished after 44.29s
+
+Timestep 189 of 1200
+Number of satellites: 54927
+Iteration finished after 44.06s
+
+Timestep 192 of 1200
+Number of satellites: 55003
+Iteration finished after 44.39s
+
+Timestep 195 of 1200
+Number of satellites: 55080
+Iteration finished after 44.66s
+
+Timestep 198 of 1200
+Number of satellites: 55158
+Iteration finished after 44.53s
+
+Timestep 201 of 1200
+Number of satellites: 55230
+Iteration finished after 44.92s
+
+Timestep 204 of 1200
+Number of satellites: 55309
+Iteration finished after 44.53s
+
+Timestep 207 of 1200
+Number of satellites: 55386
+Iteration finished after 44.87s
+
+Timestep 210 of 1200
+Number of satellites: 55461
+Iteration finished after 44.46s
+
+Timestep 213 of 1200
+Number of satellites: 55537
+Iteration finished after 44.34s
+
+Timestep 216 of 1200
+Number of satellites: 55614
+Iteration finished after 44.55s
+
+Timestep 219 of 1200
+Number of satellites: 55689
+Iteration finished after 44.99s
+
+Timestep 222 of 1200
+Number of satellites: 55763
+Iteration finished after 44.6s
+
+Timestep 225 of 1200
+Number of satellites: 55842
+Iteration finished after 45.02s
+
+Timestep 228 of 1200
+Number of satellites: 55918
+Iteration finished after 44.81s
+
+Timestep 231 of 1200
+Number of satellites: 55996
+Iteration finished after 44.96s
+
+Timestep 234 of 1200
+Number of satellites: 56071
+Iteration finished after 44.87s
+
+Timestep 237 of 1200
+Number of satellites: 56147
+Iteration finished after 44.81s
+
+Timestep 240 of 1200
+Number of satellites: 56227
+Iteration finished after 44.94s
+
+Timestep 243 of 1200
+Number of satellites: 56305
+Iteration finished after 44.84s
+
+Timestep 246 of 1200
+Number of satellites: 56375
+Iteration finished after 45.13s
+
+Timestep 249 of 1200
+Number of satellites: 56453
+Iteration finished after 45.06s
+
+Timestep 252 of 1200
+Number of satellites: 56525
+Iteration finished after 45.0s
+
+Timestep 255 of 1200
+Number of satellites: 56598
+Iteration finished after 45.43s
+
+Timestep 258 of 1200
+Number of satellites: 56674
+Iteration finished after 45.06s
+
+Timestep 261 of 1200
+Number of satellites: 56750
+Iteration finished after 45.38s
+
+Timestep 264 of 1200
+Number of satellites: 56833
+Iteration finished after 45.49s
+
+Timestep 267 of 1200
+Number of satellites: 56909
+Iteration finished after 45.58s
+
+Timestep 270 of 1200
+Number of satellites: 56983
+Iteration finished after 45.53s
+
+Timestep 273 of 1200
+Number of satellites: 57057
+Iteration finished after 45.51s
+
+Timestep 276 of 1200
+Number of satellites: 57137
+Iteration finished after 45.54s
+
+Timestep 279 of 1200
+Number of satellites: 57217
+Iteration finished after 45.42s
+
+Timestep 282 of 1200
+Number of satellites: 57298
+Iteration finished after 45.41s
+
+Timestep 285 of 1200
+Number of satellites: 57367
+Iteration finished after 45.67s
+
+Timestep 288 of 1200
+Number of satellites: 57446
+Iteration finished after 45.45s
+
+Timestep 291 of 1200
+Number of satellites: 57524
+Iteration finished after 45.69s
+
+Timestep 294 of 1200
+Number of satellites: 57600
+Iteration finished after 45.8s
+
+Timestep 297 of 1200
+Number of satellites: 57673
+Iteration finished after 45.45s
+
+Timestep 300 of 1200
+Number of satellites: 57743
+Iteration finished after 46.09s
+
+Timestep 303 of 1200
+Number of satellites: 57814
+Iteration finished after 46.0s
+
+Timestep 306 of 1200
+Number of satellites: 57883
+Iteration finished after 46.31s
+
+Timestep 309 of 1200
+Number of satellites: 57958
+Iteration finished after 45.99s
+
+Timestep 312 of 1200
+Number of satellites: 58033
+Iteration finished after 46.24s
+
+Timestep 315 of 1200
+Number of satellites: 58109
+Iteration finished after 46.31s
+
+Timestep 318 of 1200
+Number of satellites: 58184
+Iteration finished after 46.4s
+
+Timestep 321 of 1200
+Number of satellites: 58261
+Iteration finished after 45.85s
+
+Timestep 324 of 1200
+Number of satellites: 58339
+Iteration finished after 45.96s
+
+Timestep 327 of 1200
+Number of satellites: 58412
+Iteration finished after 45.72s
+
+Timestep 330 of 1200
+Number of satellites: 58482
+Iteration finished after 46.13s
+
+Timestep 333 of 1200
+Number of satellites: 58555
+Iteration finished after 45.94s
+
+Timestep 336 of 1200
+Number of satellites: 58624
+Iteration finished after 46.5s
+
+Timestep 339 of 1200
+Number of satellites: 58692
+Iteration finished after 46.61s
+
+Timestep 342 of 1200
+Number of satellites: 58768
+Iteration finished after 46.17s
+
+Timestep 345 of 1200
+Number of satellites: 58837
+Iteration finished after 46.5s
+
+Timestep 348 of 1200
+Number of satellites: 58899
+Iteration finished after 46.43s
+
+Timestep 351 of 1200
+Number of satellites: 58970
+Iteration finished after 46.45s
+
+Timestep 354 of 1200
+Number of satellites: 59043
+Iteration finished after 46.55s
+
+Timestep 357 of 1200
+Number of satellites: 59104
+Iteration finished after 46.59s
+
+Timestep 360 of 1200
+Number of satellites: 59175
+Iteration finished after 46.52s
+
+Timestep 363 of 1200
+Number of satellites: 59243
+Iteration finished after 46.61s
+
+Timestep 366 of 1200
+Number of satellites: 59317
+Iteration finished after 46.77s
+
+Timestep 369 of 1200
+Number of satellites: 59382
+Iteration finished after 46.62s
+
+Timestep 372 of 1200
+Number of satellites: 59461
+Iteration finished after 47.0s
+
+Timestep 375 of 1200
+Number of satellites: 59535
+Iteration finished after 46.79s
+
+Timestep 378 of 1200
+Number of satellites: 59607
+Iteration finished after 46.57s
+
+Timestep 381 of 1200
+Number of satellites: 59677
+Iteration finished after 46.85s
+
+Timestep 384 of 1200
+Number of satellites: 59752
+Iteration finished after 47.1s
+
+Timestep 387 of 1200
+Number of satellites: 59829
+Iteration finished after 46.99s
+
+Timestep 390 of 1200
+Number of satellites: 59891
+Iteration finished after 47.0s
+
+Timestep 393 of 1200
+Number of satellites: 59967
+Iteration finished after 47.08s
+
+Timestep 396 of 1200
+Number of satellites: 60038
+Iteration finished after 47.0s
+
+Timestep 399 of 1200
+Number of satellites: 60110
+Iteration finished after 46.89s
+
+Timestep 402 of 1200
+Number of satellites: 60179
+Iteration finished after 47.2s
+
+Timestep 405 of 1200
+Number of satellites: 60246
+Iteration finished after 47.11s
+
+Timestep 408 of 1200
+Number of satellites: 60314
+Iteration finished after 47.38s
+
+Timestep 411 of 1200
+Number of satellites: 60387
+Iteration finished after 46.95s
+
+Timestep 414 of 1200
+Number of satellites: 60450
+Iteration finished after 47.39s
+
+Timestep 417 of 1200
+Number of satellites: 60524
+Iteration finished after 47.27s
+
+Timestep 420 of 1200
+Number of satellites: 60598
+Iteration finished after 47.76s
+
+Timestep 423 of 1200
+Number of satellites: 60665
+Iteration finished after 47.99s
+
+Timestep 426 of 1200
+Number of satellites: 60737
+Iteration finished after 47.37s
+
+Timestep 429 of 1200
+Number of satellites: 60804
+Iteration finished after 47.54s
+
+Timestep 432 of 1200
+Number of satellites: 60869
+Iteration finished after 47.36s
+
+Timestep 435 of 1200
+Number of satellites: 60936
+Iteration finished after 47.69s
+
+Timestep 438 of 1200
+Number of satellites: 61000
+Iteration finished after 47.76s
+
+Timestep 441 of 1200
+Number of satellites: 61071
+Iteration finished after 47.68s
+
+Timestep 444 of 1200
+Number of satellites: 61144
+Iteration finished after 47.49s
+
+Timestep 447 of 1200
+Number of satellites: 61202
+Iteration finished after 47.61s
+
+Timestep 450 of 1200
+Number of satellites: 61264
+Iteration finished after 47.28s
+
+Timestep 453 of 1200
+Number of satellites: 61315
+Iteration finished after 47.75s
+
+Timestep 456 of 1200
+Number of satellites: 61385
+Iteration finished after 47.8s
+
+Timestep 459 of 1200
+Number of satellites: 61454
+Iteration finished after 47.91s
+
+Timestep 462 of 1200
+Number of satellites: 61520
+Iteration finished after 48.3s
+
+Timestep 465 of 1200
+Number of satellites: 61583
+Iteration finished after 48.33s
+
+Timestep 468 of 1200
+Number of satellites: 61652
+Iteration finished after 48.42s
+
+Timestep 471 of 1200
+Number of satellites: 61718
+Iteration finished after 47.91s
+
+Timestep 474 of 1200
+Number of satellites: 61794
+Iteration finished after 48.27s
+
+Timestep 477 of 1200
+Number of satellites: 61851
+Iteration finished after 48.31s
+
+Timestep 480 of 1200
+Number of satellites: 61918
+Iteration finished after 48.1s
+
+Timestep 483 of 1200
+Number of satellites: 61990
+Iteration finished after 48.4s
+
+Timestep 486 of 1200
+Number of satellites: 62057
+Iteration finished after 48.0s
+
+Timestep 489 of 1200
+Number of satellites: 62124
+Iteration finished after 48.28s
+
+Timestep 492 of 1200
+Number of satellites: 62187
+Iteration finished after 48.58s
+
+Timestep 495 of 1200
+Number of satellites: 62244
+Iteration finished after 48.4s
+
+Timestep 498 of 1200
+Number of satellites: 62306
+Iteration finished after 48.44s
+
+Timestep 501 of 1200
+Number of satellites: 62367
+Iteration finished after 48.33s
+
+Timestep 504 of 1200
+Number of satellites: 62436
+Iteration finished after 48.17s
+
+Timestep 507 of 1200
+Number of satellites: 62506
+Iteration finished after 48.19s
+
+Timestep 510 of 1200
+Number of satellites: 62559
+Iteration finished after 48.71s
+
+Timestep 513 of 1200
+Number of satellites: 62619
+Iteration finished after 48.3s
+
+Timestep 516 of 1200
+Number of satellites: 62679
+Iteration finished after 48.28s
+
+Timestep 519 of 1200
+Number of satellites: 62742
+Iteration finished after 48.72s
+
+Timestep 522 of 1200
+Number of satellites: 62798
+Iteration finished after 48.53s
+
+Timestep 525 of 1200
+Number of satellites: 62854
+Iteration finished after 48.46s
+
+Timestep 528 of 1200
+Number of satellites: 62911
+Iteration finished after 48.8s
+
+Timestep 531 of 1200
+Number of satellites: 62972
+Iteration finished after 48.64s
+
+Timestep 534 of 1200
+Number of satellites: 63036
+Iteration finished after 48.5s
+
+Timestep 537 of 1200
+Number of satellites: 63098
+Iteration finished after 48.82s
+
+Timestep 540 of 1200
+Number of satellites: 63169
+Iteration finished after 48.75s
+
+Timestep 543 of 1200
+Number of satellites: 63225
+Iteration finished after 49.12s
+
+Timestep 546 of 1200
+Number of satellites: 63283
+Iteration finished after 49.02s
+
+Timestep 549 of 1200
+Number of satellites: 63343
+Iteration finished after 49.13s
+
+Timestep 552 of 1200
+Number of satellites: 63403
+Iteration finished after 49.17s
+
+Timestep 555 of 1200
+Number of satellites: 63456
+Iteration finished after 49.51s
+
+Timestep 558 of 1200
+Number of satellites: 63515
+Iteration finished after 48.82s
+
+Timestep 561 of 1200
+Number of satellites: 63576
+Iteration finished after 49.25s
+
+Timestep 564 of 1200
+Number of satellites: 63637
+Iteration finished after 49.31s
+
+Timestep 567 of 1200
+Number of satellites: 63696
+Iteration finished after 49.42s
+
+Timestep 570 of 1200
+Number of satellites: 63758
+Iteration finished after 49.09s
+
+Timestep 573 of 1200
+Number of satellites: 63814
+Iteration finished after 49.4s
+
+Timestep 576 of 1200
+Number of satellites: 63871
+Iteration finished after 49.41s
+
+Timestep 579 of 1200
+Number of satellites: 63926
+Iteration finished after 49.35s
+
+Timestep 582 of 1200
+Number of satellites: 63979
+Iteration finished after 49.35s
+
+Timestep 585 of 1200
+Number of satellites: 64032
+Iteration finished after 49.26s
+
+Timestep 588 of 1200
+Number of satellites: 64087
+Iteration finished after 49.25s
+
+Timestep 591 of 1200
+Number of satellites: 64138
+Iteration finished after 49.41s
+
+Timestep 594 of 1200
+Number of satellites: 64207
+Iteration finished after 49.53s
+
+Timestep 597 of 1200
+Number of satellites: 64271
+Iteration finished after 49.75s
+
+Timestep 600 of 1200
+Number of satellites: 64324
+Iteration finished after 47.18s
+
+Timestep 603 of 1200
+Number of satellites: 64363
+Iteration finished after 49.49s
+
+Timestep 606 of 1200
+Number of satellites: 64424
+Iteration finished after 49.59s
+
+Timestep 609 of 1200
+Number of satellites: 64476
+Iteration finished after 49.55s
+
+Timestep 612 of 1200
+Number of satellites: 64532
+Iteration finished after 49.49s
+
+Timestep 615 of 1200
+Number of satellites: 64593
+Iteration finished after 45.9s
+
+Timestep 618 of 1200
+Number of satellites: 64626
+Iteration finished after 35.84s
+
+Timestep 621 of 1200
+Number of satellites: 64625
+Iteration finished after 22.5s
+
+Timestep 624 of 1200
+Number of satellites: 64597
+Iteration finished after 15.59s
+
+Timestep 627 of 1200
+Number of satellites: 64545
+Iteration finished after 14.85s
+
+Timestep 630 of 1200
+Number of satellites: 64500
+Iteration finished after 14.67s
+
+Timestep 633 of 1200
+Number of satellites: 64459
+Iteration finished after 14.53s
+
+Timestep 636 of 1200
+Number of satellites: 64419
+Iteration finished after 14.47s
+
+Timestep 639 of 1200
+Number of satellites: 64383
+Iteration finished after 14.43s
+
+Timestep 642 of 1200
+Number of satellites: 64339
+Iteration finished after 14.4s
+
+Timestep 645 of 1200
+Number of satellites: 64294
+Iteration finished after 14.25s
+
+Timestep 648 of 1200
+Number of satellites: 64253
+Iteration finished after 14.3s
+
+Timestep 651 of 1200
+Number of satellites: 64202
+Iteration finished after 14.36s
+
+Timestep 654 of 1200
+Number of satellites: 64149
+Iteration finished after 14.22s
+
+Timestep 657 of 1200
+Number of satellites: 64097
+Iteration finished after 14.32s
+
+Timestep 660 of 1200
+Number of satellites: 64050
+Iteration finished after 14.29s
+
+Timestep 663 of 1200
+Number of satellites: 63992
+Iteration finished after 14.23s
+
+Timestep 666 of 1200
+Number of satellites: 63944
+Iteration finished after 14.22s
+
+Timestep 669 of 1200
+Number of satellites: 63889
+Iteration finished after 14.21s
+
+Timestep 672 of 1200
+Number of satellites: 63853
+Iteration finished after 14.18s
+
+Timestep 675 of 1200
+Number of satellites: 63806
+Iteration finished after 14.18s
+
+Timestep 678 of 1200
+Number of satellites: 63757
+Iteration finished after 14.21s
+
+Timestep 681 of 1200
+Number of satellites: 63707
+Iteration finished after 14.25s
+
+Timestep 684 of 1200
+Number of satellites: 63662
+Iteration finished after 14.22s
+
+Timestep 687 of 1200
+Number of satellites: 63608
+Iteration finished after 14.28s
+
+Timestep 690 of 1200
+Number of satellites: 63567
+Iteration finished after 14.22s
+
+Timestep 693 of 1200
+Number of satellites: 63519
+Iteration finished after 14.15s
+
+Timestep 696 of 1200
+Number of satellites: 63455
+Iteration finished after 14.23s
+
+Timestep 699 of 1200
+Number of satellites: 63407
+Iteration finished after 14.18s
+
+Timestep 702 of 1200
+Number of satellites: 63355
+Iteration finished after 14.27s
+
+Timestep 705 of 1200
+Number of satellites: 63291
+Iteration finished after 14.15s
+
+Timestep 708 of 1200
+Number of satellites: 63251
+Iteration finished after 14.17s
+
+Timestep 711 of 1200
+Number of satellites: 63193
+Iteration finished after 14.21s
+
+Timestep 714 of 1200
+Number of satellites: 63137
+Iteration finished after 14.21s
+
+Timestep 717 of 1200
+Number of satellites: 63064
+Iteration finished after 14.23s
+
+Timestep 720 of 1200
+Number of satellites: 63016
+Iteration finished after 14.08s
+
+Timestep 723 of 1200
+Number of satellites: 62972
+Iteration finished after 14.17s
+
+Timestep 726 of 1200
+Number of satellites: 62902
+Iteration finished after 14.21s
+
+Timestep 729 of 1200
+Number of satellites: 62843
+Iteration finished after 14.15s
+
+Timestep 732 of 1200
+Number of satellites: 62790
+Iteration finished after 14.23s
+
+Timestep 735 of 1200
+Number of satellites: 62730
+Iteration finished after 14.28s
+
+Timestep 738 of 1200
+Number of satellites: 62675
+Iteration finished after 14.16s
+
+Timestep 741 of 1200
+Number of satellites: 62614
+Iteration finished after 14.17s
+
+Timestep 744 of 1200
+Number of satellites: 62574
+Iteration finished after 14.18s
+
+Timestep 747 of 1200
+Number of satellites: 62521
+Iteration finished after 14.22s
+
+Timestep 750 of 1200
+Number of satellites: 62469
+Iteration finished after 14.2s
+
+Timestep 753 of 1200
+Number of satellites: 62410
+Iteration finished after 14.19s
+
+Timestep 756 of 1200
+Number of satellites: 62348
+Iteration finished after 14.21s
+
+Timestep 759 of 1200
+Number of satellites: 62288
+Iteration finished after 14.22s
+
+Timestep 762 of 1200
+Number of satellites: 62238
+Iteration finished after 14.24s
+
+Timestep 765 of 1200
+Number of satellites: 62168
+Iteration finished after 14.11s
+
+Timestep 768 of 1200
+Number of satellites: 62112
+Iteration finished after 14.15s
+
+Timestep 771 of 1200
+Number of satellites: 62061
+Iteration finished after 14.16s
+
+Timestep 774 of 1200
+Number of satellites: 61987
+Iteration finished after 14.19s
+
+Timestep 777 of 1200
+Number of satellites: 61928
+Iteration finished after 14.23s
+
+Timestep 780 of 1200
+Number of satellites: 61878
+Iteration finished after 14.2s
+
+Timestep 783 of 1200
+Number of satellites: 61812
+Iteration finished after 14.18s
+
+Timestep 786 of 1200
+Number of satellites: 61755
+Iteration finished after 14.21s
+
+Timestep 789 of 1200
+Number of satellites: 61689
+Iteration finished after 14.21s
+
+Timestep 792 of 1200
+Number of satellites: 61631
+Iteration finished after 14.25s
+
+Timestep 795 of 1200
+Number of satellites: 61575
+Iteration finished after 14.22s
+
+Timestep 798 of 1200
+Number of satellites: 61519
+Iteration finished after 14.1s
+
+Timestep 801 of 1200
+Number of satellites: 61460
+Iteration finished after 14.13s
+
+Timestep 804 of 1200
+Number of satellites: 61392
+Iteration finished after 14.1s
+
+Timestep 807 of 1200
+Number of satellites: 61330
+Iteration finished after 14.12s
+
+Timestep 810 of 1200
+Number of satellites: 61266
+Iteration finished after 14.03s
+
+Timestep 813 of 1200
+Number of satellites: 61206
+Iteration finished after 14.04s
+
+Timestep 816 of 1200
+Number of satellites: 61145
+Iteration finished after 14.09s
+
+Timestep 819 of 1200
+Number of satellites: 61078
+Iteration finished after 14.06s
+
+Timestep 822 of 1200
+Number of satellites: 61010
+Iteration finished after 14.15s
+
+Timestep 825 of 1200
+Number of satellites: 60957
+Iteration finished after 14.17s
+
+Timestep 828 of 1200
+Number of satellites: 60895
+Iteration finished after 14.16s
+
+Timestep 831 of 1200
+Number of satellites: 60822
+Iteration finished after 14.18s
+
+Timestep 834 of 1200
+Number of satellites: 60741
+Iteration finished after 14.17s
+
+Timestep 837 of 1200
+Number of satellites: 60664
+Iteration finished after 14.11s
+
+Timestep 840 of 1200
+Number of satellites: 60598
+Iteration finished after 14.11s
+
+Timestep 843 of 1200
+Number of satellites: 60531
+Iteration finished after 14.07s
+
+Timestep 846 of 1200
+Number of satellites: 60452
+Iteration finished after 14.11s
+
+Timestep 849 of 1200
+Number of satellites: 60356
+Iteration finished after 14.1s
+
+Timestep 852 of 1200
+Number of satellites: 60288
+Iteration finished after 14.14s
+
+Timestep 855 of 1200
+Number of satellites: 60228
+Iteration finished after 14.14s
+
+Timestep 858 of 1200
+Number of satellites: 60156
+Iteration finished after 14.13s
+
+Timestep 861 of 1200
+Number of satellites: 60085
+Iteration finished after 14.21s
+
+Timestep 864 of 1200
+Number of satellites: 60010
+Iteration finished after 14.15s
+
+Timestep 867 of 1200
+Number of satellites: 59943
+Iteration finished after 14.1s
+
+Timestep 870 of 1200
+Number of satellites: 59855
+Iteration finished after 14.1s
+
+Timestep 873 of 1200
+Number of satellites: 59769
+Iteration finished after 14.04s
+
+Timestep 876 of 1200
+Number of satellites: 59691
+Iteration finished after 14.19s
+
+Timestep 879 of 1200
+Number of satellites: 59610
+Iteration finished after 14.13s
+
+Timestep 882 of 1200
+Number of satellites: 59535
+Iteration finished after 14.1s
+
+Timestep 885 of 1200
+Number of satellites: 59444
+Iteration finished after 14.14s
+
+Timestep 888 of 1200
+Number of satellites: 59356
+Iteration finished after 14.15s
+
+Timestep 891 of 1200
+Number of satellites: 59277
+Iteration finished after 14.19s
+
+Timestep 894 of 1200
+Number of satellites: 59202
+Iteration finished after 14.07s
+
+Timestep 897 of 1200
+Number of satellites: 59112
+Iteration finished after 14.06s
+
+Timestep 900 of 1200
+Number of satellites: 59033
+Iteration finished after 14.07s
+
+Timestep 903 of 1200
+Number of satellites: 58933
+Iteration finished after 14.1s
+
+Timestep 906 of 1200
+Number of satellites: 58856
+Iteration finished after 14.14s
+
+Timestep 909 of 1200
+Number of satellites: 58772
+Iteration finished after 14.12s
+
+Timestep 912 of 1200
+Number of satellites: 58687
+Iteration finished after 14.05s
+
+Timestep 915 of 1200
+Number of satellites: 58611
+Iteration finished after 14.06s
+
+Timestep 918 of 1200
+Number of satellites: 58516
+Iteration finished after 14.13s
+
+Timestep 921 of 1200
+Number of satellites: 58433
+Iteration finished after 14.1s
+
+Timestep 924 of 1200
+Number of satellites: 58352
+Iteration finished after 14.06s
+
+Timestep 927 of 1200
+Number of satellites: 58270
+Iteration finished after 14.03s
+
+Timestep 930 of 1200
+Number of satellites: 58178
+Iteration finished after 14.06s
+
+Timestep 933 of 1200
+Number of satellites: 58081
+Iteration finished after 14.02s
+
+Timestep 936 of 1200
+Number of satellites: 57998
+Iteration finished after 14.0s
+
+Timestep 939 of 1200
+Number of satellites: 57910
+Iteration finished after 14.02s
+
+Timestep 942 of 1200
+Number of satellites: 57831
+Iteration finished after 13.99s
+
+Timestep 945 of 1200
+Number of satellites: 57725
+Iteration finished after 14.04s
+
+Timestep 948 of 1200
+Number of satellites: 57625
+Iteration finished after 14.05s
+
+Timestep 951 of 1200
+Number of satellites: 57538
+Iteration finished after 14.14s
+
+Timestep 954 of 1200
+Number of satellites: 57445
+Iteration finished after 13.99s
+
+Timestep 957 of 1200
+Number of satellites: 57355
+Iteration finished after 14.0s
+
+Timestep 960 of 1200
+Number of satellites: 57267
+Iteration finished after 14.03s
+
+Timestep 963 of 1200
+Number of satellites: 57183
+Iteration finished after 13.96s
+
+Timestep 966 of 1200
+Number of satellites: 57085
+Iteration finished after 13.98s
+
+Timestep 969 of 1200
+Number of satellites: 57000
+Iteration finished after 14.01s
+
+Timestep 972 of 1200
+Number of satellites: 56907
+Iteration finished after 14.02s
+
+Timestep 975 of 1200
+Number of satellites: 56807
+Iteration finished after 14.0s
+
+Timestep 978 of 1200
+Number of satellites: 56708
+Iteration finished after 14.0s
+
+Timestep 981 of 1200
+Number of satellites: 56622
+Iteration finished after 14.02s
+
+Timestep 984 of 1200
+Number of satellites: 56527
+Iteration finished after 14.03s
+
+Timestep 987 of 1200
+Number of satellites: 56420
+Iteration finished after 14.0s
+
+Timestep 990 of 1200
+Number of satellites: 56325
+Iteration finished after 14.06s
+
+Timestep 993 of 1200
+Number of satellites: 56208
+Iteration finished after 14.09s
+
+Timestep 996 of 1200
+Number of satellites: 56109
+Iteration finished after 14.07s
+
+Timestep 999 of 1200
+Number of satellites: 56009
+Iteration finished after 14.06s
+
+Timestep 1002 of 1200
+Number of satellites: 55913
+Iteration finished after 14.07s
+
+Timestep 1005 of 1200
+Number of satellites: 55822
+Iteration finished after 13.98s
+
+Timestep 1008 of 1200
+Number of satellites: 55727
+Iteration finished after 13.96s
+
+Timestep 1011 of 1200
+Number of satellites: 55634
+Iteration finished after 13.9s
+
+Timestep 1014 of 1200
+Number of satellites: 55541
+Iteration finished after 13.94s
+
+Timestep 1017 of 1200
+Number of satellites: 55429
+Iteration finished after 13.98s
+
+Timestep 1020 of 1200
+Number of satellites: 55336
+Iteration finished after 14.03s
+
+Timestep 1023 of 1200
+Number of satellites: 55228
+Iteration finished after 14.02s
+
+Timestep 1026 of 1200
+Number of satellites: 55126
+Iteration finished after 14.0s
+
+Timestep 1029 of 1200
+Number of satellites: 55011
+Iteration finished after 13.99s
+
+Timestep 1032 of 1200
+Number of satellites: 54915
+Iteration finished after 14.02s
+
+Timestep 1035 of 1200
+Number of satellites: 54809
+Iteration finished after 13.94s
+
+Timestep 1038 of 1200
+Number of satellites: 54695
+Iteration finished after 13.97s
+
+Timestep 1041 of 1200
+Number of satellites: 54585
+Iteration finished after 13.99s
+
+Timestep 1044 of 1200
+Number of satellites: 54484
+Iteration finished after 14.03s
+
+Timestep 1047 of 1200
+Number of satellites: 54378
+Iteration finished after 14.07s
+
+Timestep 1050 of 1200
+Number of satellites: 54256
+Iteration finished after 14.02s
+
+Timestep 1053 of 1200
+Number of satellites: 54138
+Iteration finished after 13.98s
+
+Timestep 1056 of 1200
+Number of satellites: 54014
+Iteration finished after 14.04s
+
+Timestep 1059 of 1200
+Number of satellites: 53898
+Iteration finished after 13.92s
+
+Timestep 1062 of 1200
+Number of satellites: 53803
+Iteration finished after 13.97s
+
+Timestep 1065 of 1200
+Number of satellites: 53688
+Iteration finished after 14.0s
+
+Timestep 1068 of 1200
+Number of satellites: 53575
+Iteration finished after 13.91s
+
+Timestep 1071 of 1200
+Number of satellites: 53460
+Iteration finished after 14.03s
+
+Timestep 1074 of 1200
+Number of satellites: 53331
+Iteration finished after 13.98s
+
+Timestep 1077 of 1200
+Number of satellites: 53221
+Iteration finished after 13.96s
+
+Timestep 1080 of 1200
+Number of satellites: 53091
+Iteration finished after 13.92s
+
+Timestep 1083 of 1200
+Number of satellites: 52972
+Iteration finished after 14.0s
+
+Timestep 1086 of 1200
+Number of satellites: 52849
+Iteration finished after 13.88s
+
+Timestep 1089 of 1200
+Number of satellites: 52727
+Iteration finished after 13.91s
+
+Timestep 1092 of 1200
+Number of satellites: 52585
+Iteration finished after 13.91s
+
+Timestep 1095 of 1200
+Number of satellites: 52472
+Iteration finished after 13.91s
+
+Timestep 1098 of 1200
+Number of satellites: 52344
+Iteration finished after 13.91s
+
+Timestep 1101 of 1200
+Number of satellites: 52222
+Iteration finished after 13.9s
+
+Timestep 1104 of 1200
+Number of satellites: 52113
+Iteration finished after 13.92s
+
+Timestep 1107 of 1200
+Number of satellites: 51970
+Iteration finished after 13.92s
+
+Timestep 1110 of 1200
+Number of satellites: 51850
+Iteration finished after 13.97s
+
+Timestep 1113 of 1200
+Number of satellites: 51722
+Iteration finished after 13.87s
+
+Timestep 1116 of 1200
+Number of satellites: 51600
+Iteration finished after 13.91s
+
+Timestep 1119 of 1200
+Number of satellites: 51488
+Iteration finished after 13.86s
+
+Timestep 1122 of 1200
+Number of satellites: 51360
+Iteration finished after 13.93s
+
+Timestep 1125 of 1200
+Number of satellites: 51230
+Iteration finished after 13.87s
+
+Timestep 1128 of 1200
+Number of satellites: 51090
+Iteration finished after 13.94s
+
+Timestep 1131 of 1200
+Number of satellites: 50966
+Iteration finished after 13.98s
+
+Timestep 1134 of 1200
+Number of satellites: 50846
+Iteration finished after 13.92s
+
+Timestep 1137 of 1200
+Number of satellites: 50697
+Iteration finished after 13.97s
+
+Timestep 1140 of 1200
+Number of satellites: 50552
+Iteration finished after 13.98s
+
+Timestep 1143 of 1200
+Number of satellites: 50411
+Iteration finished after 13.89s
+
+Timestep 1146 of 1200
+Number of satellites: 50271
+Iteration finished after 13.86s
+
+Timestep 1149 of 1200
+Number of satellites: 50153
+Iteration finished after 13.9s
+
+Timestep 1152 of 1200
+Number of satellites: 50025
+Iteration finished after 13.97s
+
+Timestep 1155 of 1200
+Number of satellites: 49877
+Iteration finished after 13.94s
+
+Timestep 1158 of 1200
+Number of satellites: 49748
+Iteration finished after 13.87s
+
+Timestep 1161 of 1200
+Number of satellites: 49618
+Iteration finished after 13.88s
+
+Timestep 1164 of 1200
+Number of satellites: 49469
+Iteration finished after 13.9s
+
+Timestep 1167 of 1200
+Number of satellites: 49337
+Iteration finished after 13.95s
+
+Timestep 1170 of 1200
+Number of satellites: 49208
+Iteration finished after 13.93s
+
+Timestep 1173 of 1200
+Number of satellites: 49074
+Iteration finished after 13.88s
+
+Timestep 1176 of 1200
+Number of satellites: 48937
+Iteration finished after 13.88s
+
+Timestep 1179 of 1200
+Number of satellites: 48794
+Iteration finished after 13.9s
+
+Timestep 1182 of 1200
+Number of satellites: 48649
+Iteration finished after 13.86s
+
+Timestep 1185 of 1200
+Number of satellites: 48516
+Iteration finished after 13.86s
+
+Timestep 1188 of 1200
+Number of satellites: 48402
+Iteration finished after 13.89s
+
+Timestep 1191 of 1200
+Number of satellites: 48275
+Iteration finished after 13.88s
+
+Timestep 1194 of 1200
+Number of satellites: 48125
+Iteration finished after 13.88s
+
+Timestep 1197 of 1200
+Number of satellites: 47992
+2024-03-06 23:36:54,247 - INFO - Simulation finished after: 12200.59s
+2024-03-06 23:36:54,247 - INFO - Writing results.
+2024-03-06 23:36:58,539 - INFO - Process finished.
+
+
+2024-03-06 23:36:58,539 - INFO - Simulation started with following input parameters:
+2024-03-06 23:36:58,539 - INFO - Input path:
+/Users/janlucal/Documents/GitHub/HubaldModel/Python/Optimized/batch2/300.txt
+
+2024-03-06 23:36:58,540 - INFO - matrix_mode = import
+2024-03-06 23:36:58,540 - INFO - launch_mode = njit
+2024-03-06 23:36:58,540 - INFO - accuracy = 20
+2024-03-06 23:36:58,540 - INFO - prob_thresh = 10**(-15)
+2024-03-06 23:36:58,540 - INFO - starting_sats = 50000
+2024-03-06 23:36:58,540 - INFO - sigma = 2000
+2024-03-06 23:36:58,540 - INFO - fragment_collision_prob = 0.0003
+2024-03-06 23:36:58,540 - INFO - active_percentage = 0.8
+2024-03-06 23:36:58,540 - INFO - aLimits = [200000, 2000000]
+2024-03-06 23:36:58,540 - INFO - small_fragments = 100000000
+2024-03-06 23:36:58,540 - INFO - large_fragments = 100000
+2024-03-06 23:36:58,540 - INFO - timestep = 3
+2024-03-06 23:36:58,540 - INFO - tmax = 1200
+2024-03-06 23:36:58,540 - INFO - starts_per_timestep = 300
+2024-03-06 23:36:58,540 - INFO - deorbits_per_timestep = 30
+2024-03-06 23:36:58,540 - INFO - num_workers = 12
+2024-03-06 23:36:58,540 - INFO - Importing data.
+2024-03-06 23:36:59,479 - INFO - Kessler model employed.
+
+Iteration finished after 13.89s
+
+Timestep 0 of 1200
+Number of satellites: 50000
+Iteration finished after 96.27s
+
+Timestep 3 of 1200
+Number of satellites: 50218
+Iteration finished after 96.65s
+
+Timestep 6 of 1200
+Number of satellites: 50473
+Iteration finished after 97.57s
+
+Timestep 9 of 1200
+Number of satellites: 50728
+Iteration finished after 98.28s
+
+Timestep 12 of 1200
+Number of satellites: 50992
+Iteration finished after 99.21s
+
+Timestep 15 of 1200
+Number of satellites: 51248
+Iteration finished after 99.19s
+
+Timestep 18 of 1200
+Number of satellites: 51507
+Iteration finished after 101.16s
+
+Timestep 21 of 1200
+Number of satellites: 51764
+Iteration finished after 100.31s
+
+Timestep 24 of 1200
+Number of satellites: 52024
+Iteration finished after 100.36s
+
+Timestep 27 of 1200
+Number of satellites: 52281
+Iteration finished after 100.67s
+
+Timestep 30 of 1200
+Number of satellites: 52537
+Iteration finished after 101.16s
+
+Timestep 33 of 1200
+Number of satellites: 52797
+Iteration finished after 101.78s
+
+Timestep 36 of 1200
+Number of satellites: 53057
+Iteration finished after 102.36s
+
+Timestep 39 of 1200
+Number of satellites: 53315
+Iteration finished after 102.75s
+
+Timestep 42 of 1200
+Number of satellites: 53570
+Iteration finished after 103.28s
+
+Timestep 45 of 1200
+Number of satellites: 53828
+Iteration finished after 103.66s
+
+Timestep 48 of 1200
+Number of satellites: 54089
+Iteration finished after 104.18s
+
+Timestep 51 of 1200
+Number of satellites: 54349
+Iteration finished after 104.73s
+
+Timestep 54 of 1200
+Number of satellites: 54606
+Iteration finished after 105.11s
+
+Timestep 57 of 1200
+Number of satellites: 54862
+Iteration finished after 105.55s
+
+Timestep 60 of 1200
+Number of satellites: 55123
+Iteration finished after 105.38s
+
+Timestep 63 of 1200
+Number of satellites: 55382
+Iteration finished after 106.27s
+
+Timestep 66 of 1200
+Number of satellites: 55635
+Iteration finished after 106.64s
+
+Timestep 69 of 1200
+Number of satellites: 55897
+Iteration finished after 107.1s
+
+Timestep 72 of 1200
+Number of satellites: 56156
+Iteration finished after 107.51s
+
+Timestep 75 of 1200
+Number of satellites: 56416
+Iteration finished after 107.23s
+
+Timestep 78 of 1200
+Number of satellites: 56678
+Iteration finished after 109.67s
+
+Timestep 81 of 1200
+Number of satellites: 56935
+Iteration finished after 107.47s
+
+Timestep 84 of 1200
+Number of satellites: 57192
+Iteration finished after 108.59s
+
+Timestep 87 of 1200
+Number of satellites: 57449
+Iteration finished after 109.29s
+
+Timestep 90 of 1200
+Number of satellites: 57710
+Iteration finished after 110.39s
+
+Timestep 93 of 1200
+Number of satellites: 57965
+Iteration finished after 110.53s
+
+Timestep 96 of 1200
+Number of satellites: 58221
+Iteration finished after 110.47s
+
+Timestep 99 of 1200
+Number of satellites: 58476
+Iteration finished after 111.01s
+
+Timestep 102 of 1200
+Number of satellites: 58736
+Iteration finished after 111.7s
+
+Timestep 105 of 1200
+Number of satellites: 58990
+Iteration finished after 112.4s
+
+Timestep 108 of 1200
+Number of satellites: 59249
+Iteration finished after 111.82s
+
+Timestep 111 of 1200
+Number of satellites: 59504
+Iteration finished after 113.2s
+
+Timestep 114 of 1200
+Number of satellites: 59761
+Iteration finished after 114.3s
+
+Timestep 117 of 1200
+Number of satellites: 60019
+Iteration finished after 113.23s
+
+Timestep 120 of 1200
+Number of satellites: 60275
+Iteration finished after 114.54s
+
+Timestep 123 of 1200
+Number of satellites: 60535
+Iteration finished after 114.48s
+
+Timestep 126 of 1200
+Number of satellites: 60791
+Iteration finished after 114.58s
+
+Timestep 129 of 1200
+Number of satellites: 61051
+Iteration finished after 116.1s
+
+Timestep 132 of 1200
+Number of satellites: 61305
+Iteration finished after 115.78s
+
+Timestep 135 of 1200
+Number of satellites: 61564
+Iteration finished after 116.1s
+
+Timestep 138 of 1200
+Number of satellites: 61823
+Iteration finished after 115.7s
+
+Timestep 141 of 1200
+Number of satellites: 62077
+Iteration finished after 117.24s
+
+Timestep 144 of 1200
+Number of satellites: 62329
+Iteration finished after 117.51s
+
+Timestep 147 of 1200
+Number of satellites: 62587
+Iteration finished after 117.75s
+
+Timestep 150 of 1200
+Number of satellites: 62847
+Iteration finished after 119.05s
+
+Timestep 153 of 1200
+Number of satellites: 63107
+Iteration finished after 119.54s
+
+Timestep 156 of 1200
+Number of satellites: 63366
+Iteration finished after 119.55s
+
+Timestep 159 of 1200
+Number of satellites: 63624
+Iteration finished after 119.49s
+
+Timestep 162 of 1200
+Number of satellites: 63879
+Iteration finished after 119.31s
+
+Timestep 165 of 1200
+Number of satellites: 64139
+Iteration finished after 120.67s
+
+Timestep 168 of 1200
+Number of satellites: 64397
+Iteration finished after 120.72s
+
+Timestep 171 of 1200
+Number of satellites: 64657
+Iteration finished after 121.77s
+
+Timestep 174 of 1200
+Number of satellites: 64914
+Iteration finished after 121.65s
+
+Timestep 177 of 1200
+Number of satellites: 65170
+Iteration finished after 122.05s
+
+Timestep 180 of 1200
+Number of satellites: 65428
+Iteration finished after 122.93s
+
+Timestep 183 of 1200
+Number of satellites: 65685
+Iteration finished after 122.66s
+
+Timestep 186 of 1200
+Number of satellites: 65935
+Iteration finished after 123.73s
+
+Timestep 189 of 1200
+Number of satellites: 66193
+Iteration finished after 123.94s
+
+Timestep 192 of 1200
+Number of satellites: 66447
+Iteration finished after 124.16s
+
+Timestep 195 of 1200
+Number of satellites: 66701
+Iteration finished after 125.56s
+
+Timestep 198 of 1200
+Number of satellites: 66955
+Iteration finished after 124.95s
+
+Timestep 201 of 1200
+Number of satellites: 67202
+Iteration finished after 125.16s
+
+Timestep 204 of 1200
+Number of satellites: 67447
+Iteration finished after 126.76s
+
+Timestep 207 of 1200
+Number of satellites: 67702
+Iteration finished after 126.19s
+
+Timestep 210 of 1200
+Number of satellites: 67953
+Iteration finished after 127.03s
+
+Timestep 213 of 1200
+Number of satellites: 68211
+Iteration finished after 126.56s
+
+Timestep 216 of 1200
+Number of satellites: 68463
+Iteration finished after 127.8s
+
+Timestep 219 of 1200
+Number of satellites: 68720
+Iteration finished after 128.56s
+
+Timestep 222 of 1200
+Number of satellites: 68974
+Iteration finished after 129.11s
+
+Timestep 225 of 1200
+Number of satellites: 69231
+Iteration finished after 129.5s
+
+Timestep 228 of 1200
+Number of satellites: 69479
+Iteration finished after 129.33s
+
+Timestep 231 of 1200
+Number of satellites: 69733
+Iteration finished after 130.98s
+
+Timestep 234 of 1200
+Number of satellites: 69981
+Iteration finished after 130.53s
+
+Timestep 237 of 1200
+Number of satellites: 70236
+Iteration finished after 130.83s
+
+Timestep 240 of 1200
+Number of satellites: 70489
+Iteration finished after 130.52s
+
+Timestep 243 of 1200
+Number of satellites: 70748
+Iteration finished after 131.7s
+
+Timestep 246 of 1200
+Number of satellites: 70998
+Iteration finished after 132.33s
+
+Timestep 249 of 1200
+Number of satellites: 71249
+Iteration finished after 132.42s
+
+Timestep 252 of 1200
+Number of satellites: 71500
+Iteration finished after 132.22s
+
+Timestep 255 of 1200
+Number of satellites: 71752
+Iteration finished after 133.44s
+
+Timestep 258 of 1200
+Number of satellites: 72009
+Iteration finished after 133.11s
+
+Timestep 261 of 1200
+Number of satellites: 72265
+Iteration finished after 133.6s
+
+Timestep 264 of 1200
+Number of satellites: 72521
+Iteration finished after 136.32s
+
+Timestep 267 of 1200
+Number of satellites: 72778
+Iteration finished after 133.87s
+
+Timestep 270 of 1200
+Number of satellites: 73029
+Iteration finished after 134.29s
+
+Timestep 273 of 1200
+Number of satellites: 73284
+Iteration finished after 135.02s
+
+Timestep 276 of 1200
+Number of satellites: 73535
+Iteration finished after 135.48s
+
+Timestep 279 of 1200
+Number of satellites: 73785
+Iteration finished after 136.4s
+
+Timestep 282 of 1200
+Number of satellites: 74038
+Iteration finished after 136.73s
+
+Timestep 285 of 1200
+Number of satellites: 74283
+Iteration finished after 137.05s
+
+Timestep 288 of 1200
+Number of satellites: 74533
+Iteration finished after 137.64s
+
+Timestep 291 of 1200
+Number of satellites: 74782
+Iteration finished after 138.39s
+
+Timestep 294 of 1200
+Number of satellites: 75026
+Iteration finished after 138.16s
+
+Timestep 297 of 1200
+Number of satellites: 75270
+Iteration finished after 138.41s
+
+Timestep 300 of 1200
+Number of satellites: 75521
+Iteration finished after 139.53s
+
+Timestep 303 of 1200
+Number of satellites: 75769
+Iteration finished after 139.1s
+
+Timestep 306 of 1200
+Number of satellites: 76016
+Iteration finished after 140.74s
+
+Timestep 309 of 1200
+Number of satellites: 76265
+Iteration finished after 140.65s
+
+Timestep 312 of 1200
+Number of satellites: 76518
+Iteration finished after 140.94s
+
+Timestep 315 of 1200
+Number of satellites: 76771
+Iteration finished after 141.93s
+
+Timestep 318 of 1200
+Number of satellites: 77022
+Iteration finished after 141.77s
+
+Timestep 321 of 1200
+Number of satellites: 77268
+Iteration finished after 142.18s
+
+Timestep 324 of 1200
+Number of satellites: 77511
+Iteration finished after 142.37s
+
+Timestep 327 of 1200
+Number of satellites: 77760
+Iteration finished after 143.02s
+
+Timestep 330 of 1200
+Number of satellites: 78001
+Iteration finished after 142.26s
+
+Timestep 333 of 1200
+Number of satellites: 78241
+Iteration finished after 143.74s
+
+Timestep 336 of 1200
+Number of satellites: 78484
+Iteration finished after 144.88s
+
+Timestep 339 of 1200
+Number of satellites: 78734
+Iteration finished after 143.84s
+
+Timestep 342 of 1200
+Number of satellites: 78979
+Iteration finished after 144.78s
+
+Timestep 345 of 1200
+Number of satellites: 79231
+Iteration finished after 144.71s
+
+Timestep 348 of 1200
+Number of satellites: 79472
+Iteration finished after 145.58s
+
+Timestep 351 of 1200
+Number of satellites: 79707
+Iteration finished after 146.22s
+
+Timestep 354 of 1200
+Number of satellites: 79945
+Iteration finished after 145.7s
+
+Timestep 357 of 1200
+Number of satellites: 80186
+Iteration finished after 146.71s
+
+Timestep 360 of 1200
+Number of satellites: 80432
+Iteration finished after 146.98s
+
+Timestep 363 of 1200
+Number of satellites: 80677
+Iteration finished after 147.36s
+
+Timestep 366 of 1200
+Number of satellites: 80930
+Iteration finished after 148.58s
+
+Timestep 369 of 1200
+Number of satellites: 81173
+Iteration finished after 147.74s
+
+Timestep 372 of 1200
+Number of satellites: 81422
+Iteration finished after 148.57s
+
+Timestep 375 of 1200
+Number of satellites: 81660
+Iteration finished after 150.04s
+
+Timestep 378 of 1200
+Number of satellites: 81900
+Iteration finished after 150.69s
+
+Timestep 381 of 1200
+Number of satellites: 82144
+Iteration finished after 150.32s
+
+Timestep 384 of 1200
+Number of satellites: 82386
+Iteration finished after 150.59s
+
+Timestep 387 of 1200
+Number of satellites: 82622
+Iteration finished after 149.74s
+
+Timestep 390 of 1200
+Number of satellites: 82865
+Iteration finished after 150.94s
+
+Timestep 393 of 1200
+Number of satellites: 83105
+Iteration finished after 152.87s
+
+Timestep 396 of 1200
+Number of satellites: 83337
+Iteration finished after 152.14s
+
+Timestep 399 of 1200
+Number of satellites: 83571
+Iteration finished after 151.39s
+
+Timestep 402 of 1200
+Number of satellites: 83804
+Iteration finished after 152.94s
+
+Timestep 405 of 1200
+Number of satellites: 84038
+Iteration finished after 152.77s
+
+Timestep 408 of 1200
+Number of satellites: 84274
+Iteration finished after 153.4s
+
+Timestep 411 of 1200
+Number of satellites: 84500
+Iteration finished after 153.03s
+
+Timestep 414 of 1200
+Number of satellites: 84727
+Iteration finished after 152.6s
+
+Timestep 417 of 1200
+Number of satellites: 84960
+Iteration finished after 154.33s
+
+Timestep 420 of 1200
+Number of satellites: 85186
+Iteration finished after 154.31s
+
+Timestep 423 of 1200
+Number of satellites: 85421
+Iteration finished after 155.69s
+
+Timestep 426 of 1200
+Number of satellites: 85658
+Iteration finished after 156.19s
+
+Timestep 429 of 1200
+Number of satellites: 85893
+Iteration finished after 156.17s
+
+Timestep 432 of 1200
+Number of satellites: 86128
+Iteration finished after 156.73s
+
+Timestep 435 of 1200
+Number of satellites: 86366
+Iteration finished after 155.65s
+
+Timestep 438 of 1200
+Number of satellites: 86601
+Iteration finished after 157.78s
+
+Timestep 441 of 1200
+Number of satellites: 86820
+Iteration finished after 157.11s
+
+Timestep 444 of 1200
+Number of satellites: 87053
+Iteration finished after 157.81s
+
+Timestep 447 of 1200
+Number of satellites: 87264
+Iteration finished after 158.57s
+
+Timestep 450 of 1200
+Number of satellites: 87487
+Iteration finished after 158.55s
+
+Timestep 453 of 1200
+Number of satellites: 87718
+Iteration finished after 159.49s
+
+Timestep 456 of 1200
+Number of satellites: 87960
+Iteration finished after 159.38s
+
+Timestep 459 of 1200
+Number of satellites: 88186
+Iteration finished after 159.59s
+
+Timestep 462 of 1200
+Number of satellites: 88401
+Iteration finished after 162.4s
+
+Timestep 465 of 1200
+Number of satellites: 88614
+Iteration finished after 161.49s
+
+Timestep 468 of 1200
+Number of satellites: 88836
+Iteration finished after 161.04s
+
+Timestep 471 of 1200
+Number of satellites: 89066
+Iteration finished after 161.1s
+
+Timestep 474 of 1200
+Number of satellites: 89294
+Iteration finished after 160.54s
+
+Timestep 477 of 1200
+Number of satellites: 89516
+Iteration finished after 162.81s
+
+Timestep 480 of 1200
+Number of satellites: 89750
+Iteration finished after 162.76s
+
+Timestep 483 of 1200
+Number of satellites: 89964
+Iteration finished after 164.12s
+
+Timestep 486 of 1200
+Number of satellites: 90184
+Iteration finished after 162.56s
+
+Timestep 489 of 1200
+Number of satellites: 90404
+Iteration finished after 162.81s
+
+Timestep 492 of 1200
+Number of satellites: 90624
+Iteration finished after 162.72s
+
+Timestep 495 of 1200
+Number of satellites: 90848
+Iteration finished after 165.1s
+
+Timestep 498 of 1200
+Number of satellites: 91077
+Iteration finished after 163.95s
+
+Timestep 501 of 1200
+Number of satellites: 91291
+Iteration finished after 164.22s
+
+Timestep 504 of 1200
+Number of satellites: 91505
+Iteration finished after 166.27s
+
+Timestep 507 of 1200
+Number of satellites: 91724
+Iteration finished after 165.59s
+
+Timestep 510 of 1200
+Number of satellites: 91941
+Iteration finished after 165.84s
+
+Timestep 513 of 1200
+Number of satellites: 92149
+Iteration finished after 167.1s
+
+Timestep 516 of 1200
+Number of satellites: 92361
+Iteration finished after 166.97s
+
+Timestep 519 of 1200
+Number of satellites: 92564
+Iteration finished after 167.05s
+
+Timestep 522 of 1200
+Number of satellites: 92778
+Iteration finished after 166.69s
+
+Timestep 525 of 1200
+Number of satellites: 92987
+Iteration finished after 168.23s
+
+Timestep 528 of 1200
+Number of satellites: 93199
+Iteration finished after 168.02s
+
+Timestep 531 of 1200
+Number of satellites: 93414
+Iteration finished after 168.18s
+
+Timestep 534 of 1200
+Number of satellites: 93632
+Iteration finished after 167.6s
+
+Timestep 537 of 1200
+Number of satellites: 93833
+Iteration finished after 168.71s
+
+Timestep 540 of 1200
+Number of satellites: 94060
+Iteration finished after 168.98s
+
+Timestep 543 of 1200
+Number of satellites: 94265
+Iteration finished after 170.02s
+
+Timestep 546 of 1200
+Number of satellites: 94472
+Iteration finished after 169.71s
+
+Timestep 549 of 1200
+Number of satellites: 94662
+Iteration finished after 169.83s
+
+Timestep 552 of 1200
+Number of satellites: 94861
+Iteration finished after 170.81s
+
+Timestep 555 of 1200
+Number of satellites: 95069
+Iteration finished after 171.86s
+
+Timestep 558 of 1200
+Number of satellites: 95266
+Iteration finished after 171.37s
+
+Timestep 561 of 1200
+Number of satellites: 95470
+Iteration finished after 171.24s
+
+Timestep 564 of 1200
+Number of satellites: 95666
+Iteration finished after 171.78s
+
+Timestep 567 of 1200
+Number of satellites: 95871
+Iteration finished after 172.22s
+
+Timestep 570 of 1200
+Number of satellites: 96062
+Iteration finished after 174.02s
+
+Timestep 573 of 1200
+Number of satellites: 96268
+Iteration finished after 172.23s
+
+Timestep 576 of 1200
+Number of satellites: 96464
+Iteration finished after 174.38s
+
+Timestep 579 of 1200
+Number of satellites: 96651
+Iteration finished after 173.19s
+
+Timestep 582 of 1200
+Number of satellites: 96845
+Iteration finished after 174.37s
+
+Timestep 585 of 1200
+Number of satellites: 97043
+Iteration finished after 174.21s
+
+Timestep 588 of 1200
+Number of satellites: 97231
+Iteration finished after 175.22s
+
+Timestep 591 of 1200
+Number of satellites: 97414
+Iteration finished after 174.47s
+
+Timestep 594 of 1200
+Number of satellites: 97602
+Iteration finished after 175.3s
+
+Timestep 597 of 1200
+Number of satellites: 97776
+Iteration finished after 175.85s
+
+Timestep 600 of 1200
+Number of satellites: 97971
+Iteration finished after 174.95s
+
+Timestep 603 of 1200
+Number of satellites: 98158
+Iteration finished after 176.25s
+
+Timestep 606 of 1200
+Number of satellites: 98358
+Iteration finished after 177.27s
+
+Timestep 609 of 1200
+Number of satellites: 98516
+Iteration finished after 176.88s
+
+Timestep 612 of 1200
+Number of satellites: 98707
+Iteration finished after 177.38s
+
+Timestep 615 of 1200
+Number of satellites: 98884
+Iteration finished after 176.81s
+
+Timestep 618 of 1200
+Number of satellites: 99056
+Iteration finished after 176.99s
+
+Timestep 621 of 1200
+Number of satellites: 99234
+Iteration finished after 177.84s
+
+Timestep 624 of 1200
+Number of satellites: 99401
+Iteration finished after 177.71s
+
+Timestep 627 of 1200
+Number of satellites: 99590
+Iteration finished after 177.47s
+
+Timestep 630 of 1200
+Number of satellites: 99735
+Iteration finished after 179.27s
+
+Timestep 633 of 1200
+Number of satellites: 99899
+Iteration finished after 182.83s
+
+Timestep 636 of 1200
+Number of satellites: 100073
+Iteration finished after 178.63s
+
+Timestep 639 of 1200
+Number of satellites: 100233
+Iteration finished after 179.54s
+
+Timestep 642 of 1200
+Number of satellites: 100402
+Iteration finished after 179.79s
+
+Timestep 645 of 1200
+Number of satellites: 100566
+Iteration finished after 180.32s
+
+Timestep 648 of 1200
+Number of satellites: 100717
+Iteration finished after 175.53s
+
+Timestep 651 of 1200
+Number of satellites: 100856
+Iteration finished after 180.79s
+
+Timestep 654 of 1200
+Number of satellites: 101031
+Iteration finished after 181.07s
+
+Timestep 657 of 1200
+Number of satellites: 101195
+Iteration finished after 181.22s
+
+Timestep 660 of 1200
+Number of satellites: 101346
+Iteration finished after 177.95s
+
+Timestep 663 of 1200
+Number of satellites: 101485
+Iteration finished after 180.36s
+
+Timestep 666 of 1200
+Number of satellites: 101640
+Iteration finished after 181.25s
+
+Timestep 669 of 1200
+Number of satellites: 101792
+Iteration finished after 159.55s
+
+Timestep 672 of 1200
+Number of satellites: 101880
+Iteration finished after 126.91s
+
+Timestep 675 of 1200
+Number of satellites: 101916
+Iteration finished after 63.34s
+
+Timestep 678 of 1200
+Number of satellites: 101837
+Iteration finished after 20.77s
+
+Timestep 681 of 1200
+Number of satellites: 101679
+Iteration finished after 20.05s
+
+Timestep 684 of 1200
+Number of satellites: 101496
+Iteration finished after 19.86s
+
+Timestep 687 of 1200
+Number of satellites: 101342
+Iteration finished after 19.74s
+
+Timestep 690 of 1200
+Number of satellites: 101166
+Iteration finished after 19.63s
+
+Timestep 693 of 1200
+Number of satellites: 100997
+Iteration finished after 19.63s
+
+Timestep 696 of 1200
+Number of satellites: 100815
+Iteration finished after 19.53s
+
+Timestep 699 of 1200
+Number of satellites: 100636
+Iteration finished after 19.53s
+
+Timestep 702 of 1200
+Number of satellites: 100473
+Iteration finished after 19.53s
+
+Timestep 705 of 1200
+Number of satellites: 100317
+Iteration finished after 19.49s
+
+Timestep 708 of 1200
+Number of satellites: 100140
+Iteration finished after 19.5s
+
+Timestep 711 of 1200
+Number of satellites: 99983
+Iteration finished after 19.5s
+
+Timestep 714 of 1200
+Number of satellites: 99810
+Iteration finished after 19.54s
+
+Timestep 717 of 1200
+Number of satellites: 99619
+Iteration finished after 19.49s
+
+Timestep 720 of 1200
+Number of satellites: 99440
+Iteration finished after 19.55s
+
+Timestep 723 of 1200
+Number of satellites: 99261
+Iteration finished after 19.47s
+
+Timestep 726 of 1200
+Number of satellites: 99091
+Iteration finished after 19.41s
+
+Timestep 729 of 1200
+Number of satellites: 98888
+Iteration finished after 19.45s
+
+Timestep 732 of 1200
+Number of satellites: 98719
+Iteration finished after 19.5s
+
+Timestep 735 of 1200
+Number of satellites: 98516
+Iteration finished after 19.46s
+
+Timestep 738 of 1200
+Number of satellites: 98326
+Iteration finished after 19.48s
+
+Timestep 741 of 1200
+Number of satellites: 98120
+Iteration finished after 19.41s
+
+Timestep 744 of 1200
+Number of satellites: 97923
+Iteration finished after 19.49s
+
+Timestep 747 of 1200
+Number of satellites: 97737
+Iteration finished after 19.5s
+
+Timestep 750 of 1200
+Number of satellites: 97491
+Iteration finished after 19.5s
+
+Timestep 753 of 1200
+Number of satellites: 97272
+Iteration finished after 19.47s
+
+Timestep 756 of 1200
+Number of satellites: 97070
+Iteration finished after 19.47s
+
+Timestep 759 of 1200
+Number of satellites: 96869
+Iteration finished after 19.63s
+
+Timestep 762 of 1200
+Number of satellites: 96651
+Iteration finished after 19.51s
+
+Timestep 765 of 1200
+Number of satellites: 96426
+Iteration finished after 19.49s
+
+Timestep 768 of 1200
+Number of satellites: 96177
+Iteration finished after 19.45s
+
+Timestep 771 of 1200
+Number of satellites: 95960
+Iteration finished after 19.46s
+
+Timestep 774 of 1200
+Number of satellites: 95745
+Iteration finished after 19.47s
+
+Timestep 777 of 1200
+Number of satellites: 95526
+Iteration finished after 19.6s
+
+Timestep 780 of 1200
+Number of satellites: 95286
+Iteration finished after 19.56s
+
+Timestep 783 of 1200
+Number of satellites: 95055
+Iteration finished after 19.64s
+
+Timestep 786 of 1200
+Number of satellites: 94813
+Iteration finished after 19.55s
+
+Timestep 789 of 1200
+Number of satellites: 94605
+Iteration finished after 19.5s
+
+Timestep 792 of 1200
+Number of satellites: 94365
+Iteration finished after 19.47s
+
+Timestep 795 of 1200
+Number of satellites: 94132
+Iteration finished after 19.41s
+
+Timestep 798 of 1200
+Number of satellites: 93908
+Iteration finished after 19.47s
+
+Timestep 801 of 1200
+Number of satellites: 93682
+Iteration finished after 19.48s
+
+Timestep 804 of 1200
+Number of satellites: 93451
+Iteration finished after 19.51s
+
+Timestep 807 of 1200
+Number of satellites: 93207
+Iteration finished after 19.55s
+
+Timestep 810 of 1200
+Number of satellites: 92942
+Iteration finished after 19.6s
+
+Timestep 813 of 1200
+Number of satellites: 92692
+Iteration finished after 19.46s
+
+Timestep 816 of 1200
+Number of satellites: 92424
+Iteration finished after 19.51s
+
+Timestep 819 of 1200
+Number of satellites: 92197
+Iteration finished after 19.46s
+
+Timestep 822 of 1200
+Number of satellites: 91923
+Iteration finished after 19.56s
+
+Timestep 825 of 1200
+Number of satellites: 91637
+Iteration finished after 19.39s
+
+Timestep 828 of 1200
+Number of satellites: 91368
+Iteration finished after 19.49s
+
+Timestep 831 of 1200
+Number of satellites: 91080
+Iteration finished after 19.47s
+
+Timestep 834 of 1200
+Number of satellites: 90814
+Iteration finished after 19.48s
+
+Timestep 837 of 1200
+Number of satellites: 90544
+Iteration finished after 19.49s
+
+Timestep 840 of 1200
+Number of satellites: 90284
+Iteration finished after 19.43s
+
+Timestep 843 of 1200
+Number of satellites: 89995
+Iteration finished after 19.35s
+
+Timestep 846 of 1200
+Number of satellites: 89687
+Iteration finished after 19.43s
+
+Timestep 849 of 1200
+Number of satellites: 89405
+Iteration finished after 19.52s
+
+Timestep 852 of 1200
+Number of satellites: 89116
+Iteration finished after 19.46s
+
+Timestep 855 of 1200
+Number of satellites: 88819
+Iteration finished after 19.46s
+
+Timestep 858 of 1200
+Number of satellites: 88543
+Iteration finished after 19.42s
+
+Timestep 861 of 1200
+Number of satellites: 88251
+Iteration finished after 19.51s
+
+Timestep 864 of 1200
+Number of satellites: 87936
+Iteration finished after 19.4s
+
+Timestep 867 of 1200
+Number of satellites: 87631
+Iteration finished after 19.44s
+
+Timestep 870 of 1200
+Number of satellites: 87330
+Iteration finished after 19.52s
+
+Timestep 873 of 1200
+Number of satellites: 87048
+Iteration finished after 19.44s
+
+Timestep 876 of 1200
+Number of satellites: 86758
+Iteration finished after 19.39s
+
+Timestep 879 of 1200
+Number of satellites: 86437
+Iteration finished after 19.39s
+
+Timestep 882 of 1200
+Number of satellites: 86118
+Iteration finished after 19.71s
+
+Timestep 885 of 1200
+Number of satellites: 85804
+Iteration finished after 19.43s
+
+Timestep 888 of 1200
+Number of satellites: 85490
+Iteration finished after 19.45s
+
+Timestep 891 of 1200
+Number of satellites: 85133
+Iteration finished after 19.49s
+
+Timestep 894 of 1200
+Number of satellites: 84829
+Iteration finished after 19.49s
+
+Timestep 897 of 1200
+Number of satellites: 84513
+Iteration finished after 19.61s
+
+Timestep 900 of 1200
+Number of satellites: 84199
+Iteration finished after 19.49s
+
+Timestep 903 of 1200
+Number of satellites: 83865
+Iteration finished after 19.5s
+
+Timestep 906 of 1200
+Number of satellites: 83543
+Iteration finished after 19.5s
+
+Timestep 909 of 1200
+Number of satellites: 83213
+Iteration finished after 19.45s
+
+Timestep 912 of 1200
+Number of satellites: 82877
+Iteration finished after 19.48s
+
+Timestep 915 of 1200
+Number of satellites: 82570
+Iteration finished after 19.63s
+
+Timestep 918 of 1200
+Number of satellites: 82230
+Iteration finished after 19.45s
+
+Timestep 921 of 1200
+Number of satellites: 81865
+Iteration finished after 19.36s
+
+Timestep 924 of 1200
+Number of satellites: 81520
+Iteration finished after 19.5s
+
+Timestep 927 of 1200
+Number of satellites: 81180
+Iteration finished after 19.4s
+
+Timestep 930 of 1200
+Number of satellites: 80834
+Iteration finished after 19.43s
+
+Timestep 933 of 1200
+Number of satellites: 80512
+Iteration finished after 19.37s
+
+Timestep 936 of 1200
+Number of satellites: 80173
+Iteration finished after 19.39s
+
+Timestep 939 of 1200
+Number of satellites: 79836
+Iteration finished after 19.46s
+
+Timestep 942 of 1200
+Number of satellites: 79477
+Iteration finished after 19.4s
+
+Timestep 945 of 1200
+Number of satellites: 79130
+Iteration finished after 19.45s
+
+Timestep 948 of 1200
+Number of satellites: 78776
+Iteration finished after 19.42s
+
+Timestep 951 of 1200
+Number of satellites: 78457
+Iteration finished after 19.41s
+
+Timestep 954 of 1200
+Number of satellites: 78057
+Iteration finished after 19.43s
+
+Timestep 957 of 1200
+Number of satellites: 77698
+Iteration finished after 19.29s
+
+Timestep 960 of 1200
+Number of satellites: 77337
+Iteration finished after 19.42s
+
+Timestep 963 of 1200
+Number of satellites: 76969
+Iteration finished after 19.5s
+
+Timestep 966 of 1200
+Number of satellites: 76607
+Iteration finished after 19.4s
+
+Timestep 969 of 1200
+Number of satellites: 76245
+Iteration finished after 19.41s
+
+Timestep 972 of 1200
+Number of satellites: 75875
+Iteration finished after 19.29s
+
+Timestep 975 of 1200
+Number of satellites: 75502
+Iteration finished after 19.39s
+
+Timestep 978 of 1200
+Number of satellites: 75104
+Iteration finished after 19.46s
+
+Timestep 981 of 1200
+Number of satellites: 74710
+Iteration finished after 19.4s
+
+Timestep 984 of 1200
+Number of satellites: 74303
+Iteration finished after 19.4s
+
+Timestep 987 of 1200
+Number of satellites: 73894
+Iteration finished after 19.33s
+
+Timestep 990 of 1200
+Number of satellites: 73512
+Iteration finished after 19.43s
+
+Timestep 993 of 1200
+Number of satellites: 73153
+Iteration finished after 19.58s
+
+Timestep 996 of 1200
+Number of satellites: 72778
+Iteration finished after 19.35s
+
+Timestep 999 of 1200
+Number of satellites: 72372
+Iteration finished after 19.35s
+
+Timestep 1002 of 1200
+Number of satellites: 71978
+Iteration finished after 19.39s
+
+Timestep 1005 of 1200
+Number of satellites: 71586
+Iteration finished after 19.48s
+
+Timestep 1008 of 1200
+Number of satellites: 71212
+Iteration finished after 19.38s
+
+Timestep 1011 of 1200
+Number of satellites: 70813
+Iteration finished after 19.39s
+
+Timestep 1014 of 1200
+Number of satellites: 70413
+Iteration finished after 19.35s
+
+Timestep 1017 of 1200
+Number of satellites: 70026
+Iteration finished after 19.36s
+
+Timestep 1020 of 1200
+Number of satellites: 69639
+Iteration finished after 19.39s
+
+Timestep 1023 of 1200
+Number of satellites: 69235
+Iteration finished after 19.4s
+
+Timestep 1026 of 1200
+Number of satellites: 68813
+Iteration finished after 19.4s
+
+Timestep 1029 of 1200
+Number of satellites: 68379
+Iteration finished after 19.39s
+
+Timestep 1032 of 1200
+Number of satellites: 67951
+Iteration finished after 19.36s
+
+Timestep 1035 of 1200
+Number of satellites: 67488
+Iteration finished after 19.39s
+
+Timestep 1038 of 1200
+Number of satellites: 67032
+Iteration finished after 19.42s
+
+Timestep 1041 of 1200
+Number of satellites: 66577
+Iteration finished after 19.4s
+
+Timestep 1044 of 1200
+Number of satellites: 66142
+Iteration finished after 19.35s
+
+Timestep 1047 of 1200
+Number of satellites: 65745
+Iteration finished after 19.49s
+
+Timestep 1050 of 1200
+Number of satellites: 65266
+Iteration finished after 19.42s
+
+Timestep 1053 of 1200
+Number of satellites: 64817
+Iteration finished after 19.41s
+
+Timestep 1056 of 1200
+Number of satellites: 64422
+Iteration finished after 19.34s
+
+Timestep 1059 of 1200
+Number of satellites: 63944
+Iteration finished after 19.36s
+
+Timestep 1062 of 1200
+Number of satellites: 63541
+Iteration finished after 19.33s
+
+Timestep 1065 of 1200
+Number of satellites: 63128
+Iteration finished after 19.33s
+
+Timestep 1068 of 1200
+Number of satellites: 62657
+Iteration finished after 19.3s
+
+Timestep 1071 of 1200
+Number of satellites: 62216
+Iteration finished after 19.36s
+
+Timestep 1074 of 1200
+Number of satellites: 61754
+Iteration finished after 19.24s
+
+Timestep 1077 of 1200
+Number of satellites: 61299
+Iteration finished after 19.32s
+
+Timestep 1080 of 1200
+Number of satellites: 60839
+Iteration finished after 19.31s
+
+Timestep 1083 of 1200
+Number of satellites: 60411
+Iteration finished after 19.44s
+
+Timestep 1086 of 1200
+Number of satellites: 59993
+Iteration finished after 19.34s
+
+Timestep 1089 of 1200
+Number of satellites: 59539
+Iteration finished after 19.32s
+
+Timestep 1092 of 1200
+Number of satellites: 59061
+Iteration finished after 19.34s
+
+Timestep 1095 of 1200
+Number of satellites: 58627
+Iteration finished after 19.34s
+
+Timestep 1098 of 1200
+Number of satellites: 58184
+Iteration finished after 19.33s
+
+Timestep 1101 of 1200
+Number of satellites: 57728
+Iteration finished after 19.4s
+
+Timestep 1104 of 1200
+Number of satellites: 57288
+Iteration finished after 19.35s
+
+Timestep 1107 of 1200
+Number of satellites: 56803
+Iteration finished after 19.32s
+
+Timestep 1110 of 1200
+Number of satellites: 56336
+Iteration finished after 19.32s
+
+Timestep 1113 of 1200
+Number of satellites: 55897
+Iteration finished after 19.35s
+
+Timestep 1116 of 1200
+Number of satellites: 55468
+Iteration finished after 19.31s
+
+Timestep 1119 of 1200
+Number of satellites: 54998
+Iteration finished after 19.4s
+
+Timestep 1122 of 1200
+Number of satellites: 54554
+Iteration finished after 19.29s
+
+Timestep 1125 of 1200
+Number of satellites: 54118
+Iteration finished after 19.32s
+
+Timestep 1128 of 1200
+Number of satellites: 53663
+Iteration finished after 19.26s
+
+Timestep 1131 of 1200
+Number of satellites: 53211
+Iteration finished after 19.33s
+
+Timestep 1134 of 1200
+Number of satellites: 52732
+Iteration finished after 19.26s
+
+Timestep 1137 of 1200
+Number of satellites: 52256
+Iteration finished after 19.29s
+
+Timestep 1140 of 1200
+Number of satellites: 51805
+Iteration finished after 19.32s
+
+Timestep 1143 of 1200
+Number of satellites: 51380
+Iteration finished after 19.27s
+
+Timestep 1146 of 1200
+Number of satellites: 50926
+Iteration finished after 19.21s
+
+Timestep 1149 of 1200
+Number of satellites: 50461
+Iteration finished after 19.27s
+
+Timestep 1152 of 1200
+Number of satellites: 49999
+Iteration finished after 19.22s
+
+Timestep 1155 of 1200
+Number of satellites: 49560
+Iteration finished after 19.36s
+
+Timestep 1158 of 1200
+Number of satellites: 49108
+Iteration finished after 19.24s
+
+Timestep 1161 of 1200
+Number of satellites: 48672
+Iteration finished after 19.23s
+
+Timestep 1164 of 1200
+Number of satellites: 48233
+Iteration finished after 19.23s
+
+Timestep 1167 of 1200
+Number of satellites: 47793
+Iteration finished after 19.22s
+
+Timestep 1170 of 1200
+Number of satellites: 47404
+Iteration finished after 19.22s
+
+Timestep 1173 of 1200
+Number of satellites: 46926
+Iteration finished after 19.34s
+
+Timestep 1176 of 1200
+Number of satellites: 46484
+Iteration finished after 19.28s
+
+Timestep 1179 of 1200
+Number of satellites: 46076
+Iteration finished after 19.27s
+
+Timestep 1182 of 1200
+Number of satellites: 45616
+Iteration finished after 19.24s
+
+Timestep 1185 of 1200
+Number of satellites: 45187
+Iteration finished after 19.22s
+
+Timestep 1188 of 1200
+Number of satellites: 44772
+Iteration finished after 19.25s
+
+Timestep 1191 of 1200
+Number of satellites: 44303
+Iteration finished after 19.21s
+
+Timestep 1194 of 1200
+Number of satellites: 43883
+Iteration finished after 19.21s
+
+Timestep 1197 of 1200
+Number of satellites: 43468
+2024-03-07 09:28:09,251 - INFO - Simulation finished after: 35470.71s
+2024-03-07 09:28:09,251 - INFO - Writing results.
+2024-03-07 09:28:13,466 - INFO - Process finished.
+
+
+2024-03-07 09:28:13,466 - INFO - Simulation started with following input parameters:
+2024-03-07 09:28:13,466 - INFO - Input path:
+/Users/janlucal/Documents/GitHub/HubaldModel/Python/Optimized/batch2/500.txt
+
+2024-03-07 09:28:13,467 - INFO - matrix_mode = import
+2024-03-07 09:28:13,467 - INFO - launch_mode = njit
+2024-03-07 09:28:13,467 - INFO - accuracy = 20
+2024-03-07 09:28:13,467 - INFO - prob_thresh = 10**(-15)
+2024-03-07 09:28:13,467 - INFO - starting_sats = 50000
+2024-03-07 09:28:13,467 - INFO - sigma = 2000
+2024-03-07 09:28:13,467 - INFO - fragment_collision_prob = 0.0003
+2024-03-07 09:28:13,467 - INFO - active_percentage = 0.8
+2024-03-07 09:28:13,468 - INFO - aLimits = [200000, 2000000]
+2024-03-07 09:28:13,468 - INFO - small_fragments = 100000000
+2024-03-07 09:28:13,468 - INFO - large_fragments = 100000
+2024-03-07 09:28:13,468 - INFO - timestep = 3
+2024-03-07 09:28:13,468 - INFO - tmax = 1200
+2024-03-07 09:28:13,468 - INFO - starts_per_timestep = 500
+2024-03-07 09:28:13,468 - INFO - deorbits_per_timestep = 50
+2024-03-07 09:28:13,468 - INFO - num_workers = 12
+2024-03-07 09:28:13,468 - INFO - Importing data.
+2024-03-07 09:28:14,396 - INFO - Kessler model employed.
+
+Iteration finished after 19.21s
+
+Timestep 0 of 1200
+Number of satellites: 50000
+Iteration finished after 153.7s
+
+Timestep 3 of 1200
+Number of satellites: 50400
+Iteration finished after 155.61s
+
+Timestep 6 of 1200
+Number of satellites: 50838
+Iteration finished after 157.48s
+
+Timestep 9 of 1200
+Number of satellites: 51276
+Iteration finished after 158.11s
+
+Timestep 12 of 1200
+Number of satellites: 51716
+Iteration finished after 160.39s
+
+Timestep 15 of 1200
+Number of satellites: 52155
+Iteration finished after 160.79s
+
+Timestep 18 of 1200
+Number of satellites: 52583
+Iteration finished after 161.49s
+
+Timestep 21 of 1200
+Number of satellites: 53025
+Iteration finished after 163.05s
+
+Timestep 24 of 1200
+Number of satellites: 53465
+Iteration finished after 164.12s
+
+Timestep 27 of 1200
+Number of satellites: 53902
+Iteration finished after 165.49s
+
+Timestep 30 of 1200
+Number of satellites: 54340
+Iteration finished after 166.11s
+
+Timestep 33 of 1200
+Number of satellites: 54774
+Iteration finished after 166.38s
+
+Timestep 36 of 1200
+Number of satellites: 55214
+Iteration finished after 169.56s
+
+Timestep 39 of 1200
+Number of satellites: 55651
+Iteration finished after 169.14s
+
+Timestep 42 of 1200
+Number of satellites: 56090
+Iteration finished after 172.37s
+
+Timestep 45 of 1200
+Number of satellites: 56532
+Iteration finished after 172.19s
+
+Timestep 48 of 1200
+Number of satellites: 56974
+Iteration finished after 174.27s
+
+Timestep 51 of 1200
+Number of satellites: 57414
+Iteration finished after 174.48s
+
+Timestep 54 of 1200
+Number of satellites: 57854
+Iteration finished after 175.74s
+
+Timestep 57 of 1200
+Number of satellites: 58290
+Iteration finished after 177.35s
+
+Timestep 60 of 1200
+Number of satellites: 58732
+Iteration finished after 178.55s
+
+Timestep 63 of 1200
+Number of satellites: 59168
+Iteration finished after 178.67s
+
+Timestep 66 of 1200
+Number of satellites: 59602
+Iteration finished after 180.9s
+
+Timestep 69 of 1200
+Number of satellites: 60042
+Iteration finished after 183.17s
+
+Timestep 72 of 1200
+Number of satellites: 60479
+Iteration finished after 183.72s
+
+Timestep 75 of 1200
+Number of satellites: 60919
+Iteration finished after 188.02s
+
+Timestep 78 of 1200
+Number of satellites: 61359
+Iteration finished after 185.5s
+
+Timestep 81 of 1200
+Number of satellites: 61802
+Iteration finished after 187.01s
+
+Timestep 84 of 1200
+Number of satellites: 62240
+Iteration finished after 188.26s
+
+Timestep 87 of 1200
+Number of satellites: 62674
+Iteration finished after 189.02s
+
+Timestep 90 of 1200
+Number of satellites: 63111
+Iteration finished after 190.32s
+
+Timestep 93 of 1200
+Number of satellites: 63549
+Iteration finished after 191.22s
+
+Timestep 96 of 1200
+Number of satellites: 63985
+Iteration finished after 192.51s
+
+Timestep 99 of 1200
+Number of satellites: 64424
+Iteration finished after 193.23s
+
+Timestep 102 of 1200
+Number of satellites: 64859
+Iteration finished after 196.58s
+
+Timestep 105 of 1200
+Number of satellites: 65298
+Iteration finished after 197.31s
+
+Timestep 108 of 1200
+Number of satellites: 65736
+Iteration finished after 197.91s
+
+Timestep 111 of 1200
+Number of satellites: 66175
+Iteration finished after 200.1s
+
+Timestep 114 of 1200
+Number of satellites: 66613
+Iteration finished after 200.04s
+
+Timestep 117 of 1200
+Number of satellites: 67045
+Iteration finished after 203.08s
+
+Timestep 120 of 1200
+Number of satellites: 67489
+Iteration finished after 202.2s
+
+Timestep 123 of 1200
+Number of satellites: 67928
+Iteration finished after 205.05s
+
+Timestep 126 of 1200
+Number of satellites: 68366
+Iteration finished after 205.93s
+
+Timestep 129 of 1200
+Number of satellites: 68807
+Iteration finished after 206.08s
+
+Timestep 132 of 1200
+Number of satellites: 69241
+Iteration finished after 207.09s
+
+Timestep 135 of 1200
+Number of satellites: 69674
+Iteration finished after 208.71s
+
+Timestep 138 of 1200
+Number of satellites: 70114
+Iteration finished after 210.59s
+
+Timestep 141 of 1200
+Number of satellites: 70550
+Iteration finished after 211.04s
+
+Timestep 144 of 1200
+Number of satellites: 70987
+Iteration finished after 213.21s
+
+Timestep 147 of 1200
+Number of satellites: 71424
+Iteration finished after 213.28s
+
+Timestep 150 of 1200
+Number of satellites: 71858
+Iteration finished after 215.06s
+
+Timestep 153 of 1200
+Number of satellites: 72296
+Iteration finished after 216.9s
+
+Timestep 156 of 1200
+Number of satellites: 72736
+Iteration finished after 217.88s
+
+Timestep 159 of 1200
+Number of satellites: 73167
+Iteration finished after 219.35s
+
+Timestep 162 of 1200
+Number of satellites: 73601
+Iteration finished after 220.68s
+
+Timestep 165 of 1200
+Number of satellites: 74028
+Iteration finished after 222.35s
+
+Timestep 168 of 1200
+Number of satellites: 74466
+Iteration finished after 221.95s
+
+Timestep 171 of 1200
+Number of satellites: 74903
+Iteration finished after 224.23s
+
+Timestep 174 of 1200
+Number of satellites: 75332
+Iteration finished after 224.57s
+
+Timestep 177 of 1200
+Number of satellites: 75767
+Iteration finished after 224.92s
+
+Timestep 180 of 1200
+Number of satellites: 76199
+Iteration finished after 226.17s
+
+Timestep 183 of 1200
+Number of satellites: 76632
+Iteration finished after 227.73s
+
+Timestep 186 of 1200
+Number of satellites: 77065
+Iteration finished after 229.97s
+
+Timestep 189 of 1200
+Number of satellites: 77497
+Iteration finished after 231.59s
+
+Timestep 192 of 1200
+Number of satellites: 77933
+Iteration finished after 234.04s
+
+Timestep 195 of 1200
+Number of satellites: 78369
+Iteration finished after 231.59s
+
+Timestep 198 of 1200
+Number of satellites: 78801
+Iteration finished after 234.19s
+
+Timestep 201 of 1200
+Number of satellites: 79228
+Iteration finished after 235.29s
+
+Timestep 204 of 1200
+Number of satellites: 79662
+Iteration finished after 236.55s
+
+Timestep 207 of 1200
+Number of satellites: 80094
+Iteration finished after 238.14s
+
+Timestep 210 of 1200
+Number of satellites: 80530
+Iteration finished after 238.63s
+
+Timestep 213 of 1200
+Number of satellites: 80960
+Iteration finished after 240.64s
+
+Timestep 216 of 1200
+Number of satellites: 81398
+Iteration finished after 241.91s
+
+Timestep 219 of 1200
+Number of satellites: 81835
+Iteration finished after 243.81s
+
+Timestep 222 of 1200
+Number of satellites: 82267
+Iteration finished after 243.47s
+
+Timestep 225 of 1200
+Number of satellites: 82695
+Iteration finished after 244.71s
+
+Timestep 228 of 1200
+Number of satellites: 83127
+Iteration finished after 245.19s
+
+Timestep 231 of 1200
+Number of satellites: 83560
+Iteration finished after 247.21s
+
+Timestep 234 of 1200
+Number of satellites: 83991
+Iteration finished after 249.19s
+
+Timestep 237 of 1200
+Number of satellites: 84421
+Iteration finished after 248.88s
+
+Timestep 240 of 1200
+Number of satellites: 84849
+Iteration finished after 250.94s
+
+Timestep 243 of 1200
+Number of satellites: 85275
+Iteration finished after 252.44s
+
+Timestep 246 of 1200
+Number of satellites: 85706
+Iteration finished after 253.8s
+
+Timestep 249 of 1200
+Number of satellites: 86131
+Iteration finished after 255.0s
+
+Timestep 252 of 1200
+Number of satellites: 86560
+Iteration finished after 255.6s
+
+Timestep 255 of 1200
+Number of satellites: 86989
+Iteration finished after 258.25s
+
+Timestep 258 of 1200
+Number of satellites: 87421
+Iteration finished after 260.26s
+
+Timestep 261 of 1200
+Number of satellites: 87850
+Iteration finished after 258.83s
+
+Timestep 264 of 1200
+Number of satellites: 88275
+Iteration finished after 261.56s
+
+Timestep 267 of 1200
+Number of satellites: 88705
+Iteration finished after 262.98s
+
+Timestep 270 of 1200
+Number of satellites: 89130
+Iteration finished after 262.65s
+
+Timestep 273 of 1200
+Number of satellites: 89554
+Iteration finished after 265.55s
+
+Timestep 276 of 1200
+Number of satellites: 89976
+Iteration finished after 265.68s
+
+Timestep 279 of 1200
+Number of satellites: 90404
+Iteration finished after 266.27s
+
+Timestep 282 of 1200
+Number of satellites: 90828
+Iteration finished after 266.89s
+
+Timestep 285 of 1200
+Number of satellites: 91253
+Iteration finished after 269.44s
+
+Timestep 288 of 1200
+Number of satellites: 91668
+Iteration finished after 269.34s
+
+Timestep 291 of 1200
+Number of satellites: 92095
+Iteration finished after 270.39s
+
+Timestep 294 of 1200
+Number of satellites: 92510
+Iteration finished after 272.85s
+
+Timestep 297 of 1200
+Number of satellites: 92931
+Iteration finished after 274.78s
+
+Timestep 300 of 1200
+Number of satellites: 93347
+Iteration finished after 273.79s
+
+Timestep 303 of 1200
+Number of satellites: 93770
+Iteration finished after 276.46s
+
+Timestep 306 of 1200
+Number of satellites: 94190
+Iteration finished after 276.8s
+
+Timestep 309 of 1200
+Number of satellites: 94616
+Iteration finished after 277.89s
+
+Timestep 312 of 1200
+Number of satellites: 95025
+Iteration finished after 279.88s
+
+Timestep 315 of 1200
+Number of satellites: 95441
+Iteration finished after 279.7s
+
+Timestep 318 of 1200
+Number of satellites: 95869
+Iteration finished after 281.71s
+
+Timestep 321 of 1200
+Number of satellites: 96285
+Iteration finished after 282.12s
+
+Timestep 324 of 1200
+Number of satellites: 96705
+Iteration finished after 281.89s
+
+Timestep 327 of 1200
+Number of satellites: 97115
+Iteration finished after 284.4s
+
+Timestep 330 of 1200
+Number of satellites: 97529
+Iteration finished after 285.71s
+
+Timestep 333 of 1200
+Number of satellites: 97947
+Iteration finished after 289.44s
+
+Timestep 336 of 1200
+Number of satellites: 98360
+Iteration finished after 289.81s
+
+Timestep 339 of 1200
+Number of satellites: 98784
+Iteration finished after 289.6s
+
+Timestep 342 of 1200
+Number of satellites: 99198
+Iteration finished after 290.1s
+
+Timestep 345 of 1200
+Number of satellites: 99612
+Iteration finished after 292.04s
+
+Timestep 348 of 1200
+Number of satellites: 100024
+Iteration finished after 292.94s
+
+Timestep 351 of 1200
+Number of satellites: 100430
+Iteration finished after 295.81s
+
+Timestep 354 of 1200
+Number of satellites: 100837
+Iteration finished after 294.55s
+
+Timestep 357 of 1200
+Number of satellites: 101256
+Iteration finished after 296.92s
+
+Timestep 360 of 1200
+Number of satellites: 101659
+Iteration finished after 297.87s
+
+Timestep 363 of 1200
+Number of satellites: 102077
+Iteration finished after 301.23s
+
+Timestep 366 of 1200
+Number of satellites: 102494
+Iteration finished after 300.46s
+
+Timestep 369 of 1200
+Number of satellites: 102908
+Iteration finished after 299.41s
+
+Timestep 372 of 1200
+Number of satellites: 103318
+Iteration finished after 303.7s
+
+Timestep 375 of 1200
+Number of satellites: 103738
+Iteration finished after 303.55s
+
+Timestep 378 of 1200
+Number of satellites: 104138
+Iteration finished after 305.01s
+
+Timestep 381 of 1200
+Number of satellites: 104545
+Iteration finished after 306.26s
+
+Timestep 384 of 1200
+Number of satellites: 104949
+Iteration finished after 308.22s
+
+Timestep 387 of 1200
+Number of satellites: 105355
+Iteration finished after 309.93s
+
+Timestep 390 of 1200
+Number of satellites: 105764
+Iteration finished after 309.2s
+
+Timestep 393 of 1200
+Number of satellites: 106170
+Iteration finished after 311.45s
+
+Timestep 396 of 1200
+Number of satellites: 106576
+Iteration finished after 310.78s
+
+Timestep 399 of 1200
+Number of satellites: 106975
+Iteration finished after 313.28s
+
+Timestep 402 of 1200
+Number of satellites: 107369
+Iteration finished after 313.65s
+
+Timestep 405 of 1200
+Number of satellites: 107763
+Iteration finished after 313.33s
+
+Timestep 408 of 1200
+Number of satellites: 108159
+Iteration finished after 314.43s
+
+Timestep 411 of 1200
+Number of satellites: 108548
+Iteration finished after 317.23s
+
+Timestep 414 of 1200
+Number of satellites: 108944
+Iteration finished after 317.08s
+
+Timestep 417 of 1200
+Number of satellites: 109338
+Iteration finished after 319.45s
+
+Timestep 420 of 1200
+Number of satellites: 109736
+Iteration finished after 322.19s
+
+Timestep 423 of 1200
+Number of satellites: 110146
+Iteration finished after 321.05s
+
+Timestep 426 of 1200
+Number of satellites: 110543
+Iteration finished after 322.81s
+
+Timestep 429 of 1200
+Number of satellites: 110935
+Iteration finished after 323.56s
+
+Timestep 432 of 1200
+Number of satellites: 111333
+Iteration finished after 324.73s
+
+Timestep 435 of 1200
+Number of satellites: 111728
+Iteration finished after 325.77s
+
+Timestep 438 of 1200
+Number of satellites: 112106
+Iteration finished after 326.19s
+
+Timestep 441 of 1200
+Number of satellites: 112491
+Iteration finished after 327.31s
+
+Timestep 444 of 1200
+Number of satellites: 112879
+Iteration finished after 327.34s
+
+Timestep 447 of 1200
+Number of satellites: 113268
+Iteration finished after 329.6s
+
+Timestep 450 of 1200
+Number of satellites: 113648
+Iteration finished after 332.27s
+
+Timestep 453 of 1200
+Number of satellites: 114041
+Iteration finished after 332.67s
+
+Timestep 456 of 1200
+Number of satellites: 114426
+Iteration finished after 332.27s
+
+Timestep 459 of 1200
+Number of satellites: 114821
+Iteration finished after 340.77s
+
+Timestep 462 of 1200
+Number of satellites: 115194
+Iteration finished after 335.21s
+
+Timestep 465 of 1200
+Number of satellites: 115584
+Iteration finished after 335.18s
+
+Timestep 468 of 1200
+Number of satellites: 115963
+Iteration finished after 337.57s
+
+Timestep 471 of 1200
+Number of satellites: 116332
+Iteration finished after 339.93s
+
+Timestep 474 of 1200
+Number of satellites: 116709
+Iteration finished after 338.91s
+
+Timestep 477 of 1200
+Number of satellites: 117098
+Iteration finished after 339.98s
+
+Timestep 480 of 1200
+Number of satellites: 117476
+Iteration finished after 340.99s
+
+Timestep 483 of 1200
+Number of satellites: 117852
+Iteration finished after 342.92s
+
+Timestep 486 of 1200
+Number of satellites: 118224
+Iteration finished after 344.88s
+
+Timestep 489 of 1200
+Number of satellites: 118591
+Iteration finished after 343.19s
+
+Timestep 492 of 1200
+Number of satellites: 118940
+Iteration finished after 346.36s
+
+Timestep 495 of 1200
+Number of satellites: 119300
+Iteration finished after 350.45s
+
+Timestep 498 of 1200
+Number of satellites: 119661
+Iteration finished after 347.05s
+
+Timestep 501 of 1200
+Number of satellites: 120015
+Iteration finished after 348.44s
+
+Timestep 504 of 1200
+Number of satellites: 120370
+Iteration finished after 350.16s
+
+Timestep 507 of 1200
+Number of satellites: 120723
+Iteration finished after 349.71s
+
+Timestep 510 of 1200
+Number of satellites: 121075
+Iteration finished after 351.46s
+
+Timestep 513 of 1200
+Number of satellites: 121432
+Iteration finished after 353.11s
+
+Timestep 516 of 1200
+Number of satellites: 121784
+Iteration finished after 353.9s
+
+Timestep 519 of 1200
+Number of satellites: 122119
+Iteration finished after 353.79s
+
+Timestep 522 of 1200
+Number of satellites: 122456
+Iteration finished after 354.95s
+
+Timestep 525 of 1200
+Number of satellites: 122803
+Iteration finished after 355.08s
+
+Timestep 528 of 1200
+Number of satellites: 123144
+Iteration finished after 355.15s
+
+Timestep 531 of 1200
+Number of satellites: 123479
+Iteration finished after 358.35s
+
+Timestep 534 of 1200
+Number of satellites: 123803
+Iteration finished after 356.81s
+
+Timestep 537 of 1200
+Number of satellites: 124129
+Iteration finished after 359.33s
+
+Timestep 540 of 1200
+Number of satellites: 124456
+Iteration finished after 360.32s
+
+Timestep 543 of 1200
+Number of satellites: 124781
+Iteration finished after 360.42s
+
+Timestep 546 of 1200
+Number of satellites: 125115
+Iteration finished after 363.42s
+
+Timestep 549 of 1200
+Number of satellites: 125435
+Iteration finished after 363.0s
+
+Timestep 552 of 1200
+Number of satellites: 125745
+Iteration finished after 363.99s
+
+Timestep 555 of 1200
+Number of satellites: 126078
+Iteration finished after 364.98s
+
+Timestep 558 of 1200
+Number of satellites: 126392
+Iteration finished after 368.57s
+
+Timestep 561 of 1200
+Number of satellites: 126715
+Iteration finished after 366.87s
+
+Timestep 564 of 1200
+Number of satellites: 127025
+Iteration finished after 370.58s
+
+Timestep 567 of 1200
+Number of satellites: 127344
+Iteration finished after 369.93s
+
+Timestep 570 of 1200
+Number of satellites: 127667
+Iteration finished after 369.75s
+
+Timestep 573 of 1200
+Number of satellites: 127988
+Iteration finished after 369.34s
+
+Timestep 576 of 1200
+Number of satellites: 128282
+Iteration finished after 370.98s
+
+Timestep 579 of 1200
+Number of satellites: 128592
+Iteration finished after 371.06s
+
+Timestep 582 of 1200
+Number of satellites: 128882
+Iteration finished after 372.15s
+
+Timestep 585 of 1200
+Number of satellites: 129175
+Iteration finished after 373.81s
+
+Timestep 588 of 1200
+Number of satellites: 129453
+Iteration finished after 373.92s
+
+Timestep 591 of 1200
+Number of satellites: 129735
+Iteration finished after 374.19s
+
+Timestep 594 of 1200
+Number of satellites: 130017
+Iteration finished after 375.37s
+
+Timestep 597 of 1200
+Number of satellites: 130274
+Iteration finished after 355.45s
+
+Timestep 600 of 1200
+Number of satellites: 130477
+Iteration finished after 359.6s
+
+Timestep 603 of 1200
+Number of satellites: 130720
+Iteration finished after 377.4s
+
+Timestep 606 of 1200
+Number of satellites: 130995
+Iteration finished after 381.88s
+
+Timestep 609 of 1200
+Number of satellites: 131261
+Iteration finished after 374.01s
+
+Timestep 612 of 1200
+Number of satellites: 131500
+Iteration finished after 330.9s
+
+Timestep 615 of 1200
+Number of satellites: 131650
+Iteration finished after 303.15s
+
+Timestep 618 of 1200
+Number of satellites: 131804
+Iteration finished after 225.25s
+
+Timestep 621 of 1200
+Number of satellites: 131830
+Iteration finished after 51.78s
+
+Timestep 624 of 1200
+Number of satellites: 131596
+Iteration finished after 31.94s
+
+Timestep 627 of 1200
+Number of satellites: 131334
+Iteration finished after 31.11s
+
+Timestep 630 of 1200
+Number of satellites: 131064
+Iteration finished after 30.84s
+
+Timestep 633 of 1200
+Number of satellites: 130785
+Iteration finished after 30.56s
+
+Timestep 636 of 1200
+Number of satellites: 130532
+Iteration finished after 30.52s
+
+Timestep 639 of 1200
+Number of satellites: 130278
+Iteration finished after 30.44s
+
+Timestep 642 of 1200
+Number of satellites: 130009
+Iteration finished after 30.54s
+
+Timestep 645 of 1200
+Number of satellites: 129733
+Iteration finished after 30.25s
+
+Timestep 648 of 1200
+Number of satellites: 129456
+Iteration finished after 30.28s
+
+Timestep 651 of 1200
+Number of satellites: 129166
+Iteration finished after 30.23s
+
+Timestep 654 of 1200
+Number of satellites: 128857
+Iteration finished after 30.25s
+
+Timestep 657 of 1200
+Number of satellites: 128552
+Iteration finished after 30.21s
+
+Timestep 660 of 1200
+Number of satellites: 128276
+Iteration finished after 30.17s
+
+Timestep 663 of 1200
+Number of satellites: 127936
+Iteration finished after 30.22s
+
+Timestep 666 of 1200
+Number of satellites: 127606
+Iteration finished after 30.38s
+
+Timestep 669 of 1200
+Number of satellites: 127282
+Iteration finished after 30.16s
+
+Timestep 672 of 1200
+Number of satellites: 126953
+Iteration finished after 30.15s
+
+Timestep 675 of 1200
+Number of satellites: 126616
+Iteration finished after 30.14s
+
+Timestep 678 of 1200
+Number of satellites: 126302
+Iteration finished after 30.15s
+
+Timestep 681 of 1200
+Number of satellites: 125974
+Iteration finished after 30.21s
+
+Timestep 684 of 1200
+Number of satellites: 125633
+Iteration finished after 30.33s
+
+Timestep 687 of 1200
+Number of satellites: 125317
+Iteration finished after 30.32s
+
+Timestep 690 of 1200
+Number of satellites: 124995
+Iteration finished after 30.25s
+
+Timestep 693 of 1200
+Number of satellites: 124614
+Iteration finished after 30.17s
+
+Timestep 696 of 1200
+Number of satellites: 124254
+Iteration finished after 30.26s
+
+Timestep 699 of 1200
+Number of satellites: 123875
+Iteration finished after 30.2s
+
+Timestep 702 of 1200
+Number of satellites: 123480
+Iteration finished after 30.44s
+
+Timestep 705 of 1200
+Number of satellites: 123114
+Iteration finished after 30.44s
+
+Timestep 708 of 1200
+Number of satellites: 122750
+Iteration finished after 30.48s
+
+Timestep 711 of 1200
+Number of satellites: 122391
+Iteration finished after 30.35s
+
+Timestep 714 of 1200
+Number of satellites: 122014
+Iteration finished after 30.2s
+
+Timestep 717 of 1200
+Number of satellites: 121634
+Iteration finished after 30.14s
+
+Timestep 720 of 1200
+Number of satellites: 121238
+Iteration finished after 30.16s
+
+Timestep 723 of 1200
+Number of satellites: 120833
+Iteration finished after 30.12s
+
+Timestep 726 of 1200
+Number of satellites: 120418
+Iteration finished after 30.1s
+
+Timestep 729 of 1200
+Number of satellites: 120018
+Iteration finished after 30.15s
+
+Timestep 732 of 1200
+Number of satellites: 119624
+Iteration finished after 30.14s
+
+Timestep 735 of 1200
+Number of satellites: 119200
+Iteration finished after 30.11s
+
+Timestep 738 of 1200
+Number of satellites: 118763
+Iteration finished after 30.16s
+
+Timestep 741 of 1200
+Number of satellites: 118330
+Iteration finished after 30.26s
+
+Timestep 744 of 1200
+Number of satellites: 117869
+Iteration finished after 30.19s
+
+Timestep 747 of 1200
+Number of satellites: 117427
+Iteration finished after 30.34s
+
+Timestep 750 of 1200
+Number of satellites: 116990
+Iteration finished after 30.31s
+
+Timestep 753 of 1200
+Number of satellites: 116530
+Iteration finished after 30.4s
+
+Timestep 756 of 1200
+Number of satellites: 116076
+Iteration finished after 30.33s
+
+Timestep 759 of 1200
+Number of satellites: 115585
+Iteration finished after 30.28s
+
+Timestep 762 of 1200
+Number of satellites: 115111
+Iteration finished after 30.3s
+
+Timestep 765 of 1200
+Number of satellites: 114639
+Iteration finished after 30.36s
+
+Timestep 768 of 1200
+Number of satellites: 114143
+Iteration finished after 30.33s
+
+Timestep 771 of 1200
+Number of satellites: 113644
+Iteration finished after 30.2s
+
+Timestep 774 of 1200
+Number of satellites: 113114
+Iteration finished after 30.18s
+
+Timestep 777 of 1200
+Number of satellites: 112595
+Iteration finished after 30.19s
+
+Timestep 780 of 1200
+Number of satellites: 112058
+Iteration finished after 30.21s
+
+Timestep 783 of 1200
+Number of satellites: 111565
+Iteration finished after 30.57s
+
+Timestep 786 of 1200
+Number of satellites: 111054
+Iteration finished after 30.23s
+
+Timestep 789 of 1200
+Number of satellites: 110523
+Iteration finished after 30.27s
+
+Timestep 792 of 1200
+Number of satellites: 109984
+Iteration finished after 30.29s
+
+Timestep 795 of 1200
+Number of satellites: 109449
+Iteration finished after 30.3s
+
+Timestep 798 of 1200
+Number of satellites: 108897
+Iteration finished after 30.32s
+
+Timestep 801 of 1200
+Number of satellites: 108366
+Iteration finished after 30.28s
+
+Timestep 804 of 1200
+Number of satellites: 107820
+Iteration finished after 30.28s
+
+Timestep 807 of 1200
+Number of satellites: 107249
+Iteration finished after 30.39s
+
+Timestep 810 of 1200
+Number of satellites: 106672
+Iteration finished after 30.28s
+
+Timestep 813 of 1200
+Number of satellites: 106116
+Iteration finished after 30.35s
+
+Timestep 816 of 1200
+Number of satellites: 105542
+Iteration finished after 30.21s
+
+Timestep 819 of 1200
+Number of satellites: 104959
+Iteration finished after 30.17s
+
+Timestep 822 of 1200
+Number of satellites: 104387
+Iteration finished after 30.38s
+
+Timestep 825 of 1200
+Number of satellites: 103722
+Iteration finished after 30.39s
+
+Timestep 828 of 1200
+Number of satellites: 103115
+Iteration finished after 30.26s
+
+Timestep 831 of 1200
+Number of satellites: 102491
+Iteration finished after 30.26s
+
+Timestep 834 of 1200
+Number of satellites: 101864
+Iteration finished after 30.2s
+
+Timestep 837 of 1200
+Number of satellites: 101266
+Iteration finished after 30.29s
+
+Timestep 840 of 1200
+Number of satellites: 100636
+Iteration finished after 30.22s
+
+Timestep 843 of 1200
+Number of satellites: 100012
+Iteration finished after 30.28s
+
+Timestep 846 of 1200
+Number of satellites: 99389
+Iteration finished after 30.28s
+
+Timestep 849 of 1200
+Number of satellites: 98718
+Iteration finished after 30.21s
+
+Timestep 852 of 1200
+Number of satellites: 98064
+Iteration finished after 30.12s
+
+Timestep 855 of 1200
+Number of satellites: 97415
+Iteration finished after 29.99s
+
+Timestep 858 of 1200
+Number of satellites: 96765
+Iteration finished after 30.28s
+
+Timestep 861 of 1200
+Number of satellites: 96111
+Iteration finished after 30.13s
+
+Timestep 864 of 1200
+Number of satellites: 95438
+Iteration finished after 30.11s
+
+Timestep 867 of 1200
+Number of satellites: 94782
+Iteration finished after 30.05s
+
+Timestep 870 of 1200
+Number of satellites: 94139
+Iteration finished after 30.41s
+
+Timestep 873 of 1200
+Number of satellites: 93441
+Iteration finished after 30.21s
+
+Timestep 876 of 1200
+Number of satellites: 92747
+Iteration finished after 30.13s
+
+Timestep 879 of 1200
+Number of satellites: 92096
+Iteration finished after 30.19s
+
+Timestep 882 of 1200
+Number of satellites: 91403
+Iteration finished after 30.17s
+
+Timestep 885 of 1200
+Number of satellites: 90701
+Iteration finished after 30.24s
+
+Timestep 888 of 1200
+Number of satellites: 89986
+Iteration finished after 30.43s
+
+Timestep 891 of 1200
+Number of satellites: 89318
+Iteration finished after 30.36s
+
+Timestep 894 of 1200
+Number of satellites: 88587
+Iteration finished after 30.11s
+
+Timestep 897 of 1200
+Number of satellites: 87817
+Iteration finished after 30.31s
+
+Timestep 900 of 1200
+Number of satellites: 87112
+Iteration finished after 30.2s
+
+Timestep 903 of 1200
+Number of satellites: 86440
+Iteration finished after 30.13s
+
+Timestep 906 of 1200
+Number of satellites: 85678
+Iteration finished after 30.04s
+
+Timestep 909 of 1200
+Number of satellites: 84994
+Iteration finished after 30.0s
+
+Timestep 912 of 1200
+Number of satellites: 84183
+Iteration finished after 30.06s
+
+Timestep 915 of 1200
+Number of satellites: 83418
+Iteration finished after 30.15s
+
+Timestep 918 of 1200
+Number of satellites: 82684
+Iteration finished after 30.03s
+
+Timestep 921 of 1200
+Number of satellites: 81958
+Iteration finished after 30.09s
+
+Timestep 924 of 1200
+Number of satellites: 81216
+Iteration finished after 30.1s
+
+Timestep 927 of 1200
+Number of satellites: 80481
+Iteration finished after 30.08s
+
+Timestep 930 of 1200
+Number of satellites: 79731
+Iteration finished after 30.0s
+
+Timestep 933 of 1200
+Number of satellites: 78972
+Iteration finished after 30.31s
+
+Timestep 936 of 1200
+Number of satellites: 78197
+Iteration finished after 30.01s
+
+Timestep 939 of 1200
+Number of satellites: 77422
+Iteration finished after 30.15s
+
+Timestep 942 of 1200
+Number of satellites: 76635
+Iteration finished after 30.01s
+
+Timestep 945 of 1200
+Number of satellites: 75868
+Iteration finished after 30.25s
+
+Timestep 948 of 1200
+Number of satellites: 75081
+Iteration finished after 30.03s
+
+Timestep 951 of 1200
+Number of satellites: 74346
+Iteration finished after 30.01s
+
+Timestep 954 of 1200
+Number of satellites: 73596
+Iteration finished after 29.95s
+
+Timestep 957 of 1200
+Number of satellites: 72851
+Iteration finished after 29.98s
+
+Timestep 960 of 1200
+Number of satellites: 72108
+Iteration finished after 30.37s
+
+Timestep 963 of 1200
+Number of satellites: 71357
+Iteration finished after 30.04s
+
+Timestep 966 of 1200
+Number of satellites: 70610
+Iteration finished after 30.06s
+
+Timestep 969 of 1200
+Number of satellites: 69827
+Iteration finished after 30.14s
+
+Timestep 972 of 1200
+Number of satellites: 69093
+Iteration finished after 29.95s
+
+Timestep 975 of 1200
+Number of satellites: 68364
+Iteration finished after 30.08s
+
+Timestep 978 of 1200
+Number of satellites: 67618
+Iteration finished after 29.93s
+
+Timestep 981 of 1200
+Number of satellites: 66897
+Iteration finished after 30.06s
+
+Timestep 984 of 1200
+Number of satellites: 66160
+Iteration finished after 30.11s
+
+Timestep 987 of 1200
+Number of satellites: 65364
+Iteration finished after 30.15s
+
+Timestep 990 of 1200
+Number of satellites: 64655
+Iteration finished after 30.07s
+
+Timestep 993 of 1200
+Number of satellites: 63912
+Iteration finished after 30.05s
+
+Timestep 996 of 1200
+Number of satellites: 63163
+Iteration finished after 30.25s
+
+Timestep 999 of 1200
+Number of satellites: 62438
+Iteration finished after 30.04s
+
+Timestep 1002 of 1200
+Number of satellites: 61659
+Iteration finished after 29.94s
+
+Timestep 1005 of 1200
+Number of satellites: 60914
+Iteration finished after 29.94s
+
+Timestep 1008 of 1200
+Number of satellites: 60215
+Iteration finished after 29.89s
+
+Timestep 1011 of 1200
+Number of satellites: 59492
+Iteration finished after 29.95s
+
+Timestep 1014 of 1200
+Number of satellites: 58761
+Iteration finished after 29.91s
+
+Timestep 1017 of 1200
+Number of satellites: 58050
+Iteration finished after 30.09s
+
+Timestep 1020 of 1200
+Number of satellites: 57299
+Iteration finished after 29.88s
+
+Timestep 1023 of 1200
+Number of satellites: 56627
+Iteration finished after 29.98s
+
+Timestep 1026 of 1200
+Number of satellites: 55923
+Iteration finished after 29.97s
+
+Timestep 1029 of 1200
+Number of satellites: 55129
+Iteration finished after 30.08s
+
+Timestep 1032 of 1200
+Number of satellites: 54415
+Iteration finished after 29.88s
+
+Timestep 1035 of 1200
+Number of satellites: 53658
+Iteration finished after 30.0s
+
+Timestep 1038 of 1200
+Number of satellites: 52928
+Iteration finished after 30.1s
+
+Timestep 1041 of 1200
+Number of satellites: 52256
+Iteration finished after 30.05s
+
+Timestep 1044 of 1200
+Number of satellites: 51552
+Iteration finished after 30.11s
+
+Timestep 1047 of 1200
+Number of satellites: 50811
+Iteration finished after 29.98s
+
+Timestep 1050 of 1200
+Number of satellites: 50085
+Iteration finished after 29.92s
+
+Timestep 1053 of 1200
+Number of satellites: 49327
+Iteration finished after 29.89s
+
+Timestep 1056 of 1200
+Number of satellites: 48629
+Iteration finished after 29.86s
+
+Timestep 1059 of 1200
+Number of satellites: 47968
+Iteration finished after 29.89s
+
+Timestep 1062 of 1200
+Number of satellites: 47324
+Iteration finished after 29.94s
+
+Timestep 1065 of 1200
+Number of satellites: 46609
+Iteration finished after 29.94s
+
+Timestep 1068 of 1200
+Number of satellites: 45941
+Iteration finished after 29.94s
+
+Timestep 1071 of 1200
+Number of satellites: 45263
+Iteration finished after 29.92s
+
+Timestep 1074 of 1200
+Number of satellites: 44630
+Iteration finished after 30.01s
+
+Timestep 1077 of 1200
+Number of satellites: 43989
+Iteration finished after 30.33s
+
+Timestep 1080 of 1200
+Number of satellites: 43305
+Iteration finished after 29.95s
+
+Timestep 1083 of 1200
+Number of satellites: 42677
+Iteration finished after 29.9s
+
+Timestep 1086 of 1200
+Number of satellites: 42013
+Iteration finished after 29.95s
+
+Timestep 1089 of 1200
+Number of satellites: 41396
+Iteration finished after 29.95s
+
+Timestep 1092 of 1200
+Number of satellites: 40791
+Iteration finished after 30.36s
+
+Timestep 1095 of 1200
+Number of satellites: 40172
+Iteration finished after 30.04s
+
+Timestep 1098 of 1200
+Number of satellites: 39540
+Iteration finished after 30.0s
+
+Timestep 1101 of 1200
+Number of satellites: 38899
+Iteration finished after 30.02s
+
+Timestep 1104 of 1200
+Number of satellites: 38300
+Iteration finished after 29.94s
+
+Timestep 1107 of 1200
+Number of satellites: 37685
+Iteration finished after 29.91s
+
+Timestep 1110 of 1200
+Number of satellites: 37076
+Iteration finished after 29.88s
+
+Timestep 1113 of 1200
+Number of satellites: 36470
+Iteration finished after 29.93s
+
+Timestep 1116 of 1200
+Number of satellites: 35892
+Iteration finished after 29.86s
+
+Timestep 1119 of 1200
+Number of satellites: 35304
+Iteration finished after 30.1s
+
+Timestep 1122 of 1200
+Number of satellites: 34721
+Iteration finished after 30.0s
+
+Timestep 1125 of 1200
+Number of satellites: 34094
+Iteration finished after 29.95s
+
+Timestep 1128 of 1200
+Number of satellites: 33519
+Iteration finished after 29.92s
+
+Timestep 1131 of 1200
+Number of satellites: 32994
+Iteration finished after 29.94s
+
+Timestep 1134 of 1200
+Number of satellites: 32434
+Iteration finished after 29.87s
+
+Timestep 1137 of 1200
+Number of satellites: 31848
+Iteration finished after 29.98s
+
+Timestep 1140 of 1200
+Number of satellites: 31301
+Iteration finished after 29.85s
+
+Timestep 1143 of 1200
+Number of satellites: 30756
+Iteration finished after 29.91s
+
+Timestep 1146 of 1200
+Number of satellites: 30221
+Iteration finished after 29.84s
+
+Timestep 1149 of 1200
+Number of satellites: 29695
+Iteration finished after 29.94s
+
+Timestep 1152 of 1200
+Number of satellites: 29151
+Iteration finished after 29.94s
+
+Timestep 1155 of 1200
+Number of satellites: 28647
+Iteration finished after 29.85s
+
+Timestep 1158 of 1200
+Number of satellites: 28200
+Iteration finished after 29.82s
+
+Timestep 1161 of 1200
+Number of satellites: 27707
+Iteration finished after 29.92s
+
+Timestep 1164 of 1200
+Number of satellites: 27205
+Iteration finished after 29.92s
+
+Timestep 1167 of 1200
+Number of satellites: 26732
+Iteration finished after 29.93s
+
+Timestep 1170 of 1200
+Number of satellites: 26287
+Iteration finished after 29.94s
+
+Timestep 1173 of 1200
+Number of satellites: 25800
+Iteration finished after 29.93s
+
+Timestep 1176 of 1200
+Number of satellites: 25361
+Iteration finished after 29.96s
+
+Timestep 1179 of 1200
+Number of satellites: 24868
+Iteration finished after 29.76s
+
+Timestep 1182 of 1200
+Number of satellites: 24418
+Iteration finished after 29.8s
+
+Timestep 1185 of 1200
+Number of satellites: 23970
+Iteration finished after 29.84s
+
+Timestep 1188 of 1200
+Number of satellites: 23515
+Iteration finished after 29.75s
+
+Timestep 1191 of 1200
+Number of satellites: 23068
+Iteration finished after 29.75s
+
+Timestep 1194 of 1200
+Number of satellites: 22663
+Iteration finished after 29.72s
+
+Timestep 1197 of 1200
+Number of satellites: 22235
+2024-03-08 02:49:57,456 - INFO - Simulation finished after: 62503.99s
+2024-03-08 02:49:57,458 - INFO - Writing results.
+2024-03-08 02:50:01,688 - INFO - Process finished.
+
+
+2024-03-08 02:50:01,689 - INFO - Simulation started with following input parameters:
+2024-03-08 02:50:01,689 - INFO - Input path:
+/Users/janlucal/Documents/GitHub/HubaldModel/Python/Optimized/batch2/200.txt
+
+2024-03-08 02:50:01,690 - INFO - matrix_mode = import
+2024-03-08 02:50:01,690 - INFO - launch_mode = njit
+2024-03-08 02:50:01,690 - INFO - accuracy = 20
+2024-03-08 02:50:01,690 - INFO - prob_thresh = 10**(-15)
+2024-03-08 02:50:01,690 - INFO - starting_sats = 50000
+2024-03-08 02:50:01,690 - INFO - sigma = 2000
+2024-03-08 02:50:01,690 - INFO - fragment_collision_prob = 0.0003
+2024-03-08 02:50:01,690 - INFO - active_percentage = 0.8
+2024-03-08 02:50:01,690 - INFO - aLimits = [200000, 2000000]
+2024-03-08 02:50:01,690 - INFO - small_fragments = 100000000
+2024-03-08 02:50:01,690 - INFO - large_fragments = 100000
+2024-03-08 02:50:01,690 - INFO - timestep = 3
+2024-03-08 02:50:01,690 - INFO - tmax = 1200
+2024-03-08 02:50:01,690 - INFO - starts_per_timestep = 200
+2024-03-08 02:50:01,690 - INFO - deorbits_per_timestep = 20
+2024-03-08 02:50:01,690 - INFO - num_workers = 12
+2024-03-08 02:50:01,690 - INFO - Importing data.
+2024-03-08 02:50:02,586 - INFO - Kessler model employed.
+
+Iteration finished after 29.83s
+
+Timestep 0 of 1200
+Number of satellites: 50000
+Iteration finished after 68.07s
+
+Timestep 3 of 1200
+Number of satellites: 50126
+Iteration finished after 68.18s
+
+Timestep 6 of 1200
+Number of satellites: 50287
+Iteration finished after 68.7s
+
+Timestep 9 of 1200
+Number of satellites: 50448
+Iteration finished after 69.74s
+
+Timestep 12 of 1200
+Number of satellites: 50619
+Iteration finished after 69.96s
+
+Timestep 15 of 1200
+Number of satellites: 50786
+Iteration finished after 70.26s
+
+Timestep 18 of 1200
+Number of satellites: 50957
+Iteration finished after 70.69s
+
+Timestep 21 of 1200
+Number of satellites: 51129
+Iteration finished after 70.64s
+
+Timestep 24 of 1200
+Number of satellites: 51300
+Iteration finished after 70.78s
+
+Timestep 27 of 1200
+Number of satellites: 51465
+Iteration finished after 70.87s
+
+Timestep 30 of 1200
+Number of satellites: 51634
+Iteration finished after 71.23s
+
+Timestep 33 of 1200
+Number of satellites: 51800
+Iteration finished after 71.35s
+
+Timestep 36 of 1200
+Number of satellites: 51965
+Iteration finished after 71.26s
+
+Timestep 39 of 1200
+Number of satellites: 52121
+Iteration finished after 71.88s
+
+Timestep 42 of 1200
+Number of satellites: 52292
+Iteration finished after 72.29s
+
+Timestep 45 of 1200
+Number of satellites: 52460
+Iteration finished after 72.15s
+
+Timestep 48 of 1200
+Number of satellites: 52629
+Iteration finished after 72.96s
+
+Timestep 51 of 1200
+Number of satellites: 52797
+Iteration finished after 73.18s
+
+Timestep 54 of 1200
+Number of satellites: 52966
+Iteration finished after 72.86s
+
+Timestep 57 of 1200
+Number of satellites: 53135
+Iteration finished after 72.88s
+
+Timestep 60 of 1200
+Number of satellites: 53305
+Iteration finished after 73.37s
+
+Timestep 63 of 1200
+Number of satellites: 53473
+Iteration finished after 73.77s
+
+Timestep 66 of 1200
+Number of satellites: 53639
+Iteration finished after 73.2s
+
+Timestep 69 of 1200
+Number of satellites: 53801
+Iteration finished after 73.4s
+
+Timestep 72 of 1200
+Number of satellites: 53972
+Iteration finished after 73.93s
+
+Timestep 75 of 1200
+Number of satellites: 54141
+Iteration finished after 74.3s
+
+Timestep 78 of 1200
+Number of satellites: 54307
+Iteration finished after 73.97s
+
+Timestep 81 of 1200
+Number of satellites: 54476
+Iteration finished after 74.63s
+
+Timestep 84 of 1200
+Number of satellites: 54637
+Iteration finished after 74.65s
+
+Timestep 87 of 1200
+Number of satellites: 54808
+Iteration finished after 74.68s
+
+Timestep 90 of 1200
+Number of satellites: 54978
+Iteration finished after 74.84s
+
+Timestep 93 of 1200
+Number of satellites: 55138
+Iteration finished after 75.01s
+
+Timestep 96 of 1200
+Number of satellites: 55307
+Iteration finished after 74.92s
+
+Timestep 99 of 1200
+Number of satellites: 55472
+Iteration finished after 75.49s
+
+Timestep 102 of 1200
+Number of satellites: 55635
+Iteration finished after 75.26s
+
+Timestep 105 of 1200
+Number of satellites: 55808
+Iteration finished after 75.6s
+
+Timestep 108 of 1200
+Number of satellites: 55979
+Iteration finished after 76.11s
+
+Timestep 111 of 1200
+Number of satellites: 56143
+Iteration finished after 76.2s
+
+Timestep 114 of 1200
+Number of satellites: 56310
+Iteration finished after 76.58s
+
+Timestep 117 of 1200
+Number of satellites: 56481
+Iteration finished after 76.3s
+
+Timestep 120 of 1200
+Number of satellites: 56649
+Iteration finished after 76.66s
+
+Timestep 123 of 1200
+Number of satellites: 56819
+Iteration finished after 76.75s
+
+Timestep 126 of 1200
+Number of satellites: 56990
+Iteration finished after 76.56s
+
+Timestep 129 of 1200
+Number of satellites: 57157
+Iteration finished after 77.44s
+
+Timestep 132 of 1200
+Number of satellites: 57321
+Iteration finished after 77.15s
+
+Timestep 135 of 1200
+Number of satellites: 57494
+Iteration finished after 77.32s
+
+Timestep 138 of 1200
+Number of satellites: 57659
+Iteration finished after 77.57s
+
+Timestep 141 of 1200
+Number of satellites: 57829
+Iteration finished after 79.25s
+
+Timestep 144 of 1200
+Number of satellites: 57994
+Iteration finished after 78.47s
+
+Timestep 147 of 1200
+Number of satellites: 58158
+Iteration finished after 78.32s
+
+Timestep 150 of 1200
+Number of satellites: 58326
+Iteration finished after 78.84s
+
+Timestep 153 of 1200
+Number of satellites: 58497
+Iteration finished after 78.73s
+
+Timestep 156 of 1200
+Number of satellites: 58661
+Iteration finished after 79.17s
+
+Timestep 159 of 1200
+Number of satellites: 58832
+Iteration finished after 79.0s
+
+Timestep 162 of 1200
+Number of satellites: 59001
+Iteration finished after 79.77s
+
+Timestep 165 of 1200
+Number of satellites: 59171
+Iteration finished after 79.56s
+
+Timestep 168 of 1200
+Number of satellites: 59337
+Iteration finished after 80.07s
+
+Timestep 171 of 1200
+Number of satellites: 59509
+Iteration finished after 80.02s
+
+Timestep 174 of 1200
+Number of satellites: 59674
+Iteration finished after 80.41s
+
+Timestep 177 of 1200
+Number of satellites: 59837
+Iteration finished after 80.35s
+
+Timestep 180 of 1200
+Number of satellites: 60001
+Iteration finished after 80.71s
+
+Timestep 183 of 1200
+Number of satellites: 60167
+Iteration finished after 80.47s
+
+Timestep 186 of 1200
+Number of satellites: 60329
+Iteration finished after 81.46s
+
+Timestep 189 of 1200
+Number of satellites: 60492
+Iteration finished after 81.18s
+
+Timestep 192 of 1200
+Number of satellites: 60666
+Iteration finished after 81.28s
+
+Timestep 195 of 1200
+Number of satellites: 60834
+Iteration finished after 81.47s
+
+Timestep 198 of 1200
+Number of satellites: 60998
+Iteration finished after 81.64s
+
+Timestep 201 of 1200
+Number of satellites: 61161
+Iteration finished after 81.98s
+
+Timestep 204 of 1200
+Number of satellites: 61328
+Iteration finished after 81.76s
+
+Timestep 207 of 1200
+Number of satellites: 61491
+Iteration finished after 81.81s
+
+Timestep 210 of 1200
+Number of satellites: 61656
+Iteration finished after 81.84s
+
+Timestep 213 of 1200
+Number of satellites: 61823
+Iteration finished after 82.21s
+
+Timestep 216 of 1200
+Number of satellites: 61987
+Iteration finished after 82.89s
+
+Timestep 219 of 1200
+Number of satellites: 62152
+Iteration finished after 82.75s
+
+Timestep 222 of 1200
+Number of satellites: 62321
+Iteration finished after 82.89s
+
+Timestep 225 of 1200
+Number of satellites: 62479
+Iteration finished after 83.36s
+
+Timestep 228 of 1200
+Number of satellites: 62649
+Iteration finished after 83.2s
+
+Timestep 231 of 1200
+Number of satellites: 62812
+Iteration finished after 83.37s
+
+Timestep 234 of 1200
+Number of satellites: 62977
+Iteration finished after 83.87s
+
+Timestep 237 of 1200
+Number of satellites: 63135
+Iteration finished after 83.37s
+
+Timestep 240 of 1200
+Number of satellites: 63298
+Iteration finished after 83.69s
+
+Timestep 243 of 1200
+Number of satellites: 63465
+Iteration finished after 84.34s
+
+Timestep 246 of 1200
+Number of satellites: 63627
+Iteration finished after 84.04s
+
+Timestep 249 of 1200
+Number of satellites: 63790
+Iteration finished after 84.51s
+
+Timestep 252 of 1200
+Number of satellites: 63952
+Iteration finished after 85.18s
+
+Timestep 255 of 1200
+Number of satellites: 64116
+Iteration finished after 84.83s
+
+Timestep 258 of 1200
+Number of satellites: 64280
+Iteration finished after 85.25s
+
+Timestep 261 of 1200
+Number of satellites: 64439
+Iteration finished after 85.57s
+
+Timestep 264 of 1200
+Number of satellites: 64601
+Iteration finished after 85.24s
+
+Timestep 267 of 1200
+Number of satellites: 64763
+Iteration finished after 85.5s
+
+Timestep 270 of 1200
+Number of satellites: 64927
+Iteration finished after 86.02s
+
+Timestep 273 of 1200
+Number of satellites: 65087
+Iteration finished after 85.5s
+
+Timestep 276 of 1200
+Number of satellites: 65249
+Iteration finished after 85.97s
+
+Timestep 279 of 1200
+Number of satellites: 65402
+Iteration finished after 86.45s
+
+Timestep 282 of 1200
+Number of satellites: 65556
+Iteration finished after 86.63s
+
+Timestep 285 of 1200
+Number of satellites: 65722
+Iteration finished after 86.85s
+
+Timestep 288 of 1200
+Number of satellites: 65878
+Iteration finished after 88.44s
+
+Timestep 291 of 1200
+Number of satellites: 66042
+Iteration finished after 86.29s
+
+Timestep 294 of 1200
+Number of satellites: 66199
+Iteration finished after 87.66s
+
+Timestep 297 of 1200
+Number of satellites: 66369
+Iteration finished after 88.2s
+
+Timestep 300 of 1200
+Number of satellites: 66531
+Iteration finished after 87.1s
+
+Timestep 303 of 1200
+Number of satellites: 66691
+Iteration finished after 88.33s
+
+Timestep 306 of 1200
+Number of satellites: 66848
+Iteration finished after 87.61s
+
+Timestep 309 of 1200
+Number of satellites: 67011
+Iteration finished after 88.08s
+
+Timestep 312 of 1200
+Number of satellites: 67169
+Iteration finished after 88.06s
+
+Timestep 315 of 1200
+Number of satellites: 67328
+Iteration finished after 88.29s
+
+Timestep 318 of 1200
+Number of satellites: 67497
+Iteration finished after 88.27s
+
+Timestep 321 of 1200
+Number of satellites: 67652
+Iteration finished after 88.63s
+
+Timestep 324 of 1200
+Number of satellites: 67811
+Iteration finished after 89.35s
+
+Timestep 327 of 1200
+Number of satellites: 67969
+Iteration finished after 89.18s
+
+Timestep 330 of 1200
+Number of satellites: 68131
+Iteration finished after 89.8s
+
+Timestep 333 of 1200
+Number of satellites: 68292
+Iteration finished after 89.83s
+
+Timestep 336 of 1200
+Number of satellites: 68455
+Iteration finished after 89.23s
+
+Timestep 339 of 1200
+Number of satellites: 68618
+Iteration finished after 90.08s
+
+Timestep 342 of 1200
+Number of satellites: 68776
+Iteration finished after 90.23s
+
+Timestep 345 of 1200
+Number of satellites: 68935
+Iteration finished after 90.82s
+
+Timestep 348 of 1200
+Number of satellites: 69089
+Iteration finished after 91.22s
+
+Timestep 351 of 1200
+Number of satellites: 69251
+Iteration finished after 89.73s
+
+Timestep 354 of 1200
+Number of satellites: 69411
+Iteration finished after 90.62s
+
+Timestep 357 of 1200
+Number of satellites: 69566
+Iteration finished after 90.66s
+
+Timestep 360 of 1200
+Number of satellites: 69720
+Iteration finished after 91.13s
+
+Timestep 363 of 1200
+Number of satellites: 69880
+Iteration finished after 91.32s
+
+Timestep 366 of 1200
+Number of satellites: 70031
+Iteration finished after 91.59s
+
+Timestep 369 of 1200
+Number of satellites: 70187
+Iteration finished after 91.38s
+
+Timestep 372 of 1200
+Number of satellites: 70340
+Iteration finished after 91.46s
+
+Timestep 375 of 1200
+Number of satellites: 70487
+Iteration finished after 92.0s
+
+Timestep 378 of 1200
+Number of satellites: 70645
+Iteration finished after 91.85s
+
+Timestep 381 of 1200
+Number of satellites: 70802
+Iteration finished after 92.04s
+
+Timestep 384 of 1200
+Number of satellites: 70958
+Iteration finished after 92.55s
+
+Timestep 387 of 1200
+Number of satellites: 71110
+Iteration finished after 92.04s
+
+Timestep 390 of 1200
+Number of satellites: 71255
+Iteration finished after 93.25s
+
+Timestep 393 of 1200
+Number of satellites: 71397
+Iteration finished after 93.08s
+
+Timestep 396 of 1200
+Number of satellites: 71547
+Iteration finished after 92.95s
+
+Timestep 399 of 1200
+Number of satellites: 71696
+Iteration finished after 93.15s
+
+Timestep 402 of 1200
+Number of satellites: 71850
+Iteration finished after 93.41s
+
+Timestep 405 of 1200
+Number of satellites: 72005
+Iteration finished after 93.87s
+
+Timestep 408 of 1200
+Number of satellites: 72158
+Iteration finished after 94.1s
+
+Timestep 411 of 1200
+Number of satellites: 72312
+Iteration finished after 94.04s
+
+Timestep 414 of 1200
+Number of satellites: 72471
+Iteration finished after 94.19s
+
+Timestep 417 of 1200
+Number of satellites: 72626
+Iteration finished after 94.18s
+
+Timestep 420 of 1200
+Number of satellites: 72778
+Iteration finished after 93.98s
+
+Timestep 423 of 1200
+Number of satellites: 72930
+Iteration finished after 94.77s
+
+Timestep 426 of 1200
+Number of satellites: 73086
+Iteration finished after 94.38s
+
+Timestep 429 of 1200
+Number of satellites: 73246
+Iteration finished after 95.52s
+
+Timestep 432 of 1200
+Number of satellites: 73396
+Iteration finished after 95.2s
+
+Timestep 435 of 1200
+Number of satellites: 73551
+Iteration finished after 95.09s
+
+Timestep 438 of 1200
+Number of satellites: 73697
+Iteration finished after 95.55s
+
+Timestep 441 of 1200
+Number of satellites: 73839
+Iteration finished after 95.86s
+
+Timestep 444 of 1200
+Number of satellites: 73987
+Iteration finished after 95.61s
+
+Timestep 447 of 1200
+Number of satellites: 74133
+Iteration finished after 96.27s
+
+Timestep 450 of 1200
+Number of satellites: 74276
+Iteration finished after 96.02s
+
+Timestep 453 of 1200
+Number of satellites: 74418
+Iteration finished after 96.69s
+
+Timestep 456 of 1200
+Number of satellites: 74572
+Iteration finished after 96.71s
+
+Timestep 459 of 1200
+Number of satellites: 74717
+Iteration finished after 96.45s
+
+Timestep 462 of 1200
+Number of satellites: 74860
+Iteration finished after 96.72s
+
+Timestep 465 of 1200
+Number of satellites: 75009
+Iteration finished after 97.78s
+
+Timestep 468 of 1200
+Number of satellites: 75153
+Iteration finished after 96.37s
+
+Timestep 471 of 1200
+Number of satellites: 75296
+Iteration finished after 97.08s
+
+Timestep 474 of 1200
+Number of satellites: 75434
+Iteration finished after 97.42s
+
+Timestep 477 of 1200
+Number of satellites: 75577
+Iteration finished after 97.83s
+
+Timestep 480 of 1200
+Number of satellites: 75710
+Iteration finished after 97.42s
+
+Timestep 483 of 1200
+Number of satellites: 75847
+Iteration finished after 97.48s
+
+Timestep 486 of 1200
+Number of satellites: 75999
+Iteration finished after 98.01s
+
+Timestep 489 of 1200
+Number of satellites: 76139
+Iteration finished after 98.5s
+
+Timestep 492 of 1200
+Number of satellites: 76283
+Iteration finished after 98.65s
+
+Timestep 495 of 1200
+Number of satellites: 76421
+Iteration finished after 98.27s
+
+Timestep 498 of 1200
+Number of satellites: 76561
+Iteration finished after 98.3s
+
+Timestep 501 of 1200
+Number of satellites: 76704
+Iteration finished after 97.87s
+
+Timestep 504 of 1200
+Number of satellites: 76846
+Iteration finished after 99.57s
+
+Timestep 507 of 1200
+Number of satellites: 76992
+Iteration finished after 99.03s
+
+Timestep 510 of 1200
+Number of satellites: 77131
+Iteration finished after 99.35s
+
+Timestep 513 of 1200
+Number of satellites: 77270
+Iteration finished after 100.05s
+
+Timestep 516 of 1200
+Number of satellites: 77415
+Iteration finished after 99.55s
+
+Timestep 519 of 1200
+Number of satellites: 77542
+Iteration finished after 99.69s
+
+Timestep 522 of 1200
+Number of satellites: 77672
+Iteration finished after 99.0s
+
+Timestep 525 of 1200
+Number of satellites: 77801
+Iteration finished after 99.7s
+
+Timestep 528 of 1200
+Number of satellites: 77935
+Iteration finished after 100.2s
+
+Timestep 531 of 1200
+Number of satellites: 78070
+Iteration finished after 99.97s
+
+Timestep 534 of 1200
+Number of satellites: 78199
+Iteration finished after 100.08s
+
+Timestep 537 of 1200
+Number of satellites: 78320
+Iteration finished after 100.08s
+
+Timestep 540 of 1200
+Number of satellites: 78439
+Iteration finished after 99.75s
+
+Timestep 543 of 1200
+Number of satellites: 78569
+Iteration finished after 100.76s
+
+Timestep 546 of 1200
+Number of satellites: 78705
+Iteration finished after 101.17s
+
+Timestep 549 of 1200
+Number of satellites: 78834
+Iteration finished after 101.51s
+
+Timestep 552 of 1200
+Number of satellites: 78972
+Iteration finished after 101.41s
+
+Timestep 555 of 1200
+Number of satellites: 79103
+Iteration finished after 101.56s
+
+Timestep 558 of 1200
+Number of satellites: 79235
+Iteration finished after 100.42s
+
+Timestep 561 of 1200
+Number of satellites: 79361
+Iteration finished after 101.22s
+
+Timestep 564 of 1200
+Number of satellites: 79495
+Iteration finished after 102.81s
+
+Timestep 567 of 1200
+Number of satellites: 79614
+Iteration finished after 102.38s
+
+Timestep 570 of 1200
+Number of satellites: 79743
+Iteration finished after 102.27s
+
+Timestep 573 of 1200
+Number of satellites: 79877
+Iteration finished after 101.93s
+
+Timestep 576 of 1200
+Number of satellites: 80001
+Iteration finished after 101.52s
+
+Timestep 579 of 1200
+Number of satellites: 80136
+Iteration finished after 102.86s
+
+Timestep 582 of 1200
+Number of satellites: 80262
+Iteration finished after 102.52s
+
+Timestep 585 of 1200
+Number of satellites: 80393
+Iteration finished after 102.21s
+
+Timestep 588 of 1200
+Number of satellites: 80521
+Iteration finished after 103.04s
+
+Timestep 591 of 1200
+Number of satellites: 80642
+Iteration finished after 102.43s
+
+Timestep 594 of 1200
+Number of satellites: 80772
+Iteration finished after 102.79s
+
+Timestep 597 of 1200
+Number of satellites: 80892
+Iteration finished after 103.22s
+
+Timestep 600 of 1200
+Number of satellites: 81006
+Iteration finished after 104.04s
+
+Timestep 603 of 1200
+Number of satellites: 81140
+Iteration finished after 102.97s
+
+Timestep 606 of 1200
+Number of satellites: 81269
+Iteration finished after 103.11s
+
+Timestep 609 of 1200
+Number of satellites: 81383
+Iteration finished after 103.74s
+
+Timestep 612 of 1200
+Number of satellites: 81490
+Iteration finished after 103.57s
+
+Timestep 615 of 1200
+Number of satellites: 81608
+Iteration finished after 103.68s
+
+Timestep 618 of 1200
+Number of satellites: 81728
+Iteration finished after 103.82s
+
+Timestep 621 of 1200
+Number of satellites: 81838
+Iteration finished after 103.57s
+
+Timestep 624 of 1200
+Number of satellites: 81951
+Iteration finished after 104.49s
+
+Timestep 627 of 1200
+Number of satellites: 82063
+Iteration finished after 104.85s
+
+Timestep 630 of 1200
+Number of satellites: 82183
+Iteration finished after 104.31s
+
+Timestep 633 of 1200
+Number of satellites: 82303
+Iteration finished after 104.98s
+
+Timestep 636 of 1200
+Number of satellites: 82423
+Iteration finished after 104.93s
+
+Timestep 639 of 1200
+Number of satellites: 82537
+Iteration finished after 101.63s
+
+Timestep 642 of 1200
+Number of satellites: 82626
+Iteration finished after 104.62s
+
+Timestep 645 of 1200
+Number of satellites: 82746
+Iteration finished after 105.27s
+
+Timestep 648 of 1200
+Number of satellites: 82860
+Iteration finished after 105.29s
+
+Timestep 651 of 1200
+Number of satellites: 82972
+Iteration finished after 105.82s
+
+Timestep 654 of 1200
+Number of satellites: 83081
+Iteration finished after 106.46s
+
+Timestep 657 of 1200
+Number of satellites: 83186
+Iteration finished after 103.77s
+
+Timestep 660 of 1200
+Number of satellites: 83278
+Iteration finished after 105.83s
+
+Timestep 663 of 1200
+Number of satellites: 83388
+Iteration finished after 105.7s
+
+Timestep 666 of 1200
+Number of satellites: 83499
+Iteration finished after 105.06s
+
+Timestep 669 of 1200
+Number of satellites: 83602
+Iteration finished after 106.2s
+
+Timestep 672 of 1200
+Number of satellites: 83713
+Iteration finished after 89.66s
+
+Timestep 675 of 1200
+Number of satellites: 83754
+Iteration finished after 85.11s
+
+Timestep 678 of 1200
+Number of satellites: 83822
+Iteration finished after 56.96s
+
+Timestep 681 of 1200
+Number of satellites: 83802
+Iteration finished after 17.55s
+
+Timestep 684 of 1200
+Number of satellites: 83697
+Iteration finished after 16.9s
+
+Timestep 687 of 1200
+Number of satellites: 83590
+Iteration finished after 16.75s
+
+Timestep 690 of 1200
+Number of satellites: 83486
+Iteration finished after 16.68s
+
+Timestep 693 of 1200
+Number of satellites: 83388
+Iteration finished after 16.51s
+
+Timestep 696 of 1200
+Number of satellites: 83287
+Iteration finished after 16.5s
+
+Timestep 699 of 1200
+Number of satellites: 83175
+Iteration finished after 16.36s
+
+Timestep 702 of 1200
+Number of satellites: 83072
+Iteration finished after 16.37s
+
+Timestep 705 of 1200
+Number of satellites: 82955
+Iteration finished after 16.31s
+
+Timestep 708 of 1200
+Number of satellites: 82839
+Iteration finished after 16.25s
+
+Timestep 711 of 1200
+Number of satellites: 82718
+Iteration finished after 16.34s
+
+Timestep 714 of 1200
+Number of satellites: 82582
+Iteration finished after 16.25s
+
+Timestep 717 of 1200
+Number of satellites: 82473
+Iteration finished after 16.31s
+
+Timestep 720 of 1200
+Number of satellites: 82346
+Iteration finished after 16.29s
+
+Timestep 723 of 1200
+Number of satellites: 82223
+Iteration finished after 16.38s
+
+Timestep 726 of 1200
+Number of satellites: 82130
+Iteration finished after 16.19s
+
+Timestep 729 of 1200
+Number of satellites: 82025
+Iteration finished after 16.24s
+
+Timestep 732 of 1200
+Number of satellites: 81924
+Iteration finished after 16.3s
+
+Timestep 735 of 1200
+Number of satellites: 81817
+Iteration finished after 16.21s
+
+Timestep 738 of 1200
+Number of satellites: 81697
+Iteration finished after 16.22s
+
+Timestep 741 of 1200
+Number of satellites: 81570
+Iteration finished after 16.19s
+
+Timestep 744 of 1200
+Number of satellites: 81451
+Iteration finished after 16.2s
+
+Timestep 747 of 1200
+Number of satellites: 81324
+Iteration finished after 16.28s
+
+Timestep 750 of 1200
+Number of satellites: 81210
+Iteration finished after 16.17s
+
+Timestep 753 of 1200
+Number of satellites: 81074
+Iteration finished after 16.21s
+
+Timestep 756 of 1200
+Number of satellites: 80941
+Iteration finished after 16.18s
+
+Timestep 759 of 1200
+Number of satellites: 80832
+Iteration finished after 16.17s
+
+Timestep 762 of 1200
+Number of satellites: 80710
+Iteration finished after 16.28s
+
+Timestep 765 of 1200
+Number of satellites: 80590
+Iteration finished after 16.2s
+
+Timestep 768 of 1200
+Number of satellites: 80461
+Iteration finished after 16.17s
+
+Timestep 771 of 1200
+Number of satellites: 80338
+Iteration finished after 16.24s
+
+Timestep 774 of 1200
+Number of satellites: 80212
+Iteration finished after 16.27s
+
+Timestep 777 of 1200
+Number of satellites: 80075
+Iteration finished after 16.32s
+
+Timestep 780 of 1200
+Number of satellites: 79949
+Iteration finished after 16.23s
+
+Timestep 783 of 1200
+Number of satellites: 79819
+Iteration finished after 16.26s
+
+Timestep 786 of 1200
+Number of satellites: 79693
+Iteration finished after 16.32s
+
+Timestep 789 of 1200
+Number of satellites: 79551
+Iteration finished after 16.2s
+
+Timestep 792 of 1200
+Number of satellites: 79409
+Iteration finished after 16.23s
+
+Timestep 795 of 1200
+Number of satellites: 79260
+Iteration finished after 16.21s
+
+Timestep 798 of 1200
+Number of satellites: 79136
+Iteration finished after 16.21s
+
+Timestep 801 of 1200
+Number of satellites: 78989
+Iteration finished after 16.24s
+
+Timestep 804 of 1200
+Number of satellites: 78851
+Iteration finished after 16.29s
+
+Timestep 807 of 1200
+Number of satellites: 78704
+Iteration finished after 16.27s
+
+Timestep 810 of 1200
+Number of satellites: 78542
+Iteration finished after 16.26s
+
+Timestep 813 of 1200
+Number of satellites: 78382
+Iteration finished after 16.27s
+
+Timestep 816 of 1200
+Number of satellites: 78253
+Iteration finished after 16.19s
+
+Timestep 819 of 1200
+Number of satellites: 78091
+Iteration finished after 16.16s
+
+Timestep 822 of 1200
+Number of satellites: 77954
+Iteration finished after 16.27s
+
+Timestep 825 of 1200
+Number of satellites: 77796
+Iteration finished after 16.15s
+
+Timestep 828 of 1200
+Number of satellites: 77634
+Iteration finished after 16.19s
+
+Timestep 831 of 1200
+Number of satellites: 77473
+Iteration finished after 16.13s
+
+Timestep 834 of 1200
+Number of satellites: 77307
+Iteration finished after 16.14s
+
+Timestep 837 of 1200
+Number of satellites: 77163
+Iteration finished after 16.09s
+
+Timestep 840 of 1200
+Number of satellites: 76993
+Iteration finished after 16.21s
+
+Timestep 843 of 1200
+Number of satellites: 76840
+Iteration finished after 16.3s
+
+Timestep 846 of 1200
+Number of satellites: 76666
+Iteration finished after 16.15s
+
+Timestep 849 of 1200
+Number of satellites: 76523
+Iteration finished after 16.22s
+
+Timestep 852 of 1200
+Number of satellites: 76358
+Iteration finished after 16.14s
+
+Timestep 855 of 1200
+Number of satellites: 76177
+Iteration finished after 16.18s
+
+Timestep 858 of 1200
+Number of satellites: 76011
+Iteration finished after 16.18s
+
+Timestep 861 of 1200
+Number of satellites: 75865
+Iteration finished after 16.14s
+
+Timestep 864 of 1200
+Number of satellites: 75683
+Iteration finished after 16.11s
+
+Timestep 867 of 1200
+Number of satellites: 75504
+Iteration finished after 16.22s
+
+Timestep 870 of 1200
+Number of satellites: 75326
+Iteration finished after 16.16s
+
+Timestep 873 of 1200
+Number of satellites: 75146
+Iteration finished after 16.24s
+
+Timestep 876 of 1200
+Number of satellites: 74973
+Iteration finished after 16.21s
+
+Timestep 879 of 1200
+Number of satellites: 74792
+Iteration finished after 16.13s
+
+Timestep 882 of 1200
+Number of satellites: 74592
+Iteration finished after 16.16s
+
+Timestep 885 of 1200
+Number of satellites: 74395
+Iteration finished after 16.08s
+
+Timestep 888 of 1200
+Number of satellites: 74223
+Iteration finished after 16.15s
+
+Timestep 891 of 1200
+Number of satellites: 74029
+Iteration finished after 16.29s
+
+Timestep 894 of 1200
+Number of satellites: 73847
+Iteration finished after 16.24s
+
+Timestep 897 of 1200
+Number of satellites: 73668
+Iteration finished after 16.24s
+
+Timestep 900 of 1200
+Number of satellites: 73483
+Iteration finished after 16.15s
+
+Timestep 903 of 1200
+Number of satellites: 73310
+Iteration finished after 16.1s
+
+Timestep 906 of 1200
+Number of satellites: 73124
+Iteration finished after 16.19s
+
+Timestep 909 of 1200
+Number of satellites: 72935
+Iteration finished after 16.17s
+
+Timestep 912 of 1200
+Number of satellites: 72754
+Iteration finished after 16.15s
+
+Timestep 915 of 1200
+Number of satellites: 72575
+Iteration finished after 16.08s
+
+Timestep 918 of 1200
+Number of satellites: 72358
+Iteration finished after 16.1s
+
+Timestep 921 of 1200
+Number of satellites: 72165
+Iteration finished after 16.1s
+
+Timestep 924 of 1200
+Number of satellites: 71952
+Iteration finished after 16.09s
+
+Timestep 927 of 1200
+Number of satellites: 71735
+Iteration finished after 16.15s
+
+Timestep 930 of 1200
+Number of satellites: 71543
+Iteration finished after 16.16s
+
+Timestep 933 of 1200
+Number of satellites: 71348
+Iteration finished after 16.28s
+
+Timestep 936 of 1200
+Number of satellites: 71141
+Iteration finished after 16.16s
+
+Timestep 939 of 1200
+Number of satellites: 70927
+Iteration finished after 16.07s
+
+Timestep 942 of 1200
+Number of satellites: 70734
+Iteration finished after 16.12s
+
+Timestep 945 of 1200
+Number of satellites: 70523
+Iteration finished after 16.01s
+
+Timestep 948 of 1200
+Number of satellites: 70311
+Iteration finished after 16.12s
+
+Timestep 951 of 1200
+Number of satellites: 70117
+Iteration finished after 16.13s
+
+Timestep 954 of 1200
+Number of satellites: 69922
+Iteration finished after 16.11s
+
+Timestep 957 of 1200
+Number of satellites: 69705
+Iteration finished after 16.17s
+
+Timestep 960 of 1200
+Number of satellites: 69497
+Iteration finished after 16.12s
+
+Timestep 963 of 1200
+Number of satellites: 69261
+Iteration finished after 16.04s
+
+Timestep 966 of 1200
+Number of satellites: 69039
+Iteration finished after 16.03s
+
+Timestep 969 of 1200
+Number of satellites: 68825
+Iteration finished after 15.98s
+
+Timestep 972 of 1200
+Number of satellites: 68610
+Iteration finished after 16.08s
+
+Timestep 975 of 1200
+Number of satellites: 68407
+Iteration finished after 15.99s
+
+Timestep 978 of 1200
+Number of satellites: 68172
+Iteration finished after 16.04s
+
+Timestep 981 of 1200
+Number of satellites: 67941
+Iteration finished after 15.95s
+
+Timestep 984 of 1200
+Number of satellites: 67695
+Iteration finished after 16.02s
+
+Timestep 987 of 1200
+Number of satellites: 67452
+Iteration finished after 16.11s
+
+Timestep 990 of 1200
+Number of satellites: 67224
+Iteration finished after 16.04s
+
+Timestep 993 of 1200
+Number of satellites: 66981
+Iteration finished after 16.06s
+
+Timestep 996 of 1200
+Number of satellites: 66720
+Iteration finished after 16.03s
+
+Timestep 999 of 1200
+Number of satellites: 66480
+Iteration finished after 16.01s
+
+Timestep 1002 of 1200
+Number of satellites: 66245
+Iteration finished after 16.05s
+
+Timestep 1005 of 1200
+Number of satellites: 66002
+Iteration finished after 16.06s
+
+Timestep 1008 of 1200
+Number of satellites: 65759
+Iteration finished after 16.09s
+
+Timestep 1011 of 1200
+Number of satellites: 65535
+Iteration finished after 16.08s
+
+Timestep 1014 of 1200
+Number of satellites: 65303
+Iteration finished after 16.14s
+
+Timestep 1017 of 1200
+Number of satellites: 65055
+Iteration finished after 16.02s
+
+Timestep 1020 of 1200
+Number of satellites: 64827
+Iteration finished after 16.02s
+
+Timestep 1023 of 1200
+Number of satellites: 64577
+Iteration finished after 15.98s
+
+Timestep 1026 of 1200
+Number of satellites: 64323
+Iteration finished after 15.93s
+
+Timestep 1029 of 1200
+Number of satellites: 64095
+Iteration finished after 16.03s
+
+Timestep 1032 of 1200
+Number of satellites: 63852
+Iteration finished after 15.93s
+
+Timestep 1035 of 1200
+Number of satellites: 63610
+Iteration finished after 16.14s
+
+Timestep 1038 of 1200
+Number of satellites: 63341
+Iteration finished after 15.94s
+
+Timestep 1041 of 1200
+Number of satellites: 63101
+Iteration finished after 15.94s
+
+Timestep 1044 of 1200
+Number of satellites: 62833
+Iteration finished after 15.87s
+
+Timestep 1047 of 1200
+Number of satellites: 62555
+Iteration finished after 15.97s
+
+Timestep 1050 of 1200
+Number of satellites: 62306
+Iteration finished after 16.04s
+
+Timestep 1053 of 1200
+Number of satellites: 62056
+Iteration finished after 15.94s
+
+Timestep 1056 of 1200
+Number of satellites: 61798
+Iteration finished after 15.96s
+
+Timestep 1059 of 1200
+Number of satellites: 61515
+Iteration finished after 15.93s
+
+Timestep 1062 of 1200
+Number of satellites: 61249
+Iteration finished after 16.08s
+
+Timestep 1065 of 1200
+Number of satellites: 60979
+Iteration finished after 16.0s
+
+Timestep 1068 of 1200
+Number of satellites: 60716
+Iteration finished after 16.01s
+
+Timestep 1071 of 1200
+Number of satellites: 60434
+Iteration finished after 16.02s
+
+Timestep 1074 of 1200
+Number of satellites: 60178
+Iteration finished after 16.05s
+
+Timestep 1077 of 1200
+Number of satellites: 59885
+Iteration finished after 15.96s
+
+Timestep 1080 of 1200
+Number of satellites: 59606
+Iteration finished after 15.92s
+
+Timestep 1083 of 1200
+Number of satellites: 59331
+Iteration finished after 15.92s
+
+Timestep 1086 of 1200
+Number of satellites: 59055
+Iteration finished after 16.06s
+
+Timestep 1089 of 1200
+Number of satellites: 58794
+Iteration finished after 15.99s
+
+Timestep 1092 of 1200
+Number of satellites: 58528
+Iteration finished after 15.98s
+
+Timestep 1095 of 1200
+Number of satellites: 58246
+Iteration finished after 15.95s
+
+Timestep 1098 of 1200
+Number of satellites: 57960
+Iteration finished after 15.96s
+
+Timestep 1101 of 1200
+Number of satellites: 57697
+Iteration finished after 15.88s
+
+Timestep 1104 of 1200
+Number of satellites: 57426
+Iteration finished after 15.88s
+
+Timestep 1107 of 1200
+Number of satellites: 57136
+Iteration finished after 15.99s
+
+Timestep 1110 of 1200
+Number of satellites: 56843
+Iteration finished after 15.87s
+
+Timestep 1113 of 1200
+Number of satellites: 56562
+Iteration finished after 15.89s
+
+Timestep 1116 of 1200
+Number of satellites: 56255
+Iteration finished after 15.85s
+
+Timestep 1119 of 1200
+Number of satellites: 55965
+Iteration finished after 15.85s
+
+Timestep 1122 of 1200
+Number of satellites: 55689
+Iteration finished after 15.9s
+
+Timestep 1125 of 1200
+Number of satellites: 55384
+Iteration finished after 15.92s
+
+Timestep 1128 of 1200
+Number of satellites: 55127
+Iteration finished after 15.97s
+
+Timestep 1131 of 1200
+Number of satellites: 54859
+Iteration finished after 15.87s
+
+Timestep 1134 of 1200
+Number of satellites: 54573
+Iteration finished after 15.95s
+
+Timestep 1137 of 1200
+Number of satellites: 54290
+Iteration finished after 15.84s
+
+Timestep 1140 of 1200
+Number of satellites: 53999
+Iteration finished after 15.84s
+
+Timestep 1143 of 1200
+Number of satellites: 53685
+Iteration finished after 15.87s
+
+Timestep 1146 of 1200
+Number of satellites: 53400
+Iteration finished after 15.8s
+
+Timestep 1149 of 1200
+Number of satellites: 53139
+Iteration finished after 15.87s
+
+Timestep 1152 of 1200
+Number of satellites: 52850
+Iteration finished after 15.9s
+
+Timestep 1155 of 1200
+Number of satellites: 52563
+Iteration finished after 15.9s
+
+Timestep 1158 of 1200
+Number of satellites: 52299
+Iteration finished after 15.84s
+
+Timestep 1161 of 1200
+Number of satellites: 52016
+Iteration finished after 15.9s
+
+Timestep 1164 of 1200
+Number of satellites: 51712
+Iteration finished after 15.86s
+
+Timestep 1167 of 1200
+Number of satellites: 51428
+Iteration finished after 15.83s
+
+Timestep 1170 of 1200
+Number of satellites: 51144
+Iteration finished after 15.89s
+
+Timestep 1173 of 1200
+Number of satellites: 50884
+Iteration finished after 15.86s
+
+Timestep 1176 of 1200
+Number of satellites: 50626
+Iteration finished after 15.95s
+
+Timestep 1179 of 1200
+Number of satellites: 50323
+Iteration finished after 15.82s
+
+Timestep 1182 of 1200
+Number of satellites: 50025
+Iteration finished after 15.85s
+
+Timestep 1185 of 1200
+Number of satellites: 49723
+Iteration finished after 15.91s
+
+Timestep 1188 of 1200
+Number of satellites: 49447
+Iteration finished after 15.89s
+
+Timestep 1191 of 1200
+Number of satellites: 49143
+Iteration finished after 15.86s
+
+Timestep 1194 of 1200
+Number of satellites: 48847
+Iteration finished after 15.92s
+
+Timestep 1197 of 1200
+Number of satellites: 48549
+2024-03-08 09:12:34,889 - INFO - Simulation finished after: 22953.2s
+2024-03-08 09:12:34,890 - INFO - Writing results.
+2024-03-08 09:12:39,054 - INFO - Process finished.
+
+
+2024-03-08 09:12:39,054 - INFO - Simulation started with following input parameters:
+2024-03-08 09:12:39,054 - INFO - Input path:
+/Users/janlucal/Documents/GitHub/HubaldModel/Python/Optimized/batch2/400.txt
+
+2024-03-08 09:12:39,055 - INFO - matrix_mode = import
+2024-03-08 09:12:39,055 - INFO - launch_mode = njit
+2024-03-08 09:12:39,055 - INFO - accuracy = 20
+2024-03-08 09:12:39,055 - INFO - prob_thresh = 10**(-15)
+2024-03-08 09:12:39,055 - INFO - starting_sats = 50000
+2024-03-08 09:12:39,055 - INFO - sigma = 2000
+2024-03-08 09:12:39,055 - INFO - fragment_collision_prob = 0.0003
+2024-03-08 09:12:39,055 - INFO - active_percentage = 0.8
+2024-03-08 09:12:39,055 - INFO - aLimits = [200000, 2000000]
+2024-03-08 09:12:39,055 - INFO - small_fragments = 100000000
+2024-03-08 09:12:39,055 - INFO - large_fragments = 100000
+2024-03-08 09:12:39,055 - INFO - timestep = 3
+2024-03-08 09:12:39,056 - INFO - tmax = 1200
+2024-03-08 09:12:39,056 - INFO - starts_per_timestep = 400
+2024-03-08 09:12:39,056 - INFO - deorbits_per_timestep = 40
+2024-03-08 09:12:39,056 - INFO - num_workers = 12
+2024-03-08 09:12:39,056 - INFO - Importing data.
+2024-03-08 09:12:39,954 - INFO - Kessler model employed.
+
+Iteration finished after 15.9s
+
+Timestep 0 of 1200
+Number of satellites: 50000
+Iteration finished after 124.96s
+
+Timestep 3 of 1200
+Number of satellites: 50304
+Iteration finished after 127.01s
+
+Timestep 6 of 1200
+Number of satellites: 50648
+Iteration finished after 126.85s
+
+Timestep 9 of 1200
+Number of satellites: 50996
+Iteration finished after 128.52s
+
+Timestep 12 of 1200
+Number of satellites: 51341
+Iteration finished after 129.24s
+
+Timestep 15 of 1200
+Number of satellites: 51693
+Iteration finished after 130.18s
+
+Timestep 18 of 1200
+Number of satellites: 52042
+Iteration finished after 130.3s
+
+Timestep 21 of 1200
+Number of satellites: 52395
+Iteration finished after 131.29s
+
+Timestep 24 of 1200
+Number of satellites: 52742
+Iteration finished after 132.18s
+
+Timestep 27 of 1200
+Number of satellites: 53091
+Iteration finished after 132.38s
+
+Timestep 30 of 1200
+Number of satellites: 53437
+Iteration finished after 133.72s
+
+Timestep 33 of 1200
+Number of satellites: 53789
+Iteration finished after 134.84s
+
+Timestep 36 of 1200
+Number of satellites: 54135
+Iteration finished after 135.45s
+
+Timestep 39 of 1200
+Number of satellites: 54487
+Iteration finished after 135.76s
+
+Timestep 42 of 1200
+Number of satellites: 54837
+Iteration finished after 136.76s
+
+Timestep 45 of 1200
+Number of satellites: 55190
+Iteration finished after 136.73s
+
+Timestep 48 of 1200
+Number of satellites: 55537
+Iteration finished after 137.51s
+
+Timestep 51 of 1200
+Number of satellites: 55890
+Iteration finished after 138.76s
+
+Timestep 54 of 1200
+Number of satellites: 56237
+Iteration finished after 139.55s
+
+Timestep 57 of 1200
+Number of satellites: 56587
+Iteration finished after 140.77s
+
+Timestep 60 of 1200
+Number of satellites: 56934
+Iteration finished after 140.3s
+
+Timestep 63 of 1200
+Number of satellites: 57281
+Iteration finished after 140.96s
+
+Timestep 66 of 1200
+Number of satellites: 57634
+Iteration finished after 142.79s
+
+Timestep 69 of 1200
+Number of satellites: 57981
+Iteration finished after 142.95s
+
+Timestep 72 of 1200
+Number of satellites: 58330
+Iteration finished after 143.85s
+
+Timestep 75 of 1200
+Number of satellites: 58679
+Iteration finished after 144.28s
+
+Timestep 78 of 1200
+Number of satellites: 59031
+Iteration finished after 144.83s
+
+Timestep 81 of 1200
+Number of satellites: 59378
+Iteration finished after 145.94s
+
+Timestep 84 of 1200
+Number of satellites: 59725
+Iteration finished after 147.36s
+
+Timestep 87 of 1200
+Number of satellites: 60072
+Iteration finished after 147.93s
+
+Timestep 90 of 1200
+Number of satellites: 60421
+Iteration finished after 148.45s
+
+Timestep 93 of 1200
+Number of satellites: 60769
+Iteration finished after 148.95s
+
+Timestep 96 of 1200
+Number of satellites: 61120
+Iteration finished after 151.0s
+
+Timestep 99 of 1200
+Number of satellites: 61468
+Iteration finished after 150.61s
+
+Timestep 102 of 1200
+Number of satellites: 61818
+Iteration finished after 151.74s
+
+Timestep 105 of 1200
+Number of satellites: 62167
+Iteration finished after 153.08s
+
+Timestep 108 of 1200
+Number of satellites: 62515
+Iteration finished after 153.05s
+
+Timestep 111 of 1200
+Number of satellites: 62864
+Iteration finished after 154.03s
+
+Timestep 114 of 1200
+Number of satellites: 63212
+Iteration finished after 154.48s
+
+Timestep 117 of 1200
+Number of satellites: 63561
+Iteration finished after 155.84s
+
+Timestep 120 of 1200
+Number of satellites: 63905
+Iteration finished after 155.41s
+
+Timestep 123 of 1200
+Number of satellites: 64250
+Iteration finished after 158.05s
+
+Timestep 126 of 1200
+Number of satellites: 64598
+Iteration finished after 157.67s
+
+Timestep 129 of 1200
+Number of satellites: 64945
+Iteration finished after 159.29s
+
+Timestep 132 of 1200
+Number of satellites: 65288
+Iteration finished after 159.37s
+
+Timestep 135 of 1200
+Number of satellites: 65638
+Iteration finished after 160.58s
+
+Timestep 138 of 1200
+Number of satellites: 65986
+Iteration finished after 161.52s
+
+Timestep 141 of 1200
+Number of satellites: 66334
+Iteration finished after 161.68s
+
+Timestep 144 of 1200
+Number of satellites: 66682
+Iteration finished after 161.93s
+
+Timestep 147 of 1200
+Number of satellites: 67024
+Iteration finished after 163.44s
+
+Timestep 150 of 1200
+Number of satellites: 67368
+Iteration finished after 164.83s
+
+Timestep 153 of 1200
+Number of satellites: 67713
+Iteration finished after 164.14s
+
+Timestep 156 of 1200
+Number of satellites: 68057
+Iteration finished after 165.52s
+
+Timestep 159 of 1200
+Number of satellites: 68398
+Iteration finished after 165.73s
+
+Timestep 162 of 1200
+Number of satellites: 68742
+Iteration finished after 166.99s
+
+Timestep 165 of 1200
+Number of satellites: 69087
+Iteration finished after 167.5s
+
+Timestep 168 of 1200
+Number of satellites: 69439
+Iteration finished after 168.52s
+
+Timestep 171 of 1200
+Number of satellites: 69790
+Iteration finished after 168.84s
+
+Timestep 174 of 1200
+Number of satellites: 70135
+Iteration finished after 170.14s
+
+Timestep 177 of 1200
+Number of satellites: 70477
+Iteration finished after 171.9s
+
+Timestep 180 of 1200
+Number of satellites: 70817
+Iteration finished after 172.13s
+
+Timestep 183 of 1200
+Number of satellites: 71163
+Iteration finished after 171.99s
+
+Timestep 186 of 1200
+Number of satellites: 71507
+Iteration finished after 174.21s
+
+Timestep 189 of 1200
+Number of satellites: 71851
+Iteration finished after 174.64s
+
+Timestep 192 of 1200
+Number of satellites: 72197
+Iteration finished after 174.48s
+
+Timestep 195 of 1200
+Number of satellites: 72539
+Iteration finished after 176.38s
+
+Timestep 198 of 1200
+Number of satellites: 72886
+Iteration finished after 176.81s
+
+Timestep 201 of 1200
+Number of satellites: 73228
+Iteration finished after 176.61s
+
+Timestep 204 of 1200
+Number of satellites: 73571
+Iteration finished after 177.22s
+
+Timestep 207 of 1200
+Number of satellites: 73902
+Iteration finished after 178.95s
+
+Timestep 210 of 1200
+Number of satellites: 74246
+Iteration finished after 178.67s
+
+Timestep 213 of 1200
+Number of satellites: 74591
+Iteration finished after 179.94s
+
+Timestep 216 of 1200
+Number of satellites: 74938
+Iteration finished after 180.34s
+
+Timestep 219 of 1200
+Number of satellites: 75280
+Iteration finished after 180.94s
+
+Timestep 222 of 1200
+Number of satellites: 75624
+Iteration finished after 181.8s
+
+Timestep 225 of 1200
+Number of satellites: 75964
+Iteration finished after 182.48s
+
+Timestep 228 of 1200
+Number of satellites: 76310
+Iteration finished after 182.79s
+
+Timestep 231 of 1200
+Number of satellites: 76656
+Iteration finished after 186.87s
+
+Timestep 234 of 1200
+Number of satellites: 76997
+Iteration finished after 185.58s
+
+Timestep 237 of 1200
+Number of satellites: 77341
+Iteration finished after 184.09s
+
+Timestep 240 of 1200
+Number of satellites: 77680
+Iteration finished after 186.38s
+
+Timestep 243 of 1200
+Number of satellites: 78019
+Iteration finished after 187.53s
+
+Timestep 246 of 1200
+Number of satellites: 78358
+Iteration finished after 188.44s
+
+Timestep 249 of 1200
+Number of satellites: 78696
+Iteration finished after 190.45s
+
+Timestep 252 of 1200
+Number of satellites: 79032
+Iteration finished after 189.92s
+
+Timestep 255 of 1200
+Number of satellites: 79364
+Iteration finished after 190.88s
+
+Timestep 258 of 1200
+Number of satellites: 79698
+Iteration finished after 191.25s
+
+Timestep 261 of 1200
+Number of satellites: 80037
+Iteration finished after 193.39s
+
+Timestep 264 of 1200
+Number of satellites: 80376

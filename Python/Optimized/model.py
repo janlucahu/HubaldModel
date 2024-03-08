@@ -53,7 +53,7 @@ def kessler_model(sat_parameters: np.ndarray[np.float64, 2], sat_constants: np.n
         col_prob_matrix = build_prob_matrix(sat_parameters, sat_constants, sigma, time_step, accuracy, prob_thresh,
                                             sin, cos, lower_bound, upper_bound)
 
-    simulation_data = np.empty((10, tmax // time_step))
+    simulation_data = np.empty((11, tmax // time_step))
     total_sats = num_sats
     counter = 0
 
@@ -91,6 +91,10 @@ def kessler_model(sat_parameters: np.ndarray[np.float64, 2], sat_constants: np.n
         active_sats = np.where(sat_parameters[:, -1] == 1)[0].shape[0]
         total_sats = active_sats + inactive_sats
 
+        ite_end = time.time()
+        ite_time = ite_end - ite_start
+        print(f"Iteration finished after {round(ite_time, 2)}s\n")
+
         simulation_data[0][counter] = tt
         simulation_data[1][counter] = sat_collisions
         simulation_data[2][counter] = np.sum(simulation_data[1, 0:counter])
@@ -101,9 +105,8 @@ def kessler_model(sat_parameters: np.ndarray[np.float64, 2], sat_constants: np.n
         simulation_data[7][counter] = num_large_fragments
         simulation_data[8][counter] = small_frag_collisions
         simulation_data[9][counter] = large_frag_collisions
-
-        ite_end = time.time()
-        print(f"Iteration finished after {round(ite_end - ite_start, 2)}s\n")
+        simulation_data[10][counter] = ite_time
+        counter += 1
 
     return simulation_data, sat_parameters, sat_constants, col_prob_matrix
 
