@@ -10,7 +10,7 @@ def main():
     logger.info("Main script started.")
 
     try:
-        input_files_path = os.path.join(os.getcwd(), "batch")
+        input_files_path = os.path.join(os.getcwd(), "input")
         input_files = []
         for entry in os.scandir(input_files_path):
             if entry.is_file() and entry.name.endswith(".txt"):
