@@ -252,13 +252,17 @@ def pool_update(sat_parameters: np.ndarray[np.float64, 2], sat_constants: np.nda
                 sigma: float, time_step: int, accuracy: int, prob_thresh: float, sin: np.ndarray[np.float64, 2],
                 cos: np.ndarray[np.float64, 2], col_prob_matrix: np.ndarray[np.float64, 2],
                 launched_sats: int, a_low: float, a_high: float, active_fraction: float,
-                plane: bool, num_workers: int) -> tuple[np.ndarray[np.float64, 2], np.ndarray[np.float64, 2],
-                                                        np.ndarray[np.float64, 2]]:
+                plane: bool, num_workers: int, launch_function: str,
+                launch_stop: bool, tt: int, rate: float) -> tuple[np.ndarray[np.float64, 2], np.ndarray[np.float64, 2],
+                                                                  np.ndarray[np.float64, 2]]:
 
-    remove = [10, 443, 561, 777, 900]
-    for ind in remove:
-        sat_parameters[ind] = [0, 0, 0, 0, 0, 0, -1]
-        sat_constants[ind] = [0, 0, 0, 0, 0, -1]
+    if launch_function == "constant":
+        pass
+    elif launch_function == "exponential":
+        launched_sats = int(launched_sats * np.exp(rate * tt))
+        print(f"Launched satellites: {launched_sats}")
+    else:
+        pass
 
     # check if reusable indices are sufficient or if new rows have to be appended to sat_parameters
     indices = np.where(sat_parameters[:, -1] == -1)[0]
@@ -280,9 +284,13 @@ def pool_update(sat_parameters: np.ndarray[np.float64, 2], sat_constants: np.nda
         extended_indices[:] = indices[:launched_sats]
 
     # parameters of newly launched satellites
+    if launch_stop:
+        threshold = num_new_parameters
+    else:
+        threshold = launched_sats
     new_parameters, new_constants = initialize(launched_sats, a_low, a_high, active_fraction, plane)
     for ii, ind in enumerate(indices):
-        if ii > num_new_parameters:
+        if ii > threshold:  # num_new_parameters for launch stop
             break
         sat_parameters[ind] = new_parameters[ii]
         sat_constants[ind] = new_constants[ii]

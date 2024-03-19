@@ -32,7 +32,8 @@ def kessler_model(sat_parameters: np.ndarray[np.float64, 2], sat_constants: np.n
                   col_prob_matrix: np.ndarray[np.float64, 2], num_sats: int, sigma: float, frag_col_prob: float,
                   active_fraction: float, a_low: float, a_high: float, num_small_fragments: int,
                   num_large_fragments: int, starts_per_timestep: int, deorbits_per_timestep: int, time_step: int,
-                  tmax: int, mode: str, num_workers: int, launch_mode: str) -> np.ndarray[np.float64, 2]:
+                  tmax: int, mode: str, num_workers: int, launch_mode: str, launch_function: str,
+                  launch_stop: bool, exp_rate: float) -> np.ndarray[np.float64, 2]:
 
     plane = False
     earth_radius = float(6_370_000)
@@ -82,9 +83,10 @@ def kessler_model(sat_parameters: np.ndarray[np.float64, 2], sat_constants: np.n
         deorbit_args = (col_prob_matrix, sat_parameters, sat_constants, deorbits_per_timestep)
         col_prob_matrix, sat_parameters, sat_constants = deorbits(*deorbit_args)
 
-        # satellite starts1
+        # satellite starts
         start_args = (col_prob_matrix, sat_parameters, sat_constants, num_workers, sigma, time_step, accuracy,
-                      prob_thresh, sin, cos, starts_per_timestep, a_low, a_high, active_fraction, plane, launch_mode)
+                      prob_thresh, sin, cos, starts_per_timestep, a_low, a_high, active_fraction, plane, launch_mode,
+                      launch_function, launch_stop, tt, exp_rate)
         col_prob_matrix, sat_parameters, sat_constants = pool_starts(*start_args)
 
         inactive_sats = np.where(sat_parameters[:, -1] == 0)[0].shape[0]
@@ -130,6 +132,11 @@ def simulation(input_file):
     input_parameters = read_input_file(input_file)
     matrix_mode = input_parameters.get("matrix_mode")
     launch_mode = input_parameters.get("launch_mode")
+    launch_function = input_parameters.get("launch_function")
+    launch_stop = input_parameters.get("Launch_stop")
+    exp_rate = input_parameters.get("exp_rate")
+    if launch_stop:
+        print("Launches will be stopped at given point.")
     accuracy = input_parameters.get("accuracy")
     prob_thresh = float(eval(input_parameters.get("prob_thresh")))
     num_sats = input_parameters.get("starting_sats")
@@ -168,7 +175,7 @@ def simulation(input_file):
 
     elif matrix_mode == "import":
         logger.info("Importing data.")
-        path = os.path.join(os.getcwd(), os.path.abspath(r"input/Matrices/50000/1"))
+        path = os.path.join(os.getcwd(), os.path.abspath(r"input/Matrices/10000/1"))
         sat_parameters = read_csv(path + r"/satParameters.csv")
         sat_constants = read_csv(path + r"/satConstants.csv")
         col_prob_matrix = read_csv(path + r"/probabilityMatrix.csv")
@@ -180,7 +187,7 @@ def simulation(input_file):
     logger.info("Kessler model employed.\n")
     model_args = (sat_parameters, sat_constants, col_prob_matrix, num_sats, sigma, frag_col_prob, active_fraction,
                   a_low, a_high, num_small_fragments, num_large_fragments, starts_per_timestep, deorbits_per_timestep,
-                  time_step, tmax, matrix_mode, num_workers, launch_mode)
+                  time_step, tmax, matrix_mode, num_workers, launch_mode, launch_function, launch_stop, exp_rate)
     sim_data, sat_parameters, sat_constants, col_prob_matrix = kessler_model(*model_args)
     finish = time.time()
     elapsed_time = finish - start

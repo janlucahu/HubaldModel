@@ -180,8 +180,8 @@ def deorbits(col_prob_matrix: np.ndarray[np.float64, 2], sat_parameters: np.ndar
 def starts(col_prob_matrix: np.ndarray[np.float64, 2], sat_parameters: np.ndarray[np.float64, 2],
            sat_constants: np.ndarray[np.float64, 2], num_workers: int, sigma: float, time_step: int, accuracy: int,
            prob_thresh: float, sin: np.ndarray[np.float64, 2], cos: np.ndarray[np.float64, 2], starts_per_timestep: int,
-           a_low: float, a_high: float, active_fraction: float, plane: bool,
-           mode: str) -> tuple[np.ndarray[np.float64, 2], np.ndarray[np.float64, 2], np.ndarray[np.float64, 2]]:
+           a_low: float, a_high: float, active_fraction: float, plane: bool, mode: str, launch_function: str,
+           launch_stop: bool) -> tuple[np.ndarray[np.float64, 2], np.ndarray[np.float64, 2], np.ndarray[np.float64, 2]]:
 
     launched_sats = int(starts_per_timestep)
     if mode == "single":
@@ -204,10 +204,13 @@ def pool_starts(col_prob_matrix: np.ndarray[np.float64, 2], sat_parameters: np.n
                 sat_constants: np.ndarray[np.float64, 2], num_workers: int, sigma: float, time_step: int, accuracy: int,
                 prob_thresh: float, sin: np.ndarray[np.float64, 2], cos: np.ndarray[np.float64, 2],
                 starts_per_timestep: int, a_low: float, a_high: float, active_fraction: float, plane: bool,
-                mode: str) -> tuple[np.ndarray[np.float64, 2], np.ndarray[np.float64, 2], np.ndarray[np.float64, 2]]:
+                mode: str, launch_function: str, launch_stop: bool,
+                tt: int, rate: float) -> tuple[np.ndarray[np.float64, 2],
+                                               np.ndarray[np.float64, 2], np.ndarray[np.float64, 2]]:
 
     launched_sats = int(starts_per_timestep)
     col_prob_matrix, sat_parameters, sat_constants = pool_update(sat_parameters, sat_constants, sigma, time_step, accuracy,
                                                                  prob_thresh, sin, cos, col_prob_matrix, launched_sats,
-                                                                 a_low, a_high, active_fraction, plane, num_workers)
+                                                                 a_low, a_high, active_fraction, plane, num_workers,
+                                                                 launch_function, launch_stop, tt, rate)
     return col_prob_matrix, sat_parameters, sat_constants
