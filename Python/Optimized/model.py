@@ -133,7 +133,7 @@ def simulation(input_file):
     matrix_mode = input_parameters.get("matrix_mode")
     launch_mode = input_parameters.get("launch_mode")
     launch_function = input_parameters.get("launch_function")
-    launch_stop = input_parameters.get("Launch_stop")
+    launch_stop = input_parameters.get("launch_stop")
     exp_rate = input_parameters.get("exp_rate")
     if launch_stop:
         print("Launches will be stopped at given point.")
