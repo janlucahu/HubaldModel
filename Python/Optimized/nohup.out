@@ -26591,3 +26591,123 @@ Number of satellites: 107011
 2024-03-17 17:44:53,240 - INFO - Main script finished.
 Iteration finished after 26.43s
 
+Now running: 
+Number of workers: 1
+Matrix size: 1000
+Mode: njit
+Finished after 6.841356992721558s
+
+Now running: 
+Number of workers: 1
+Matrix size: 5000
+Mode: njit
+Finished after 68.40413117408752s
+
+Now running: 
+Number of workers: 1
+Matrix size: 10000
+Mode: njit
+Finished after 270.42602801322937s
+
+Now running: 
+Number of workers: 1
+Matrix size: 15000
+Mode: njit
+Finished after 604.9140186309814s
+
+Now running: 
+Number of workers: 1
+Matrix size: 20000
+Mode: njit
+Finished after 1073.5432550907135s
+
+Now running: 
+Number of workers: 4
+Matrix size: 1000
+Mode: njit
+Finished after 27.75855016708374s
+
+Now running: 
+Number of workers: 4
+Matrix size: 5000
+Mode: njit
+Finished after 19.57389497756958s
+
+Now running: 
+Number of workers: 4
+Matrix size: 10000
+Mode: njit
+Finished after 73.32198095321655s
+
+Now running: 
+Number of workers: 4
+Matrix size: 15000
+Mode: njit
+Finished after 164.13781666755676s
+
+Now running: 
+Number of workers: 4
+Matrix size: 20000
+Mode: njit
+Finished after 293.16139006614685s
+
+Now running: 
+Number of workers: 8
+Matrix size: 1000
+Mode: njit
+Finished after 0.5681290626525879s
+
+Now running: 
+Number of workers: 8
+Matrix size: 5000
+Mode: njit
+Finished after 14.72589898109436s
+
+Now running: 
+Number of workers: 8
+Matrix size: 10000
+Mode: njit
+Finished after 58.43641400337219s
+
+Now running: 
+Number of workers: 8
+Matrix size: 15000
+Mode: njit
+Finished after 131.36343240737915s
+
+Now running: 
+Number of workers: 8
+Matrix size: 20000
+Mode: njit
+Finished after 233.98413395881653s
+
+Now running: 
+Number of workers: 12
+Matrix size: 1000
+Mode: njit
+Finished after 0.5410621166229248s
+
+Now running: 
+Number of workers: 12
+Matrix size: 5000
+Mode: njit
+Finished after 14.24789810180664s
+
+Now running: 
+Number of workers: 12
+Matrix size: 10000
+Mode: njit
+Finished after 56.60742712020874s
+
+Now running: 
+Number of workers: 12
+Matrix size: 15000
+Mode: njit
+Finished after 127.1266860961914s
+
+Now running: 
+Number of workers: 12
+Matrix size: 20000
+Mode: njit
+Finished after 226.19974303245544s
+

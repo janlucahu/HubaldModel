@@ -287,7 +287,7 @@ def pool_update(sat_parameters: np.ndarray[np.float64, 2], sat_constants: np.nda
     if launch_stop:
         threshold = num_new_parameters
     else:
-        threshold = launched_sats
+        threshold = launched_sats - 1
     new_parameters, new_constants = initialize(launched_sats, a_low, a_high, active_fraction, plane)
     for ii, ind in enumerate(indices):
         if ii > threshold:  # num_new_parameters for launch stop
