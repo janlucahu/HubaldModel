@@ -37,7 +37,7 @@ def benchmark(num_workers_list, matrix_size_list, mode, output_dir):
             elapsed_time = finish - start
             print(f"Finished after {elapsed_time}s")
             print()
-            stats = np.array([num_workers, matrix_size, elapsed_time])
+            stats = [mode, num_workers, matrix_size, elapsed_time]
             with open(file_path, 'a', newline='') as file:
                 writer = csv.writer(file)
                 writer.writerow(stats)
@@ -46,6 +46,7 @@ def benchmark(num_workers_list, matrix_size_list, mode, output_dir):
 if __name__ == '__main__':
     num_workers_list = [1, 4, 8, 12]
     matrix_size_list = [30000, 40000, 50000]
-    mode = "pool"
+    modes = ["pool", "njit"]
     output_dir = os.path.join(os.getcwd(), "output")
-    benchmark(num_workers_list, matrix_size_list, mode, output_dir)
+    for mode in modes:
+        benchmark(num_workers_list, matrix_size_list, mode, output_dir)
