@@ -44,8 +44,8 @@ def benchmark(num_workers_list, matrix_size_list, mode, output_dir):
 
 
 if __name__ == '__main__':
-    num_workers_list = [1, 4, 8, 12]
-    matrix_size_list = [30000, 40000, 50000]
+    num_workers_list = [24, 48, 72, 96]
+    matrix_size_list = [1000, 5000, 10000, 15000, 20000, 30000, 40000, 50000]
     modes = ["pool", "njit"]
     output_dir = os.path.join(os.getcwd(), "output")
     for mode in modes:
