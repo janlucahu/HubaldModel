@@ -83,7 +83,7 @@ def large_fragment(col_prob_matrix: np.ndarray[np.float64, 2], sat_parameters: n
             satellites_struck += 1
 
     fragments = (num_small_fragments, num_large_fragments)
-    return col_prob_matrix, sat_parameters, sat_constants, fragments, satellites_struck
+    return col_prob_matrix, sat_parameters, sat_constants, fragments, satellites_struck, frag_col_prob
 
 
 @jit(nopython=True)
@@ -205,12 +205,12 @@ def pool_starts(col_prob_matrix: np.ndarray[np.float64, 2], sat_parameters: np.n
                 prob_thresh: float, sin: np.ndarray[np.float64, 2], cos: np.ndarray[np.float64, 2],
                 starts_per_timestep: int, a_low: float, a_high: float, active_fraction: float, plane: bool,
                 mode: str, launch_function: str, launch_stop: bool,
-                tt: int, rate: float) -> tuple[np.ndarray[np.float64, 2],
-                                               np.ndarray[np.float64, 2], np.ndarray[np.float64, 2]]:
+                tt: int, rate: float, fcp: float) -> tuple[np.ndarray[np.float64, 2],
+                                                           np.ndarray[np.float64, 2], np.ndarray[np.float64, 2]]:
 
     launched_sats = int(starts_per_timestep)
     col_prob_matrix, sat_parameters, sat_constants = pool_update(sat_parameters, sat_constants, sigma, time_step, accuracy,
                                                                  prob_thresh, sin, cos, col_prob_matrix, launched_sats,
                                                                  a_low, a_high, active_fraction, plane, num_workers,
-                                                                 launch_function, launch_stop, tt, rate)
+                                                                 launch_function, launch_stop, tt, rate, fcp)
     return col_prob_matrix, sat_parameters, sat_constants

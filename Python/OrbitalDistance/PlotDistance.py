@@ -188,7 +188,7 @@ def plot_distance(parameters1, parameters2, acc=100):
     y2 = X2 * P21_2 + Y2 * P22_2
     z2 = X2 * P31_2 + Y2 * P32_2
 
-    dist = np.sqrt((x1 - x2) ** 2 + (y1 - y2) ** 2 + (z1 - z2) ** 2)
+    dist = np.sqrt((x1 - x2) ** 2 + (y1 - y2) ** 2 + (z1 - z2) ** 2)/1000
 
     minDistances, minIndices, minCoord = find_minimum(parameters1, parameters2, acc=acc, repetitions=3)
     minDistance = minDistances[-1]
@@ -196,7 +196,7 @@ def plot_distance(parameters1, parameters2, acc=100):
 
     minPoints = []
     for ii, angles in enumerate(minCoord):
-        minPoints.append([angles[0], angles[1], minDistances[ii]])
+        minPoints.append([angles[0], angles[1], minDistances[ii]/1000])
 
     fig = plt.figure()
     ax = fig.add_subplot(111, projection='3d')
@@ -204,11 +204,15 @@ def plot_distance(parameters1, parameters2, acc=100):
                            vmax=dist.max())
 
     # Add legend
-    ax.text(0.8, 0.8, minDistance,
-            "Minimum distance in m: {:.2f}".format(minDistance),
-            transform=ax.transAxes)
-    ax.set_xlabel('E1')
-    ax.set_ylabel('E2')
+    # ax.text(0.8, 0.8, minDistance,
+    #         "Minimum distance in km: {:.2f}".format(minDistance),
+    #         transform=ax.transAxes)
+    ax.set_xlabel('E1', fontsize=12)
+    ax.set_ylabel('E2', fontsize=12)
+    ax.set_zlabel('Distance [km]', fontsize=12)
+    ax.tick_params(axis='x', labelsize=12)
+    ax.tick_params(axis='y', labelsize=12)
+    ax.tick_params(axis='z', labelsize=12)
 
     # Add points
     minPoints = np.array(minPoints)

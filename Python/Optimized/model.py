@@ -71,7 +71,7 @@ def kessler_model(sat_parameters: np.ndarray[np.float64, 2], sat_constants: np.n
         mm_large = frag_col_prob / 12 / initial_large_fragments * time_step
         large_args = (col_prob_matrix, sat_parameters, sat_constants, num_small_fragments, num_large_fragments,
                       mm_large)
-        col_prob_matrix, sat_parameters, sat_constants, fragments, large_frag_collisions = large_fragment(*large_args)
+        col_prob_matrix, sat_parameters, sat_constants, fragments, large_frag_collisions, fcp = large_fragment(*large_args)
         num_small_fragments, num_large_fragments = fragments
 
         # satellite collisions
@@ -86,7 +86,7 @@ def kessler_model(sat_parameters: np.ndarray[np.float64, 2], sat_constants: np.n
         # satellite starts
         start_args = (col_prob_matrix, sat_parameters, sat_constants, num_workers, sigma, time_step, accuracy,
                       prob_thresh, sin, cos, starts_per_timestep, a_low, a_high, active_fraction, plane, launch_mode,
-                      launch_function, launch_stop, tt, exp_rate)
+                      launch_function, launch_stop, tt, exp_rate, fcp)
         col_prob_matrix, sat_parameters, sat_constants = pool_starts(*start_args)
 
         inactive_sats = np.where(sat_parameters[:, -1] == 0)[0].shape[0]
@@ -95,7 +95,7 @@ def kessler_model(sat_parameters: np.ndarray[np.float64, 2], sat_constants: np.n
 
         ite_end = time.time()
         ite_time = ite_end - ite_start
-        print(f"Iteration finished after {round(ite_time, 2)}s\n")
+        print(f"Fragment collision probability: {fcp}\nIteration finished after {round(ite_time, 2)}s\n")
 
         simulation_data[0][counter] = tt
         simulation_data[1][counter] = sat_collisions

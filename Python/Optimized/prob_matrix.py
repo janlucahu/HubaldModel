@@ -253,8 +253,9 @@ def pool_update(sat_parameters: np.ndarray[np.float64, 2], sat_constants: np.nda
                 cos: np.ndarray[np.float64, 2], col_prob_matrix: np.ndarray[np.float64, 2],
                 launched_sats: int, a_low: float, a_high: float, active_fraction: float,
                 plane: bool, num_workers: int, launch_function: str,
-                launch_stop: bool, tt: int, rate: float) -> tuple[np.ndarray[np.float64, 2], np.ndarray[np.float64, 2],
-                                                                  np.ndarray[np.float64, 2]]:
+                launch_stop: bool, tt: int, rate: float, fcp: float) -> tuple[np.ndarray[np.float64, 2],
+                                                                              np.ndarray[np.float64, 2],
+                                                                              np.ndarray[np.float64, 2]]:
 
     if launch_function == "constant":
         pass
@@ -285,7 +286,10 @@ def pool_update(sat_parameters: np.ndarray[np.float64, 2], sat_constants: np.nda
 
     # parameters of newly launched satellites
     if launch_stop:
-        threshold = num_new_parameters
+        if fcp < 0.0005:
+            threshold = launched_sats - 1
+        else:
+            threshold = -1
     else:
         threshold = launched_sats - 1
     new_parameters, new_constants = initialize(launched_sats, a_low, a_high, active_fraction, plane)
