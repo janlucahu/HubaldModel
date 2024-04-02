@@ -796,3 +796,59 @@ TypeError: int() argument must be a string, a bytes-like object or a real number
 2024-03-19 17:15:25,255 - INFO - Importing data.
 2024-03-19 17:15:25,442 - INFO - Kessler model employed.
 
+2024-04-02 10:10:16,278 - INFO - Main script started.
+2024-04-02 10:10:16,278 - INFO - A total of 1 parameter set(s) will be simulated
+2024-04-02 10:10:16,279 - INFO - Simulation started with following input parameters:
+2024-04-02 10:10:16,279 - INFO - Input path:
+/Users/janlucal/Documents/GitHub/HubaldModel/Python/Optimized/input/input_parameters.txt
+
+2024-04-02 10:10:16,279 - INFO - matrix_mode = import
+2024-04-02 10:10:16,279 - INFO - launch_mode = njit
+2024-04-02 10:10:16,279 - INFO - launch_function = constant
+2024-04-02 10:10:16,279 - INFO - launch_stop = 1
+2024-04-02 10:10:16,280 - INFO - exp_rate = 0.003
+2024-04-02 10:10:16,280 - INFO - accuracy = 20
+2024-04-02 10:10:16,280 - INFO - prob_thresh = 10**(-15)
+2024-04-02 10:10:16,280 - INFO - starting_sats = 50000
+2024-04-02 10:10:16,280 - INFO - sigma = 2000
+2024-04-02 10:10:16,280 - INFO - fragment_collision_prob = 0.0005
+2024-04-02 10:10:16,280 - INFO - active_percentage = 0.8
+2024-04-02 10:10:16,280 - INFO - aLimits = [200000, 2000000]
+2024-04-02 10:10:16,280 - INFO - small_fragments = 100000000
+2024-04-02 10:10:16,280 - INFO - large_fragments = 100000
+2024-04-02 10:10:16,280 - INFO - timestep = 3
+2024-04-02 10:10:16,280 - INFO - tmax = 1200
+2024-04-02 10:10:16,280 - INFO - starts_per_timestep = 500
+2024-04-02 10:10:16,280 - INFO - deorbits_per_timestep = 50
+2024-04-02 10:10:16,280 - INFO - num_workers = 12
+2024-04-02 10:10:16,280 - INFO - Importing data.
+2024-04-02 10:10:17,196 - INFO - Kessler model employed.
+
+2024-04-02 10:25:52,979 - INFO - Main script started.
+2024-04-02 10:25:52,979 - INFO - A total of 1 parameter set(s) will be simulated
+2024-04-02 10:25:52,979 - INFO - Simulation started with following input parameters:
+2024-04-02 10:25:52,979 - INFO - Input path:
+/Users/janlucal/Documents/GitHub/HubaldModel/Python/Optimized/input/input_parameters.txt
+
+2024-04-02 10:25:52,980 - INFO - matrix_mode = import
+2024-04-02 10:25:52,980 - INFO - launch_mode = njit
+2024-04-02 10:25:52,980 - INFO - launch_function = constant
+2024-04-02 10:25:52,980 - INFO - launch_stop = 1
+2024-04-02 10:25:52,980 - INFO - exp_rate = 0.003
+2024-04-02 10:25:52,980 - INFO - accuracy = 20
+2024-04-02 10:25:52,980 - INFO - prob_thresh = 10**(-15)
+2024-04-02 10:25:52,980 - INFO - starting_sats = 50000
+2024-04-02 10:25:52,980 - INFO - sigma = 2000
+2024-04-02 10:25:52,980 - INFO - fragment_collision_prob = 0.0005
+2024-04-02 10:25:52,980 - INFO - active_percentage = 0.8
+2024-04-02 10:25:52,980 - INFO - aLimits = [200000, 2000000]
+2024-04-02 10:25:52,980 - INFO - small_fragments = 100000000
+2024-04-02 10:25:52,980 - INFO - large_fragments = 100000
+2024-04-02 10:25:52,981 - INFO - timestep = 3
+2024-04-02 10:25:52,981 - INFO - tmax = 1200
+2024-04-02 10:25:52,981 - INFO - starts_per_timestep = 500
+2024-04-02 10:25:52,981 - INFO - deorbits_per_timestep = 50
+2024-04-02 10:25:52,981 - INFO - num_workers = 12
+2024-04-02 10:25:52,981 - INFO - Importing data.
+2024-04-02 10:25:53,888 - INFO - Kessler model employed.
+
