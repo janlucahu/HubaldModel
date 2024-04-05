@@ -852,3 +852,77 @@ TypeError: int() argument must be a string, a bytes-like object or a real number
 2024-04-02 10:25:52,981 - INFO - Importing data.
 2024-04-02 10:25:53,888 - INFO - Kessler model employed.
 
+2024-04-02 17:00:12,015 - INFO - Simulation finished after: 23659.04s
+2024-04-02 17:00:12,016 - INFO - Writing results.
+2024-04-02 17:00:16,151 - INFO - Process finished.
+
+
+2024-04-02 17:00:16,152 - INFO - Main script finished.
+2024-04-03 13:59:32,623 - INFO - Main script started.
+2024-04-03 13:59:32,624 - INFO - A total of 1 parameter set(s) will be simulated
+2024-04-03 13:59:32,624 - INFO - Simulation started with following input parameters:
+2024-04-03 13:59:32,624 - INFO - Input path:
+/Users/janlucal/Documents/GitHub/HubaldModel/Python/Optimized/input/input_parameters.txt
+
+2024-04-03 13:59:32,625 - INFO - matrix_mode = import
+2024-04-03 13:59:32,625 - INFO - launch_mode = njit
+2024-04-03 13:59:32,625 - INFO - launch_function = constant
+2024-04-03 13:59:32,625 - INFO - launch_stop = 1
+2024-04-03 13:59:32,625 - INFO - exp_rate = 0.003
+2024-04-03 13:59:32,626 - INFO - accuracy = 20
+2024-04-03 13:59:32,626 - INFO - prob_thresh = 10**(-15)
+2024-04-03 13:59:32,626 - INFO - starting_sats = 50000
+2024-04-03 13:59:32,626 - INFO - sigma = 2000
+2024-04-03 13:59:32,626 - INFO - fragment_collision_prob = 0.0005
+2024-04-03 13:59:32,626 - INFO - active_percentage = 0.8
+2024-04-03 13:59:32,626 - INFO - aLimits = [200000, 2000000]
+2024-04-03 13:59:32,626 - INFO - small_fragments = 100000000
+2024-04-03 13:59:32,626 - INFO - large_fragments = 100000
+2024-04-03 13:59:32,626 - INFO - timestep = 3
+2024-04-03 13:59:32,626 - INFO - tmax = 1200
+2024-04-03 13:59:32,626 - INFO - starts_per_timestep = 500
+2024-04-03 13:59:32,626 - INFO - deorbits_per_timestep = 50
+2024-04-03 13:59:32,626 - INFO - num_workers = 12
+2024-04-03 13:59:32,626 - INFO - Importing data.
+2024-04-03 13:59:33,529 - INFO - Kessler model employed.
+
+2024-04-03 17:29:32,893 - INFO - Simulation finished after: 12600.27s
+2024-04-03 17:29:32,895 - INFO - Writing results.
+2024-04-03 17:29:37,014 - INFO - Process finished.
+
+
+2024-04-03 17:29:37,015 - INFO - Main script finished.
+2024-04-04 14:22:23,806 - INFO - Main script started.
+2024-04-04 14:22:23,807 - INFO - A total of 1 parameter set(s) will be simulated
+2024-04-04 14:22:23,807 - INFO - Simulation started with following input parameters:
+2024-04-04 14:22:23,807 - INFO - Input path:
+/Users/janlucal/Documents/GitHub/HubaldModel/Python/Optimized/input/input_parameters.txt
+
+2024-04-04 14:22:23,808 - INFO - matrix_mode = import
+2024-04-04 14:22:23,808 - INFO - launch_mode = njit
+2024-04-04 14:22:23,808 - INFO - launch_function = constant
+2024-04-04 14:22:23,808 - INFO - launch_stop = 1
+2024-04-04 14:22:23,808 - INFO - exp_rate = 0.003
+2024-04-04 14:22:23,808 - INFO - accuracy = 20
+2024-04-04 14:22:23,808 - INFO - prob_thresh = 10**(-15)
+2024-04-04 14:22:23,808 - INFO - starting_sats = 10000
+2024-04-04 14:22:23,808 - INFO - sigma = 2000
+2024-04-04 14:22:23,808 - INFO - fragment_collision_prob = 0.0005
+2024-04-04 14:22:23,809 - INFO - active_percentage = 0.5
+2024-04-04 14:22:23,809 - INFO - aLimits = [200000, 2000000]
+2024-04-04 14:22:23,809 - INFO - small_fragments = 100000000
+2024-04-04 14:22:23,809 - INFO - large_fragments = 100000
+2024-04-04 14:22:23,809 - INFO - timestep = 3
+2024-04-04 14:22:23,809 - INFO - tmax = 1200
+2024-04-04 14:22:23,809 - INFO - starts_per_timestep = 500
+2024-04-04 14:22:23,809 - INFO - deorbits_per_timestep = 50
+2024-04-04 14:22:23,809 - INFO - num_workers = 12
+2024-04-04 14:22:23,809 - INFO - Importing data.
+2024-04-04 14:22:23,998 - INFO - Kessler model employed.
+
+2024-04-04 17:40:10,152 - INFO - Simulation finished after: 11866.35s
+2024-04-04 17:40:10,153 - INFO - Writing results.
+2024-04-04 17:40:14,298 - INFO - Process finished.
+
+
+2024-04-04 17:40:14,298 - INFO - Main script finished.

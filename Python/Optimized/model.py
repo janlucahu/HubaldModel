@@ -175,7 +175,7 @@ def simulation(input_file):
 
     elif matrix_mode == "import":
         logger.info("Importing data.")
-        path = os.path.join(os.getcwd(), os.path.abspath(r"input/Matrices/50000/1"))
+        path = os.path.join(os.getcwd(), os.path.abspath(r"input/Matrices/10000/1"))
         sat_parameters = read_csv(path + r"/satParameters.csv")
         sat_constants = read_csv(path + r"/satConstants.csv")
         col_prob_matrix = read_csv(path + r"/probabilityMatrix.csv")

@@ -286,7 +286,7 @@ def pool_update(sat_parameters: np.ndarray[np.float64, 2], sat_constants: np.nda
 
     # parameters of newly launched satellites
     if launch_stop:
-        if fcp < 0.0005:
+        if fcp < 0.0002:
             threshold = launched_sats - 1
         else:
             threshold = -1
